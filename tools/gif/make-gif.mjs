@@ -15,10 +15,10 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT = join(__dirname, '..', '..', 'docs', 'img', 'demo.gif');
 
 const W = 900, H = 500;
-const BG = '#1b1f27';
+const BG = '#0a0e16';
 const TYPE_COLORS = {
-  Device: '#4aa3ff', User: '#b48ead', Group: '#a3be8c', Filter: '#d08770',
-  ConfigPolicy: '#ebcb8b', CompliancePolicy: '#88c0d0', App: '#bf616a', Script: '#5e81ac', Builtin: '#e5e9f0'
+  Device: '#58a6ff', User: '#c792ea', Group: '#9fef00', Filter: '#d2a8ff',
+  ConfigPolicy: '#ffb454', CompliancePolicy: '#56d4dd', App: '#ff7b72', Script: '#f778ba', Builtin: '#c9d4e3'
 };
 const TYPE_RADIUS = { Device: 6, User: 6, Group: 11, Filter: 8, ConfigPolicy: 12, CompliancePolicy: 12, App: 12, Script: 9, Builtin: 13 };
 const LABELLED = new Set(['Group', 'App', 'ConfigPolicy', 'CompliancePolicy', 'Script', 'Filter', 'Builtin']);
@@ -77,11 +77,23 @@ const ctx = canvas.getContext('2d');
 function drawFrame(highlightId) {
   ctx.fillStyle = BG; ctx.fillRect(0, 0, W, H);
 
-  // header
-  ctx.fillStyle = '#e6eaf0'; ctx.font = 'bold 18px sans-serif';
+  // radial glow washes (blue top-right, green bottom-left)
+  let g = ctx.createRadialGradient(W * 0.85, -40, 0, W * 0.85, -40, 520);
+  g.addColorStop(0, 'rgba(88,166,255,0.10)'); g.addColorStop(1, 'rgba(88,166,255,0)');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  g = ctx.createRadialGradient(-30, H + 40, 0, -30, H + 40, 480);
+  g.addColorStop(0, 'rgba(159,239,0,0.06)'); g.addColorStop(1, 'rgba(159,239,0,0)');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+
+  // (grid omitted in the GIF: anti-aliased 1px lines inflate the palette and file
+  //  size across every frame; the live HTML viewer keeps the grid, where it's free.)
+
+  // header: green accent bar + wordmark
+  ctx.fillStyle = '#9fef00'; ctx.fillRect(0, 0, 3, 52);
+  ctx.fillStyle = '#9fef00'; ctx.font = 'bold 18px sans-serif';
   ctx.fillText('IntuneGraph', 24, 34);
-  ctx.fillStyle = '#98a2b3'; ctx.font = '13px sans-serif';
-  ctx.fillText(`Contoso demo tenant  ·  ${nodes.length} nodes · ${edges.length} edges`, 132, 34);
+  ctx.fillStyle = '#7c8aa0'; ctx.font = '13px sans-serif';
+  ctx.fillText(`Contoso demo tenant  ·  ${nodes.length} nodes · ${edges.length} edges`, 138, 34);
 
   ctx.save();
   ctx.translate(W / 2, H / 2 + 28);
@@ -95,10 +107,10 @@ function drawFrame(highlightId) {
     const dim = focus && !(focus.has(a.id) && focus.has(b.id));
     ctx.globalAlpha = dim ? 0.06 : 0.55;
     ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
-    if (e.type === 'memberOf') { ctx.strokeStyle = '#4c566a'; ctx.lineWidth = 0.7 / cam.scale + 0.3; ctx.setLineDash([]); }
-    else if (e.type === 'filteredBy') { ctx.strokeStyle = '#b48ead'; ctx.lineWidth = 1; ctx.setLineDash([1.5, 3]); }
-    else if (e.properties && e.properties.mode === 'exclude') { ctx.strokeStyle = '#bf616a'; ctx.lineWidth = 1.4; ctx.setLineDash([5, 4]); }
-    else { ctx.strokeStyle = '#a3be8c'; ctx.lineWidth = 1.4; ctx.setLineDash([]); }
+    if (e.type === 'memberOf') { ctx.strokeStyle = '#2f3f61'; ctx.lineWidth = 0.7 / cam.scale + 0.3; ctx.setLineDash([]); }
+    else if (e.type === 'filteredBy') { ctx.strokeStyle = '#ffb454'; ctx.lineWidth = 1; ctx.setLineDash([1.5, 3]); }
+    else if (e.properties && e.properties.mode === 'exclude') { ctx.strokeStyle = '#ff7b72'; ctx.lineWidth = 1.4; ctx.setLineDash([5, 4]); }
+    else { ctx.strokeStyle = '#9fef00'; ctx.lineWidth = 1.4; ctx.setLineDash([]); }
     ctx.stroke();
   }
   ctx.setLineDash([]);
@@ -110,9 +122,9 @@ function drawFrame(highlightId) {
     ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
     ctx.fillStyle = TYPE_COLORS[n.type] || '#ccc'; ctx.fill();
     if (n.id === highlightId) { ctx.lineWidth = 2.5 / cam.scale; ctx.strokeStyle = '#fff'; ctx.stroke(); }
-    else if (n.properties && n.properties.missing) { ctx.lineWidth = 2 / cam.scale; ctx.strokeStyle = '#bf616a'; ctx.stroke(); }
+    else if (n.properties && n.properties.missing) { ctx.lineWidth = 2 / cam.scale; ctx.strokeStyle = '#ff7b72'; ctx.stroke(); }
     if (!dim && LABELLED.has(n.type) && cam.scale > 0.45) {
-      ctx.globalAlpha = 0.9; ctx.fillStyle = '#e6eaf0';
+      ctx.globalAlpha = 0.92; ctx.fillStyle = '#c9d4e3';
       ctx.font = `${Math.max(9, 10 / cam.scale)}px sans-serif`;
       ctx.fillText(n.name || n.id, n.x + r + 3, n.y + 3.5);
     }
@@ -121,7 +133,7 @@ function drawFrame(highlightId) {
   ctx.globalAlpha = 1;
 
   // caption
-  ctx.fillStyle = '#6b7280'; ctx.font = '12px sans-serif';
+  ctx.fillStyle = '#56657d'; ctx.font = '12px sans-serif';
   ctx.fillText('github.com/juandresrodca/IntuneGraph', 24, H - 18);
 }
 function neighborhood(id) {

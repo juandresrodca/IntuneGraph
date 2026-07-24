@@ -6,51 +6,80 @@
 <title>__IG_TITLE__</title>
 <style>
   :root {
-    --bg: #1b1f27; --panel: #232833; --panel2: #2b313d; --line: #39414f;
-    --text: #e6eaf0; --muted: #98a2b3; --accent: #4aa3ff;
-    --device:#4aa3ff; --user:#b48ead; --group:#a3be8c; --filter:#d08770;
-    --config:#ebcb8b; --compliance:#88c0d0; --app:#bf616a; --script:#5e81ac; --builtin:#e5e9f0;
+    --bg:#0a0e16; --bg2:#0d1320; --panel:#111a2b; --panel2:#16213a;
+    --line:#1e2c45; --line2:#27395a;
+    --green:#9fef00; --green-dim:#6fa800; --blue:#58a6ff; --purple:#c792ea;
+    --cyan:#56d4dd; --red:#ff7b72; --amber:#ffb454;
+    --text:#c9d4e3; --muted:#7c8aa0; --mute2:#56657d; --accent:var(--green);
+    /* node-type legend swatches (mirror JS TYPE_COLORS) */
+    --group:#9fef00; --device:#58a6ff; --user:#c792ea; --app:#ff7b72;
+    --config:#ffb454; --compliance:#56d4dd; --script:#f778ba; --filter:#d2a8ff; --builtin:#c9d4e3;
+    --mono:'JetBrains Mono',ui-monospace,'Cascadia Code','SF Mono',Menlo,Consolas,monospace;
+    --sans:'Outfit',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
   }
   * { box-sizing: border-box; }
-  html,body { margin:0; height:100%; background:var(--bg); color:var(--text);
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
-  #app { display:flex; flex-direction:column; height:100vh; }
-  header { display:flex; align-items:baseline; gap:16px; padding:12px 18px; border-bottom:1px solid var(--line); background:var(--panel); }
-  header h1 { font-size:16px; margin:0; font-weight:600; letter-spacing:.2px; }
-  header .meta { font-size:12px; color:var(--muted); }
+  html,body { margin:0; height:100%; color:var(--text); font-family:var(--sans);
+    background:
+      radial-gradient(900px 500px at 88% -12%, rgba(88,166,255,.10), transparent 60%),
+      radial-gradient(760px 520px at -5% 112%, rgba(159,239,0,.06), transparent 55%),
+      var(--bg); }
+  .grid-bg { position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:linear-gradient(rgba(40,57,90,.16) 1px,transparent 1px),linear-gradient(90deg,rgba(40,57,90,.16) 1px,transparent 1px);
+    background-size:42px 42px; mask-image:radial-gradient(circle at 60% 20%,#000,transparent 85%); }
+  #app { position:relative; z-index:1; display:flex; flex-direction:column; height:100vh; }
+  header { display:flex; align-items:center; gap:14px; padding:14px 20px; position:relative; overflow:hidden;
+    background:linear-gradient(180deg,var(--panel),var(--bg2)); border-bottom:1px solid var(--line); }
+  header::before { content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--green); box-shadow:0 0 12px rgba(159,239,0,.5); }
+  header h1 { font-family:var(--mono); font-size:16px; margin:0; font-weight:600; letter-spacing:-.3px; color:var(--text); }
+  header .meta { font-family:var(--mono); font-size:11.5px; color:var(--muted); }
   .stage { flex:1; display:flex; min-height:0; }
-  .toolbar { width:220px; padding:14px; border-right:1px solid var(--line); background:var(--panel); overflow:auto; font-size:13px; }
-  .toolbar h2 { font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:16px 0 8px; }
+  .toolbar { width:230px; padding:16px; border-right:1px solid var(--line); overflow:auto; font-size:13px;
+    background:linear-gradient(180deg,rgba(17,26,43,.6),rgba(13,19,32,.6)); backdrop-filter:blur(2px); }
+  .toolbar h2 { font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.12em; color:var(--muted);
+    margin:20px 0 9px; display:flex; align-items:center; gap:8px; }
+  .toolbar h2::before { content:""; width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 7px var(--green); flex:none; }
   .toolbar h2:first-child { margin-top:0; }
-  #search { width:100%; padding:7px 9px; background:var(--panel2); border:1px solid var(--line); border-radius:6px; color:var(--text); font-size:13px; }
-  .legend-item, .filter-item { display:flex; align-items:center; gap:8px; padding:3px 0; cursor:pointer; user-select:none; }
-  .dot { width:11px; height:11px; border-radius:50%; flex:none; }
-  .filter-item input { accent-color:var(--accent); }
-  .count { margin-left:auto; color:var(--muted); font-variant-numeric:tabular-nums; }
+  #search { width:100%; padding:8px 10px; background:#0a1018; border:1px solid var(--line2); border-radius:8px;
+    color:var(--text); font-family:var(--mono); font-size:12.5px; }
+  #search::placeholder { color:var(--mute2); }
+  #search:focus { outline:none; border-color:var(--green); }
+  .legend-item, .filter-item { display:flex; align-items:center; gap:9px; padding:4px 0; cursor:pointer; user-select:none; font-size:12.5px; }
+  .legend-item { font-family:var(--mono); font-size:11.5px; color:var(--muted); }
+  .dot { width:11px; height:11px; border-radius:50%; flex:none; box-shadow:0 0 6px currentColor; }
+  .filter-item input { accent-color:var(--green); }
+  .count { margin-left:auto; font-family:var(--mono); color:var(--mute2); font-size:11px; font-variant-numeric:tabular-nums; }
   .canvas-wrap { flex:1; position:relative; min-width:0; }
   canvas { display:block; width:100%; height:100%; cursor:grab; }
   canvas.grabbing { cursor:grabbing; }
-  #side { position:absolute; top:12px; right:12px; width:300px; max-height:calc(100% - 24px); overflow:auto;
-    background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px; display:none;
-    box-shadow:0 10px 30px rgba(0,0,0,.35); font-size:13px; }
+  #side { position:absolute; top:14px; right:14px; width:308px; max-height:calc(100% - 28px); overflow:auto;
+    background:linear-gradient(180deg,var(--panel),var(--bg2)); border:1px solid var(--line2); border-radius:14px; padding:16px; display:none;
+    box-shadow:0 24px 60px rgba(0,0,0,.5); font-size:13px; }
   #side.show { display:block; }
-  #side .stype { font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); }
-  #side h3 { margin:4px 0 10px; font-size:15px; }
-  #side .kv { display:flex; gap:8px; padding:3px 0; border-top:1px solid var(--line); }
-  #side .kv b { color:var(--muted); font-weight:500; min-width:96px; }
-  #side .edges { margin-top:10px; }
-  #side .edge { padding:4px 0; border-top:1px solid var(--line); color:var(--muted); }
+  #side .stype { font-family:var(--mono); font-size:10px; text-transform:uppercase; letter-spacing:.1em; color:var(--green); }
+  #side h3 { font-family:var(--mono); margin:5px 0 12px; font-size:15px; color:var(--text); word-break:break-word; }
+  #side .kv { display:flex; gap:8px; padding:4px 0; border-top:1px solid var(--line); font-size:12px; }
+  #side .kv b { font-family:var(--mono); color:var(--mute2); font-weight:400; min-width:96px; }
+  #side .kv span { font-family:var(--mono); color:var(--text); word-break:break-word; }
+  #side .edges { margin-top:12px; }
+  #side .edge { padding:5px 0; border-top:1px solid var(--line); color:var(--muted); font-size:12px; }
   #side .edge b { color:var(--text); font-weight:500; }
-  #side .close { position:absolute; top:10px; right:12px; cursor:pointer; color:var(--muted); font-size:18px; line-height:1; }
-  .hint { position:absolute; left:12px; bottom:12px; font-size:11px; color:var(--muted); background:rgba(0,0,0,.25); padding:6px 9px; border-radius:6px; }
-  .banner { position:absolute; left:50%; top:12px; transform:translateX(-50%); background:var(--panel2); border:1px solid var(--line);
-    padding:7px 12px; border-radius:8px; font-size:12px; color:var(--muted); display:none; }
+  #side .close { position:absolute; top:12px; right:14px; cursor:pointer; color:var(--mute2); font-size:18px; line-height:1; }
+  #side .close:hover { color:var(--red); }
+  .hint { position:absolute; left:14px; bottom:14px; font-family:var(--mono); font-size:10.5px; color:var(--mute2);
+    background:rgba(10,14,22,.6); border:1px solid var(--line); padding:6px 10px; border-radius:7px; backdrop-filter:blur(2px); }
+  .banner { position:absolute; left:50%; top:14px; transform:translateX(-50%); background:var(--panel2); border:1px solid var(--line2);
+    padding:8px 13px; border-radius:9px; font-family:var(--mono); font-size:11.5px; color:var(--muted); display:none; }
   .banner.show { display:block; }
-  button.reset { margin-top:12px; width:100%; padding:7px; background:var(--panel2); color:var(--text); border:1px solid var(--line); border-radius:6px; cursor:pointer; font-size:12px; }
-  button.reset:hover { border-color:var(--accent); }
+  button.reset { margin-top:14px; width:100%; padding:8px; background:rgba(159,239,0,.06); color:var(--green);
+    border:1px solid rgba(159,239,0,.35); border-radius:8px; cursor:pointer; font-family:var(--mono); font-size:12px; font-weight:600; transition:.15s; }
+  button.reset:hover { background:rgba(159,239,0,.12); }
+  ::-webkit-scrollbar { width:6px; height:6px; }
+  ::-webkit-scrollbar-track { background:transparent; }
+  ::-webkit-scrollbar-thumb { background:var(--line2); border-radius:3px; }
 </style>
 </head>
 <body>
+<div class="grid-bg"></div>
 <div id="app">
   <header>
     <h1>__IG_TITLE__</h1>
@@ -67,7 +96,7 @@
       <div class="legend-item"><span style="width:18px;height:0;border-top:2px solid var(--group)"></span>include</div>
       <div class="legend-item"><span style="width:18px;height:0;border-top:2px dashed var(--app)"></span>exclude</div>
       <div class="legend-item"><span style="width:18px;height:0;border-top:1px solid var(--line)"></span>member of</div>
-      <div class="legend-item"><span style="width:18px;height:0;border-top:2px dotted var(--user)"></span>filtered by</div>
+      <div class="legend-item"><span style="width:18px;height:0;border-top:2px dotted var(--amber)"></span>filtered by</div>
     </div>
     <div class="canvas-wrap">
       <canvas id="c"></canvas>
@@ -88,8 +117,8 @@ const GRAPH = "__IG_DATA__";
 const META = "__IG_META__";
 
 const TYPE_COLORS = {
-  Device:'#4aa3ff', User:'#b48ead', Group:'#a3be8c', Filter:'#d08770',
-  ConfigPolicy:'#ebcb8b', CompliancePolicy:'#88c0d0', App:'#bf616a', Script:'#5e81ac', Builtin:'#e5e9f0'
+  Device:'#58a6ff', User:'#c792ea', Group:'#9fef00', Filter:'#d2a8ff',
+  ConfigPolicy:'#ffb454', CompliancePolicy:'#56d4dd', App:'#ff7b72', Script:'#f778ba', Builtin:'#c9d4e3'
 };
 const TYPE_RADIUS = { Device:6, User:6, Group:10, Filter:8, ConfigPolicy:11, CompliancePolicy:11, App:11, Script:9, Builtin:12 };
 
@@ -183,10 +212,10 @@ function draw() {
     const dim = focus && !(focus.has(a.id)&&focus.has(b.id));
     ctx.globalAlpha = dim ? 0.06 : 0.5;
     ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
-    if (e.type==='memberOf'){ ctx.strokeStyle='#4c566a'; ctx.lineWidth=0.6; ctx.setLineDash([]); }
-    else if (e.type==='filteredBy'){ ctx.strokeStyle='#b48ead'; ctx.lineWidth=1; ctx.setLineDash([1,3]); }
-    else if (e.properties && e.properties.mode==='exclude'){ ctx.strokeStyle='#bf616a'; ctx.lineWidth=1.3; ctx.setLineDash([5,4]); }
-    else { ctx.strokeStyle='#a3be8c'; ctx.lineWidth=1.3; ctx.setLineDash([]); }
+    if (e.type==='memberOf'){ ctx.strokeStyle='#2f3f61'; ctx.lineWidth=0.7; ctx.setLineDash([]); }
+    else if (e.type==='filteredBy'){ ctx.strokeStyle='#ffb454'; ctx.lineWidth=1; ctx.setLineDash([1,3]); }
+    else if (e.properties && e.properties.mode==='exclude'){ ctx.strokeStyle='#ff7b72'; ctx.lineWidth=1.4; ctx.setLineDash([5,4]); }
+    else { ctx.strokeStyle='#9fef00'; ctx.lineWidth=1.4; ctx.setLineDash([]); }
     ctx.stroke();
   });
   ctx.setLineDash([]);
@@ -200,10 +229,10 @@ function draw() {
     ctx.beginPath(); ctx.arc(n.x,n.y,r,0,Math.PI*2);
     ctx.fillStyle = TYPE_COLORS[n.type]||'#ccc'; ctx.fill();
     if (n.id===selected){ ctx.lineWidth=2.5; ctx.strokeStyle='#fff'; ctx.stroke(); }
-    else if (n.properties && n.properties.missing){ ctx.lineWidth=2; ctx.strokeStyle='#bf616a'; ctx.stroke(); }
+    else if (n.properties && n.properties.missing){ ctx.lineWidth=2; ctx.strokeStyle='#ff7b72'; ctx.stroke(); }
     // label
     if (scale>0.55 && !dim && (r>=9 || n.id===hoverId || n.id===selected)){
-      ctx.globalAlpha = dim?0.2:0.85; ctx.fillStyle='#e6eaf0';
+      ctx.globalAlpha = dim?0.2:0.9; ctx.fillStyle='#c9d4e3';
       ctx.font = '10px -apple-system,Segoe UI,sans-serif';
       ctx.fillText(n.name||n.id, n.x+r+3, n.y+3);
     }
