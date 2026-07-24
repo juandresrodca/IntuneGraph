@@ -1,0 +1,16 @@
+﻿{
+  "value": [
+    {
+        "id":  "f0000000-0000-0000-0000-000000000001",
+        "displayName":  "F-CorpOwned",
+        "platform":  "windows10AndLater",
+        "rule":  "(device.deviceOwnership -eq \"Corporate\")"
+    },
+    {
+        "id":  "f0000000-0000-0000-0000-000000000002",
+        "displayName":  "F-Unused",
+        "platform":  "windows10AndLater",
+        "rule":  "(device.model -eq \"Surface\")"
+    }
+]
+}

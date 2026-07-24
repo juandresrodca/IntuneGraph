@@ -1,0 +1,26 @@
+# graphify knowledge-graph artifacts (generated locally for reference)
+graphify-out/
+
+# IntuneGraph exports (never commit tenant data)
+out/
+IntuneGraph-*/
+*.html
+!src/IntuneGraph/Assets/template.html
+graph.json
+!tests/Fixtures/**/*.json
+!src/IntuneGraph/DemoData/**/*.json
+
+# Test output
+TestResults/
+testResults.xml
+coverage.xml
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.user
+
+# OS
+Thumbs.db
+.DS_Store

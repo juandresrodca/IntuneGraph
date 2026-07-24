@@ -1,0 +1,16 @@
+﻿{
+  "value": [
+    {
+        "@odata.type":  "#microsoft.graph.user",
+        "id":  "55000000-0000-0000-0000-000000000207",
+        "displayName":  "grace",
+        "userPrincipalName":  "grace@contoso.com"
+    },
+    {
+        "@odata.type":  "#microsoft.graph.user",
+        "id":  "55000000-0000-0000-0000-000000000208",
+        "displayName":  "heidi",
+        "userPrincipalName":  "heidi@contoso.com"
+    }
+]
+}

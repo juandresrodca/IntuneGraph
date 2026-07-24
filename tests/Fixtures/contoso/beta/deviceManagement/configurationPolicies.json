@@ -1,0 +1,47 @@
+﻿{
+  "value": [
+    {
+        "id":  "c0000000-0000-0000-0000-000000000001",
+        "name":  "Win11 Security Baseline",
+        "platforms":  "windows10",
+        "technologies":  "mdm",
+        "assignments":  [
+                            {
+                                "id":  "a1",
+                                "target":  {
+                                               "@odata.type":  "#microsoft.graph.groupAssignmentTarget",
+                                               "groupId":  "00000000-0000-0000-0000-000000000001",
+                                               "deviceAndAppManagementAssignmentFilterId":  null,
+                                               "deviceAndAppManagementAssignmentFilterType":  "none"
+                                           }
+                            }
+                        ]
+    },
+    {
+        "id":  "c0000000-0000-0000-0000-000000000003",
+        "name":  "Kiosk Lockdown",
+        "platforms":  "windows10",
+        "technologies":  "mdm",
+        "assignments":  [
+                            {
+                                "id":  "a2",
+                                "target":  {
+                                               "@odata.type":  "#microsoft.graph.groupAssignmentTarget",
+                                               "groupId":  "00000000-0000-0000-0000-000000000005",
+                                               "deviceAndAppManagementAssignmentFilterId":  null,
+                                               "deviceAndAppManagementAssignmentFilterType":  "none"
+                                           }
+                            }
+                        ]
+    },
+    {
+        "id":  "c0000000-0000-0000-0000-000000000004",
+        "name":  "Orphan Wi-Fi Profile",
+        "platforms":  "windows10",
+        "technologies":  "mdm",
+        "assignments":  [
+
+                        ]
+    }
+]
+}

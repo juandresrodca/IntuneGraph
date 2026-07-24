@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/juandresrodca/IntuneGraph/blob/main/docs/graph.schema.json",
+  "title": "IntuneGraph graph.json",
+  "type": "object",
+  "required": ["schemaVersion", "metadata", "nodes", "edges"],
+  "properties": {
+    "schemaVersion": { "const": "1.0" },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "tenantId": { "type": ["string", "null"] },
+        "tenantName": { "type": ["string", "null"] },
+        "exportedAt": { "type": "string" },
+        "toolVersion": { "type": "string" },
+        "source": { "type": "string", "enum": ["live", "fixture", "demo"] },
+        "deviceCount": { "type": "integer" },
+        "userCount": { "type": "integer" },
+        "counts": { "type": "object" }
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "name"],
+        "properties": {
+          "id": { "type": "string" },
+          "type": {
+            "type": "string",
+            "enum": ["Device", "User", "Group", "Filter", "ConfigPolicy", "CompliancePolicy", "App", "Script", "Builtin"]
+          },
+          "subtype": { "type": ["string", "null"] },
+          "name": { "type": ["string", "null"] },
+          "sourceId": { "type": ["string", "null"] },
+          "properties": { "type": "object" }
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "from", "to"],
+        "properties": {
+          "id": { "type": "string" },
+          "type": { "type": "string", "enum": ["memberOf", "assignedTo", "filteredBy"] },
+          "from": { "type": "string" },
+          "to": { "type": "string" },
+          "properties": {
+            "type": "object",
+            "properties": {
+              "mode": { "type": ["string", "null"], "enum": ["include", "exclude", null] },
+              "intent": { "type": ["string", "null"] },
+              "filterId": { "type": ["string", "null"] },
+              "filterMode": { "type": ["string", "null"] }
+            }
+          }
+        }
+      }
+    }
+  }
+}

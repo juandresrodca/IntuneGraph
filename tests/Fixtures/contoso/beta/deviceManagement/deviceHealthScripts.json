@@ -1,0 +1,18 @@
+﻿{
+  "value": [{
+    "id":  "e0000000-0000-0000-0000-000000000002",
+    "@odata.type":  "#microsoft.graph.deviceHealthScript",
+    "displayName":  "Disk Cleanup",
+    "assignments":  [
+                        {
+                            "id":  "a14",
+                            "target":  {
+                                           "@odata.type":  "#microsoft.graph.groupAssignmentTarget",
+                                           "groupId":  "00000000-0000-0000-0000-000000000007",
+                                           "deviceAndAppManagementAssignmentFilterId":  null,
+                                           "deviceAndAppManagementAssignmentFilterType":  "none"
+                                       }
+                        }
+                    ]
+}]
+}

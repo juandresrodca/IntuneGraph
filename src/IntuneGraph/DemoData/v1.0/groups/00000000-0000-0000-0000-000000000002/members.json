@@ -1,0 +1,49 @@
+﻿{
+  "value": [
+    {
+        "@odata.type":  "#microsoft.graph.device",
+        "id":  "de000000-0000-0000-0000-000000000101",
+        "displayName":  "DEV-FIN-01",
+        "deviceId":  "aa000000-0000-0000-0000-000000000101",
+        "operatingSystem":  "Windows"
+    },
+    {
+        "@odata.type":  "#microsoft.graph.device",
+        "id":  "de000000-0000-0000-0000-000000000102",
+        "displayName":  "DEV-FIN-02",
+        "deviceId":  "aa000000-0000-0000-0000-000000000102",
+        "operatingSystem":  "Windows"
+    },
+    {
+        "@odata.type":  "#microsoft.graph.device",
+        "id":  "de000000-0000-0000-0000-000000000103",
+        "displayName":  "DEV-FIN-03",
+        "deviceId":  "aa000000-0000-0000-0000-000000000103",
+        "operatingSystem":  "Windows"
+    },
+    {
+        "@odata.type":  "#microsoft.graph.user",
+        "id":  "55000000-0000-0000-0000-000000000201",
+        "displayName":  "alice",
+        "userPrincipalName":  "alice@contoso.com"
+    },
+    {
+        "@odata.type":  "#microsoft.graph.user",
+        "id":  "55000000-0000-0000-0000-000000000202",
+        "displayName":  "bob",
+        "userPrincipalName":  "bob@contoso.com"
+    },
+    {
+        "@odata.type":  "#microsoft.graph.user",
+        "id":  "55000000-0000-0000-0000-000000000203",
+        "displayName":  "carol",
+        "userPrincipalName":  "carol@contoso.com"
+    },
+    {
+        "@odata.type":  "#microsoft.graph.user",
+        "id":  "55000000-0000-0000-0000-000000000204",
+        "displayName":  "dave",
+        "userPrincipalName":  "dave@contoso.com"
+    }
+]
+}

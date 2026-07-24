@@ -1,0 +1,18 @@
+﻿{
+  "value": [
+    {
+        "@odata.type":  "#microsoft.graph.device",
+        "id":  "de000000-0000-0000-0000-000000000106",
+        "displayName":  "KIOSK-01",
+        "deviceId":  "aa000000-0000-0000-0000-000000000106",
+        "operatingSystem":  "Windows"
+    },
+    {
+        "@odata.type":  "#microsoft.graph.device",
+        "id":  "de000000-0000-0000-0000-000000000107",
+        "displayName":  "KIOSK-02",
+        "deviceId":  "aa000000-0000-0000-0000-000000000107",
+        "operatingSystem":  "Windows"
+    }
+]
+}

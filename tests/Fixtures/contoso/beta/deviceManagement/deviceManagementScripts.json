@@ -1,0 +1,17 @@
+﻿{
+  "value": [{
+    "id":  "e0000000-0000-0000-0000-000000000001",
+    "displayName":  "Rename Script",
+    "assignments":  [
+                        {
+                            "id":  "a13",
+                            "target":  {
+                                           "@odata.type":  "#microsoft.graph.groupAssignmentTarget",
+                                           "groupId":  "00000000-0000-0000-0000-000000000003",
+                                           "deviceAndAppManagementAssignmentFilterId":  null,
+                                           "deviceAndAppManagementAssignmentFilterType":  "none"
+                                       }
+                        }
+                    ]
+}]
+}

@@ -1,0 +1,27 @@
+﻿{
+  "value": [{
+    "id":  "d0000000-0000-0000-0000-000000000002",
+    "@odata.type":  "#microsoft.graph.windowsVpnConfiguration",
+    "displayName":  "Legacy VPN Profile",
+    "assignments":  [
+                        {
+                            "id":  "a3",
+                            "target":  {
+                                           "@odata.type":  "#microsoft.graph.groupAssignmentTarget",
+                                           "groupId":  "00000000-0000-0000-0000-000000000002",
+                                           "deviceAndAppManagementAssignmentFilterId":  null,
+                                           "deviceAndAppManagementAssignmentFilterType":  "none"
+                                       }
+                        },
+                        {
+                            "id":  "a4",
+                            "target":  {
+                                           "@odata.type":  "#microsoft.graph.exclusionGroupAssignmentTarget",
+                                           "groupId":  "00000000-0000-0000-0000-000000000002",
+                                           "deviceAndAppManagementAssignmentFilterId":  null,
+                                           "deviceAndAppManagementAssignmentFilterType":  "none"
+                                       }
+                        }
+                    ]
+}]
+}

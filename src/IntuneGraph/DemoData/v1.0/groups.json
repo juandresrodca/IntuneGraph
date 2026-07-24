@@ -1,0 +1,74 @@
+﻿{
+  "value": [
+    {
+        "id":  "00000000-0000-0000-0000-000000000001",
+        "displayName":  "SG-AllStaff",
+        "securityEnabled":  true,
+        "groupTypes":  [
+
+                       ],
+        "membershipRule":  null,
+        "mailEnabled":  false
+    },
+    {
+        "id":  "00000000-0000-0000-0000-000000000002",
+        "displayName":  "SG-Finance",
+        "securityEnabled":  true,
+        "groupTypes":  [
+
+                       ],
+        "membershipRule":  null,
+        "mailEnabled":  false
+    },
+    {
+        "id":  "00000000-0000-0000-0000-000000000003",
+        "displayName":  "SG-IT",
+        "securityEnabled":  true,
+        "groupTypes":  [
+
+                       ],
+        "membershipRule":  null,
+        "mailEnabled":  false
+    },
+    {
+        "id":  "00000000-0000-0000-0000-000000000004",
+        "displayName":  "SG-Contractors",
+        "securityEnabled":  true,
+        "groupTypes":  [
+
+                       ],
+        "membershipRule":  null,
+        "mailEnabled":  false
+    },
+    {
+        "id":  "00000000-0000-0000-0000-000000000005",
+        "displayName":  "SG-Empty",
+        "securityEnabled":  true,
+        "groupTypes":  [
+
+                       ],
+        "membershipRule":  null,
+        "mailEnabled":  false
+    },
+    {
+        "id":  "00000000-0000-0000-0000-000000000006",
+        "displayName":  "SG-Kiosks",
+        "securityEnabled":  true,
+        "groupTypes":  [
+
+                       ],
+        "membershipRule":  null,
+        "mailEnabled":  false
+    },
+    {
+        "id":  "00000000-0000-0000-0000-000000000007",
+        "displayName":  "SG-Dynamic-Win",
+        "securityEnabled":  true,
+        "groupTypes":  [
+                           "DynamicMembership"
+                       ],
+        "membershipRule":  "(device.deviceOSType -eq \"Windows\")",
+        "mailEnabled":  false
+    }
+]
+}

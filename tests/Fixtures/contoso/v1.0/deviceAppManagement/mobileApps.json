@@ -1,0 +1,85 @@
+﻿{
+  "value": [
+    {
+        "id":  "b0000000-0000-0000-0000-000000000001",
+        "@odata.type":  "#microsoft.graph.win32LobApp",
+        "displayName":  "Company Portal",
+        "publisher":  "Microsoft",
+        "assignments":  [
+                            {
+                                "id":  "a8",
+                                "target":  {
+                                               "@odata.type":  "#microsoft.graph.allDevicesAssignmentTarget",
+                                               "deviceAndAppManagementAssignmentFilterId":  null,
+                                               "deviceAndAppManagementAssignmentFilterType":  "none"
+                                           },
+                                "intent":  "required"
+                            }
+                        ]
+    },
+    {
+        "id":  "b0000000-0000-0000-0000-000000000002",
+        "@odata.type":  "#microsoft.graph.win32LobApp",
+        "displayName":  "Adobe Reader",
+        "publisher":  "Adobe",
+        "assignments":  [
+                            {
+                                "id":  "a9",
+                                "target":  {
+                                               "@odata.type":  "#microsoft.graph.groupAssignmentTarget",
+                                               "groupId":  "00000000-0000-0000-0000-000000000001",
+                                               "deviceAndAppManagementAssignmentFilterId":  null,
+                                               "deviceAndAppManagementAssignmentFilterType":  "none"
+                                           },
+                                "intent":  "available"
+                            }
+                        ]
+    },
+    {
+        "id":  "b0000000-0000-0000-0000-000000000003",
+        "@odata.type":  "#microsoft.graph.win32LobApp",
+        "displayName":  "LOB Finance App",
+        "publisher":  "Contoso",
+        "assignments":  [
+                            {
+                                "id":  "a10",
+                                "target":  {
+                                               "@odata.type":  "#microsoft.graph.groupAssignmentTarget",
+                                               "groupId":  "00000000-0000-0000-0000-000000000002",
+                                               "deviceAndAppManagementAssignmentFilterId":  null,
+                                               "deviceAndAppManagementAssignmentFilterType":  "none"
+                                           },
+                                "intent":  "required"
+                            },
+                            {
+                                "id":  "a11",
+                                "target":  {
+                                               "@odata.type":  "#microsoft.graph.exclusionGroupAssignmentTarget",
+                                               "groupId":  "00000000-0000-0000-0000-000000000004",
+                                               "deviceAndAppManagementAssignmentFilterId":  null,
+                                               "deviceAndAppManagementAssignmentFilterType":  "none"
+                                           },
+                                "intent":  "required"
+                            }
+                        ]
+    },
+    {
+        "id":  "b0000000-0000-0000-0000-000000000004",
+        "@odata.type":  "#microsoft.graph.win32LobApp",
+        "displayName":  "Old CRM",
+        "publisher":  "Contoso",
+        "assignments":  [
+                            {
+                                "id":  "a12",
+                                "target":  {
+                                               "@odata.type":  "#microsoft.graph.groupAssignmentTarget",
+                                               "groupId":  "00000000-0000-0000-0000-000000000099",
+                                               "deviceAndAppManagementAssignmentFilterId":  null,
+                                               "deviceAndAppManagementAssignmentFilterType":  "none"
+                                           },
+                                "intent":  "required"
+                            }
+                        ]
+    }
+]
+}

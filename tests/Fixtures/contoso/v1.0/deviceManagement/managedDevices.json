@@ -1,0 +1,85 @@
+﻿{
+  "value": [
+    {
+        "id":  "10000000-0000-0000-0000-000000000101",
+        "deviceName":  "DEV-FIN-01",
+        "azureADDeviceId":  "aa000000-0000-0000-0000-000000000101",
+        "operatingSystem":  "Windows",
+        "userPrincipalName":  "",
+        "complianceState":  "compliant",
+        "lastSyncDateTime":  "2026-07-20T08:00:00Z"
+    },
+    {
+        "id":  "10000000-0000-0000-0000-000000000102",
+        "deviceName":  "DEV-FIN-02",
+        "azureADDeviceId":  "aa000000-0000-0000-0000-000000000102",
+        "operatingSystem":  "Windows",
+        "userPrincipalName":  "",
+        "complianceState":  "compliant",
+        "lastSyncDateTime":  "2026-07-20T08:00:00Z"
+    },
+    {
+        "id":  "10000000-0000-0000-0000-000000000103",
+        "deviceName":  "DEV-FIN-03",
+        "azureADDeviceId":  "aa000000-0000-0000-0000-000000000103",
+        "operatingSystem":  "Windows",
+        "userPrincipalName":  "",
+        "complianceState":  "compliant",
+        "lastSyncDateTime":  "2026-07-20T08:00:00Z"
+    },
+    {
+        "id":  "10000000-0000-0000-0000-000000000104",
+        "deviceName":  "DEV-IT-01",
+        "azureADDeviceId":  "aa000000-0000-0000-0000-000000000104",
+        "operatingSystem":  "Windows",
+        "userPrincipalName":  "",
+        "complianceState":  "compliant",
+        "lastSyncDateTime":  "2026-07-20T08:00:00Z"
+    },
+    {
+        "id":  "10000000-0000-0000-0000-000000000105",
+        "deviceName":  "DEV-IT-02",
+        "azureADDeviceId":  "aa000000-0000-0000-0000-000000000105",
+        "operatingSystem":  "Windows",
+        "userPrincipalName":  "",
+        "complianceState":  "compliant",
+        "lastSyncDateTime":  "2026-07-20T08:00:00Z"
+    },
+    {
+        "id":  "10000000-0000-0000-0000-000000000106",
+        "deviceName":  "KIOSK-01",
+        "azureADDeviceId":  "aa000000-0000-0000-0000-000000000106",
+        "operatingSystem":  "Windows",
+        "userPrincipalName":  "",
+        "complianceState":  "compliant",
+        "lastSyncDateTime":  "2026-07-20T08:00:00Z"
+    },
+    {
+        "id":  "10000000-0000-0000-0000-000000000107",
+        "deviceName":  "KIOSK-02",
+        "azureADDeviceId":  "aa000000-0000-0000-0000-000000000107",
+        "operatingSystem":  "Windows",
+        "userPrincipalName":  "",
+        "complianceState":  "compliant",
+        "lastSyncDateTime":  "2026-07-20T08:00:00Z"
+    },
+    {
+        "id":  "10000000-0000-0000-0000-000000000108",
+        "deviceName":  "DEV-DYN-01",
+        "azureADDeviceId":  "aa000000-0000-0000-0000-000000000108",
+        "operatingSystem":  "Windows",
+        "userPrincipalName":  "",
+        "complianceState":  "compliant",
+        "lastSyncDateTime":  "2026-07-20T08:00:00Z"
+    },
+    {
+        "id":  "10000000-0000-0000-0000-000000000109",
+        "deviceName":  "DEV-DYN-02",
+        "azureADDeviceId":  "aa000000-0000-0000-0000-000000000109",
+        "operatingSystem":  "Windows",
+        "userPrincipalName":  "",
+        "complianceState":  "compliant",
+        "lastSyncDateTime":  "2026-07-20T08:00:00Z"
+    }
+]
+}

@@ -1,0 +1,14 @@
+﻿{
+  "value": [
+    {
+        "@odata.type":  "#microsoft.graph.group",
+        "id":  "00000000-0000-0000-0000-000000000002",
+        "displayName":  "SG-Finance"
+    },
+    {
+        "@odata.type":  "#microsoft.graph.group",
+        "id":  "00000000-0000-0000-0000-000000000003",
+        "displayName":  "SG-IT"
+    }
+]
+}

@@ -1,0 +1,6 @@
+# Normalize line endings. PowerShell + web assets use LF in the repo.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.ico binary

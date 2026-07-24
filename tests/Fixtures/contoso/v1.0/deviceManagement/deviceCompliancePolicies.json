@@ -1,0 +1,43 @@
+﻿{
+  "value": [
+    {
+        "id":  "ca000000-0000-0000-0000-000000000001",
+        "@odata.type":  "#microsoft.graph.windows10CompliancePolicy",
+        "displayName":  "Win Compliance",
+        "assignments":  [
+                            {
+                                "id":  "a5",
+                                "target":  {
+                                               "@odata.type":  "#microsoft.graph.allDevicesAssignmentTarget",
+                                               "deviceAndAppManagementAssignmentFilterId":  "f0000000-0000-0000-0000-000000000001",
+                                               "deviceAndAppManagementAssignmentFilterType":  "include"
+                                           }
+                            }
+                        ]
+    },
+    {
+        "id":  "ca000000-0000-0000-0000-000000000002",
+        "@odata.type":  "#microsoft.graph.windows10CompliancePolicy",
+        "displayName":  "BYOD Compliance",
+        "assignments":  [
+                            {
+                                "id":  "a6",
+                                "target":  {
+                                               "@odata.type":  "#microsoft.graph.allDevicesAssignmentTarget",
+                                               "deviceAndAppManagementAssignmentFilterId":  null,
+                                               "deviceAndAppManagementAssignmentFilterType":  "none"
+                                           }
+                            },
+                            {
+                                "id":  "a7",
+                                "target":  {
+                                               "@odata.type":  "#microsoft.graph.exclusionGroupAssignmentTarget",
+                                               "groupId":  "00000000-0000-0000-0000-000000000004",
+                                               "deviceAndAppManagementAssignmentFilterId":  null,
+                                               "deviceAndAppManagementAssignmentFilterType":  "none"
+                                           }
+                            }
+                        ]
+    }
+]
+}
