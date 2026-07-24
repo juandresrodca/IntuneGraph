@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>IntuneGraph - Contoso</title>
+<style>
+  :root {
+    --bg:#0a0e16; --bg2:#0d1320; --panel:#111a2b; --panel2:#16213a;
+    --line:#1e2c45; --line2:#27395a;
+    --green:#9fef00; --green-dim:#6fa800; --blue:#58a6ff; --purple:#c792ea;
+    --cyan:#56d4dd; --red:#ff7b72; --amber:#ffb454;
+    --text:#c9d4e3; --muted:#7c8aa0; --mute2:#56657d; --accent:var(--green);
+    /* node-type legend swatches (mirror JS TYPE_COLORS) */
+    --group:#9fef00; --device:#58a6ff; --user:#c792ea; --app:#ff7b72;
+    --config:#ffb454; --compliance:#56d4dd; --script:#f778ba; --filter:#d2a8ff; --builtin:#c9d4e3;
+    --mono:'JetBrains Mono',ui-monospace,'Cascadia Code','SF Mono',Menlo,Consolas,monospace;
+    --sans:'Outfit',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html,body { margin:0; height:100%; color:var(--text); font-family:var(--sans);
+    background:
+      radial-gradient(900px 500px at 88% -12%, rgba(88,166,255,.10), transparent 60%),
+      radial-gradient(760px 520px at -5% 112%, rgba(159,239,0,.06), transparent 55%),
+      var(--bg); }
+  .grid-bg { position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:linear-gradient(rgba(40,57,90,.16) 1px,transparent 1px),linear-gradient(90deg,rgba(40,57,90,.16) 1px,transparent 1px);
+    background-size:42px 42px; mask-image:radial-gradient(circle at 60% 20%,#000,transparent 85%); }
+  #app { position:relative; z-index:1; display:flex; flex-direction:column; height:100vh; }
+  header { display:flex; align-items:center; gap:14px; padding:14px 20px; position:relative; overflow:hidden;
+    background:linear-gradient(180deg,var(--panel),var(--bg2)); border-bottom:1px solid var(--line); }
+  header::before { content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--green); box-shadow:0 0 12px rgba(159,239,0,.5); }
+  header h1 { font-family:var(--mono); font-size:16px; margin:0; font-weight:600; letter-spacing:-.3px; color:var(--text); }
+  header .meta { font-family:var(--mono); font-size:11.5px; color:var(--muted); }
+  .stage { flex:1; display:flex; min-height:0; }
+  .toolbar { width:230px; padding:16px; border-right:1px solid var(--line); overflow:auto; font-size:13px;
+    background:linear-gradient(180deg,rgba(17,26,43,.6),rgba(13,19,32,.6)); backdrop-filter:blur(2px); }
+  .toolbar h2 { font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.12em; color:var(--muted);
+    margin:20px 0 9px; display:flex; align-items:center; gap:8px; }
+  .toolbar h2::before { content:""; width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 7px var(--green); flex:none; }
+  .toolbar h2:first-child { margin-top:0; }
+  #search { width:100%; padding:8px 10px; background:#0a1018; border:1px solid var(--line2); border-radius:8px;
+    color:var(--text); font-family:var(--mono); font-size:12.5px; }
+  #search::placeholder { color:var(--mute2); }
+  #search:focus { outline:none; border-color:var(--green); }
+  .legend-item, .filter-item { display:flex; align-items:center; gap:9px; padding:4px 0; cursor:pointer; user-select:none; font-size:12.5px; }
+  .legend-item { font-family:var(--mono); font-size:11.5px; color:var(--muted); }
+  .dot { width:11px; height:11px; border-radius:50%; flex:none; box-shadow:0 0 6px currentColor; }
+  .filter-item input { accent-color:var(--green); }
+  .count { margin-left:auto; font-family:var(--mono); color:var(--mute2); font-size:11px; font-variant-numeric:tabular-nums; }
+  .canvas-wrap { flex:1; position:relative; min-width:0; }
+  canvas { display:block; width:100%; height:100%; cursor:grab; }
+  canvas.grabbing { cursor:grabbing; }
+  #side { position:absolute; top:14px; right:14px; width:308px; max-height:calc(100% - 28px); overflow:auto;
+    background:linear-gradient(180deg,var(--panel),var(--bg2)); border:1px solid var(--line2); border-radius:14px; padding:16px; display:none;
+    box-shadow:0 24px 60px rgba(0,0,0,.5); font-size:13px; }
+  #side.show { display:block; }
+  #side .stype { font-family:var(--mono); font-size:10px; text-transform:uppercase; letter-spacing:.1em; color:var(--green); }
+  #side h3 { font-family:var(--mono); margin:5px 0 12px; font-size:15px; color:var(--text); word-break:break-word; }
+  #side .kv { display:flex; gap:8px; padding:4px 0; border-top:1px solid var(--line); font-size:12px; }
+  #side .kv b { font-family:var(--mono); color:var(--mute2); font-weight:400; min-width:96px; }
+  #side .kv span { font-family:var(--mono); color:var(--text); word-break:break-word; }
+  #side .edges { margin-top:12px; }
+  #side .edge { padding:5px 0; border-top:1px solid var(--line); color:var(--muted); font-size:12px; }
+  #side .edge b { color:var(--text); font-weight:500; }
+  #side .close { position:absolute; top:12px; right:14px; cursor:pointer; color:var(--mute2); font-size:18px; line-height:1; }
+  #side .close:hover { color:var(--red); }
+  .hint { position:absolute; left:14px; bottom:14px; font-family:var(--mono); font-size:10.5px; color:var(--mute2);
+    background:rgba(10,14,22,.6); border:1px solid var(--line); padding:6px 10px; border-radius:7px; backdrop-filter:blur(2px); }
+  .banner { position:absolute; left:50%; top:14px; transform:translateX(-50%); background:var(--panel2); border:1px solid var(--line2);
+    padding:8px 13px; border-radius:9px; font-family:var(--mono); font-size:11.5px; color:var(--muted); display:none; }
+  .banner.show { display:block; }
+  button.reset { margin-top:14px; width:100%; padding:8px; background:rgba(159,239,0,.06); color:var(--green);
+    border:1px solid rgba(159,239,0,.35); border-radius:8px; cursor:pointer; font-family:var(--mono); font-size:12px; font-weight:600; transition:.15s; }
+  button.reset:hover { background:rgba(159,239,0,.12); }
+  ::-webkit-scrollbar { width:6px; height:6px; }
+  ::-webkit-scrollbar-track { background:transparent; }
+  ::-webkit-scrollbar-thumb { background:var(--line2); border-radius:3px; }
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div id="app">
+  <header>
+    <h1>IntuneGraph - Contoso</h1>
+    <span class="meta" id="meta"></span>
+  </header>
+  <div class="stage">
+    <div class="toolbar">
+      <h2>Search</h2>
+      <input id="search" placeholder="Filter by name..." autocomplete="off" />
+      <h2>Node types</h2>
+      <div id="filters"></div>
+      <button class="reset" id="reset">Reset view</button>
+      <h2>Edges</h2>
+      <div class="legend-item"><span style="width:18px;height:0;border-top:2px solid var(--group)"></span>include</div>
+      <div class="legend-item"><span style="width:18px;height:0;border-top:2px dashed var(--app)"></span>exclude</div>
+      <div class="legend-item"><span style="width:18px;height:0;border-top:1px solid var(--line)"></span>member of</div>
+      <div class="legend-item"><span style="width:18px;height:0;border-top:2px dotted var(--amber)"></span>filtered by</div>
+    </div>
+    <div class="canvas-wrap">
+      <canvas id="c"></canvas>
+      <div class="banner" id="banner"></div>
+      <div class="hint">Drag nodes &middot; scroll to zoom &middot; drag background to pan &middot; click a node for details</div>
+      <div id="side">
+        <span class="close" id="sideClose">&times;</span>
+        <div class="stype" id="sideType"></div>
+        <h3 id="sideName"></h3>
+        <div id="sideProps"></div>
+        <div class="edges" id="sideEdges"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const GRAPH = {"schemaVersion":"1.0","metadata":{"source":"demo","deviceCount":9,"userCount":8,"exportedAt":"2026-07-24T18:05:16Z","tenantId":"c3f1e2d4-0000-0000-0000-000000000001","toolVersion":"0.1.0","counts":{"byNodeType":{"CompliancePolicy":2,"Filter":2,"Group":8,"Script":2,"App":4,"Device":9,"ConfigPolicy":4,"Builtin":2,"User":8},"edges":34,"nodes":41},"tenantName":"Contoso"},"nodes":[{"id":"app-b0000000-0000-0000-0000-000000000001","type":"App","subtype":"win32LobApp","name":"Company Portal","sourceId":"b0000000-0000-0000-0000-000000000001","properties":{"publisher":"Microsoft"}},{"id":"app-b0000000-0000-0000-0000-000000000002","type":"App","subtype":"win32LobApp","name":"Adobe Reader","sourceId":"b0000000-0000-0000-0000-000000000002","properties":{"publisher":"Adobe"}},{"id":"app-b0000000-0000-0000-0000-000000000003","type":"App","subtype":"win32LobApp","name":"LOB Finance App","sourceId":"b0000000-0000-0000-0000-000000000003","properties":{"publisher":"Contoso"}},{"id":"app-b0000000-0000-0000-0000-000000000004","type":"App","subtype":"win32LobApp","name":"Old CRM","sourceId":"b0000000-0000-0000-0000-000000000004","properties":{"publisher":"Contoso"}},{"id":"builtin-allDevices","type":"Builtin","subtype":"","name":"All Devices","sourceId":"builtin-allDevices","properties":{}},{"id":"builtin-allUsers","type":"Builtin","subtype":"","name":"All Users","sourceId":"builtin-allUsers","properties":{}},{"id":"cfg-c0000000-0000-0000-0000-000000000001","type":"ConfigPolicy","subtype":"settingsCatalog","name":"Win11 Security Baseline","sourceId":"c0000000-0000-0000-0000-000000000001","properties":{"platforms":"windows10","lastModifiedDateTime":null,"createdDateTime":null,"technologies":"mdm","odataType":null}},{"id":"cfg-c0000000-0000-0000-0000-000000000003","type":"ConfigPolicy","subtype":"settingsCatalog","name":"Kiosk Lockdown","sourceId":"c0000000-0000-0000-0000-000000000003","properties":{"platforms":"windows10","lastModifiedDateTime":null,"createdDateTime":null,"technologies":"mdm","odataType":null}},{"id":"cfg-c0000000-0000-0000-0000-000000000004","type":"ConfigPolicy","subtype":"settingsCatalog","name":"Orphan Wi-Fi Profile","sourceId":"c0000000-0000-0000-0000-000000000004","properties":{"platforms":"windows10","lastModifiedDateTime":null,"createdDateTime":null,"technologies":"mdm","odataType":null}},{"id":"cfg-d0000000-0000-0000-0000-000000000002","type":"ConfigPolicy","subtype":"deviceConfiguration","name":"Legacy VPN Profile","sourceId":"d0000000-0000-0000-0000-000000000002","properties":{"platforms":null,"lastModifiedDateTime":null,"createdDateTime":null,"technologies":null,"odataType":"windowsVpnConfiguration"}},{"id":"cmp-ca000000-0000-0000-0000-000000000001","type":"CompliancePolicy","subtype":"windows10CompliancePolicy","name":"Win Compliance","sourceId":"ca000000-0000-0000-0000-000000000001","properties":{"lastModifiedDateTime":null,"createdDateTime":null}},{"id":"cmp-ca000000-0000-0000-0000-000000000002","type":"CompliancePolicy","subtype":"windows10CompliancePolicy","name":"BYOD Compliance","sourceId":"ca000000-0000-0000-0000-000000000002","properties":{"lastModifiedDateTime":null,"createdDateTime":null}},{"id":"dev-de000000-0000-0000-0000-000000000101","type":"Device","subtype":"","name":"DEV-FIN-01","sourceId":"de000000-0000-0000-0000-000000000101","properties":{"lastSyncDateTime":"2026-07-20T08:00:00Z","aadDeviceId":"aa000000-0000-0000-0000-000000000101","userPrincipalName":"","intuneDeviceName":"DEV-FIN-01","complianceState":"compliant","managed":true,"operatingSystem":"Windows"}},{"id":"dev-de000000-0000-0000-0000-000000000102","type":"Device","subtype":"","name":"DEV-FIN-02","sourceId":"de000000-0000-0000-0000-000000000102","properties":{"lastSyncDateTime":"2026-07-20T08:00:00Z","aadDeviceId":"aa000000-0000-0000-0000-000000000102","userPrincipalName":"","intuneDeviceName":"DEV-FIN-02","complianceState":"compliant","managed":true,"operatingSystem":"Windows"}},{"id":"dev-de000000-0000-0000-0000-000000000103","type":"Device","subtype":"","name":"DEV-FIN-03","sourceId":"de000000-0000-0000-0000-000000000103","properties":{"lastSyncDateTime":"2026-07-20T08:00:00Z","aadDeviceId":"aa000000-0000-0000-0000-000000000103","userPrincipalName":"","intuneDeviceName":"DEV-FIN-03","complianceState":"compliant","managed":true,"operatingSystem":"Windows"}},{"id":"dev-de000000-0000-0000-0000-000000000104","type":"Device","subtype":"","name":"DEV-IT-01","sourceId":"de000000-0000-0000-0000-000000000104","properties":{"lastSyncDateTime":"2026-07-20T08:00:00Z","aadDeviceId":"aa000000-0000-0000-0000-000000000104","userPrincipalName":"","intuneDeviceName":"DEV-IT-01","complianceState":"compliant","managed":true,"operatingSystem":"Windows"}},{"id":"dev-de000000-0000-0000-0000-000000000105","type":"Device","subtype":"","name":"DEV-IT-02","sourceId":"de000000-0000-0000-0000-000000000105","properties":{"lastSyncDateTime":"2026-07-20T08:00:00Z","aadDeviceId":"aa000000-0000-0000-0000-000000000105","userPrincipalName":"","intuneDeviceName":"DEV-IT-02","complianceState":"compliant","managed":true,"operatingSystem":"Windows"}},{"id":"dev-de000000-0000-0000-0000-000000000106","type":"Device","subtype":"","name":"KIOSK-01","sourceId":"de000000-0000-0000-0000-000000000106","properties":{"lastSyncDateTime":"2026-07-20T08:00:00Z","aadDeviceId":"aa000000-0000-0000-0000-000000000106","userPrincipalName":"","intuneDeviceName":"KIOSK-01","complianceState":"compliant","managed":true,"operatingSystem":"Windows"}},{"id":"dev-de000000-0000-0000-0000-000000000107","type":"Device","subtype":"","name":"KIOSK-02","sourceId":"de000000-0000-0000-0000-000000000107","properties":{"lastSyncDateTime":"2026-07-20T08:00:00Z","aadDeviceId":"aa000000-0000-0000-0000-000000000107","userPrincipalName":"","intuneDeviceName":"KIOSK-02","complianceState":"compliant","managed":true,"operatingSystem":"Windows"}},{"id":"dev-de000000-0000-0000-0000-000000000108","type":"Device","subtype":"","name":"DEV-DYN-01","sourceId":"de000000-0000-0000-0000-000000000108","properties":{"lastSyncDateTime":"2026-07-20T08:00:00Z","aadDeviceId":"aa000000-0000-0000-0000-000000000108","userPrincipalName":"","intuneDeviceName":"DEV-DYN-01","complianceState":"compliant","managed":true,"operatingSystem":"Windows"}},{"id":"dev-de000000-0000-0000-0000-000000000109","type":"Device","subtype":"","name":"DEV-DYN-02","sourceId":"de000000-0000-0000-0000-000000000109","properties":{"lastSyncDateTime":"2026-07-20T08:00:00Z","aadDeviceId":"aa000000-0000-0000-0000-000000000109","userPrincipalName":"","intuneDeviceName":"DEV-DYN-02","complianceState":"compliant","managed":true,"operatingSystem":"Windows"}},{"id":"flt-f0000000-0000-0000-0000-000000000001","type":"Filter","subtype":"assignmentFilter","name":"F-CorpOwned","sourceId":"f0000000-0000-0000-0000-000000000001","properties":{"rule":"(device.deviceOwnership -eq \"Corporate\")","platform":"windows10AndLater"}},{"id":"flt-f0000000-0000-0000-0000-000000000002","type":"Filter","subtype":"assignmentFilter","name":"F-Unused","sourceId":"f0000000-0000-0000-0000-000000000002","properties":{"rule":"(device.model -eq \"Surface\")","platform":"windows10AndLater"}},{"id":"grp-00000000-0000-0000-0000-000000000001","type":"Group","subtype":"security","name":"SG-AllStaff","sourceId":"00000000-0000-0000-0000-000000000001","properties":{"dynamicRule":null,"membershipType":"assigned"}},{"id":"grp-00000000-0000-0000-0000-000000000002","type":"Group","subtype":"security","name":"SG-Finance","sourceId":"00000000-0000-0000-0000-000000000002","properties":{"dynamicRule":null,"membershipType":"assigned"}},{"id":"grp-00000000-0000-0000-0000-000000000003","type":"Group","subtype":"security","name":"SG-IT","sourceId":"00000000-0000-0000-0000-000000000003","properties":{"dynamicRule":null,"membershipType":"assigned"}},{"id":"grp-00000000-0000-0000-0000-000000000004","type":"Group","subtype":"security","name":"SG-Contractors","sourceId":"00000000-0000-0000-0000-000000000004","properties":{"dynamicRule":null,"membershipType":"assigned"}},{"id":"grp-00000000-0000-0000-0000-000000000005","type":"Group","subtype":"security","name":"SG-Empty","sourceId":"00000000-0000-0000-0000-000000000005","properties":{"dynamicRule":null,"membershipType":"assigned"}},{"id":"grp-00000000-0000-0000-0000-000000000006","type":"Group","subtype":"security","name":"SG-Kiosks","sourceId":"00000000-0000-0000-0000-000000000006","properties":{"dynamicRule":null,"membershipType":"assigned"}},{"id":"grp-00000000-0000-0000-0000-000000000007","type":"Group","subtype":"security","name":"SG-Dynamic-Win","sourceId":"00000000-0000-0000-0000-000000000007","properties":{"dynamicRule":"(device.deviceOSType -eq \"Windows\")","membershipType":"dynamic"}},{"id":"grp-00000000-0000-0000-0000-000000000099","type":"Group","subtype":"","name":"(deleted group)","sourceId":"00000000-0000-0000-0000-000000000099","properties":{"missing":true}},{"id":"scr-e0000000-0000-0000-0000-000000000001","type":"Script","subtype":"platformScript","name":"Rename Script","sourceId":"e0000000-0000-0000-0000-000000000001","properties":{}},{"id":"scr-e0000000-0000-0000-0000-000000000002","type":"Script","subtype":"remediationScript","name":"Disk Cleanup","sourceId":"e0000000-0000-0000-0000-000000000002","properties":{}},{"id":"usr-55000000-0000-0000-0000-000000000201","type":"User","subtype":"","name":"alice","sourceId":"55000000-0000-0000-0000-000000000201","properties":{"userPrincipalName":"alice@contoso.com"}},{"id":"usr-55000000-0000-0000-0000-000000000202","type":"User","subtype":"","name":"bob","sourceId":"55000000-0000-0000-0000-000000000202","properties":{"userPrincipalName":"bob@contoso.com"}},{"id":"usr-55000000-0000-0000-0000-000000000203","type":"User","subtype":"","name":"carol","sourceId":"55000000-0000-0000-0000-000000000203","properties":{"userPrincipalName":"carol@contoso.com"}},{"id":"usr-55000000-0000-0000-0000-000000000204","type":"User","subtype":"","name":"dave","sourceId":"55000000-0000-0000-0000-000000000204","properties":{"userPrincipalName":"dave@contoso.com"}},{"id":"usr-55000000-0000-0000-0000-000000000205","type":"User","subtype":"","name":"erin","sourceId":"55000000-0000-0000-0000-000000000205","properties":{"userPrincipalName":"erin@contoso.com"}},{"id":"usr-55000000-0000-0000-0000-000000000206","type":"User","subtype":"","name":"frank","sourceId":"55000000-0000-0000-0000-000000000206","properties":{"userPrincipalName":"frank@contoso.com"}},{"id":"usr-55000000-0000-0000-0000-000000000207","type":"User","subtype":"","name":"grace","sourceId":"55000000-0000-0000-0000-000000000207","properties":{"userPrincipalName":"grace@contoso.com"}},{"id":"usr-55000000-0000-0000-0000-000000000208","type":"User","subtype":"","name":"heidi","sourceId":"55000000-0000-0000-0000-000000000208","properties":{"userPrincipalName":"heidi@contoso.com"}}],"edges":[{"id":"e-000001","type":"assignedTo","from":"cfg-c0000000-0000-0000-0000-000000000001","to":"grp-00000000-0000-0000-0000-000000000001","properties":{"filterId":null,"assignmentId":"a1","filterMode":null,"mode":"include","intent":null}},{"id":"e-000002","type":"assignedTo","from":"cfg-c0000000-0000-0000-0000-000000000003","to":"grp-00000000-0000-0000-0000-000000000005","properties":{"filterId":null,"assignmentId":"a2","filterMode":null,"mode":"include","intent":null}},{"id":"e-000003","type":"assignedTo","from":"cfg-d0000000-0000-0000-0000-000000000002","to":"grp-00000000-0000-0000-0000-000000000002","properties":{"filterId":null,"assignmentId":"a3","filterMode":null,"mode":"include","intent":null}},{"id":"e-000004","type":"assignedTo","from":"cfg-d0000000-0000-0000-0000-000000000002","to":"grp-00000000-0000-0000-0000-000000000002","properties":{"filterId":null,"assignmentId":"a4","filterMode":null,"mode":"exclude","intent":null}},{"id":"e-000005","type":"assignedTo","from":"cmp-ca000000-0000-0000-0000-000000000001","to":"builtin-allDevices","properties":{"filterId":"flt-f0000000-0000-0000-0000-000000000001","assignmentId":"a5","filterMode":"include","mode":"include","intent":null}},{"id":"e-000006","type":"filteredBy","from":"cmp-ca000000-0000-0000-0000-000000000001","to":"flt-f0000000-0000-0000-0000-000000000001","properties":{"viaAssignmentId":"a5","appliedOnTarget":"builtin-allDevices","filterMode":"include"}},{"id":"e-000007","type":"assignedTo","from":"cmp-ca000000-0000-0000-0000-000000000002","to":"builtin-allDevices","properties":{"filterId":null,"assignmentId":"a6","filterMode":null,"mode":"include","intent":null}},{"id":"e-000008","type":"assignedTo","from":"cmp-ca000000-0000-0000-0000-000000000002","to":"grp-00000000-0000-0000-0000-000000000004","properties":{"filterId":null,"assignmentId":"a7","filterMode":null,"mode":"exclude","intent":null}},{"id":"e-000009","type":"assignedTo","from":"app-b0000000-0000-0000-0000-000000000001","to":"builtin-allDevices","properties":{"filterId":null,"assignmentId":"a8","filterMode":null,"mode":"include","intent":"required"}},{"id":"e-000010","type":"assignedTo","from":"app-b0000000-0000-0000-0000-000000000002","to":"grp-00000000-0000-0000-0000-000000000001","properties":{"filterId":null,"assignmentId":"a9","filterMode":null,"mode":"include","intent":"available"}},{"id":"e-000011","type":"assignedTo","from":"app-b0000000-0000-0000-0000-000000000003","to":"grp-00000000-0000-0000-0000-000000000002","properties":{"filterId":null,"assignmentId":"a10","filterMode":null,"mode":"include","intent":"required"}},{"id":"e-000012","type":"assignedTo","from":"app-b0000000-0000-0000-0000-000000000003","to":"grp-00000000-0000-0000-0000-000000000004","properties":{"filterId":null,"assignmentId":"a11","filterMode":null,"mode":"exclude","intent":"required"}},{"id":"e-000013","type":"assignedTo","from":"app-b0000000-0000-0000-0000-000000000004","to":"grp-00000000-0000-0000-0000-000000000099","properties":{"filterId":null,"assignmentId":"a12","filterMode":null,"mode":"include","intent":"required"}},{"id":"e-000014","type":"assignedTo","from":"scr-e0000000-0000-0000-0000-000000000001","to":"grp-00000000-0000-0000-0000-000000000003","properties":{"filterId":null,"assignmentId":"a13","filterMode":null,"mode":"include","intent":null}},{"id":"e-000015","type":"assignedTo","from":"scr-e0000000-0000-0000-0000-000000000002","to":"grp-00000000-0000-0000-0000-000000000007","properties":{"filterId":null,"assignmentId":"a14","filterMode":null,"mode":"include","intent":null}},{"id":"e-000016","type":"memberOf","from":"grp-00000000-0000-0000-0000-000000000002","to":"grp-00000000-0000-0000-0000-000000000001","properties":{}},{"id":"e-000017","type":"memberOf","from":"grp-00000000-0000-0000-0000-000000000003","to":"grp-00000000-0000-0000-0000-000000000001","properties":{}},{"id":"e-000018","type":"memberOf","from":"dev-de000000-0000-0000-0000-000000000101","to":"grp-00000000-0000-0000-0000-000000000002","properties":{}},{"id":"e-000019","type":"memberOf","from":"dev-de000000-0000-0000-0000-000000000102","to":"grp-00000000-0000-0000-0000-000000000002","properties":{}},{"id":"e-000020","type":"memberOf","from":"dev-de000000-0000-0000-0000-000000000103","to":"grp-00000000-0000-0000-0000-000000000002","properties":{}},{"id":"e-000021","type":"memberOf","from":"usr-55000000-0000-0000-0000-000000000201","to":"grp-00000000-0000-0000-0000-000000000002","properties":{}},{"id":"e-000022","type":"memberOf","from":"usr-55000000-0000-0000-0000-000000000202","to":"grp-00000000-0000-0000-0000-000000000002","properties":{}},{"id":"e-000023","type":"memberOf","from":"usr-55000000-0000-0000-0000-000000000203","to":"grp-00000000-0000-0000-0000-000000000002","properties":{}},{"id":"e-000024","type":"memberOf","from":"usr-55000000-0000-0000-0000-000000000204","to":"grp-00000000-0000-0000-0000-000000000002","properties":{}},{"id":"e-000025","type":"memberOf","from":"dev-de000000-0000-0000-0000-000000000104","to":"grp-00000000-0000-0000-0000-000000000003","properties":{}},{"id":"e-000026","type":"memberOf","from":"dev-de000000-0000-0000-0000-000000000105","to":"grp-00000000-0000-0000-0000-000000000003","properties":{}},{"id":"e-000027","type":"memberOf","from":"usr-55000000-0000-0000-0000-000000000205","to":"grp-00000000-0000-0000-0000-000000000003","properties":{}},{"id":"e-000028","type":"memberOf","from":"usr-55000000-0000-0000-0000-000000000206","to":"grp-00000000-0000-0000-0000-000000000003","properties":{}},{"id":"e-000029","type":"memberOf","from":"usr-55000000-0000-0000-0000-000000000207","to":"grp-00000000-0000-0000-0000-000000000004","properties":{}},{"id":"e-000030","type":"memberOf","from":"usr-55000000-0000-0000-0000-000000000208","to":"grp-00000000-0000-0000-0000-000000000004","properties":{}},{"id":"e-000031","type":"memberOf","from":"dev-de000000-0000-0000-0000-000000000106","to":"grp-00000000-0000-0000-0000-000000000006","properties":{}},{"id":"e-000032","type":"memberOf","from":"dev-de000000-0000-0000-0000-000000000107","to":"grp-00000000-0000-0000-0000-000000000006","properties":{}},{"id":"e-000033","type":"memberOf","from":"dev-de000000-0000-0000-0000-000000000108","to":"grp-00000000-0000-0000-0000-000000000007","properties":{}},{"id":"e-000034","type":"memberOf","from":"dev-de000000-0000-0000-0000-000000000109","to":"grp-00000000-0000-0000-0000-000000000007","properties":{}}]};
+const META = {"title":"IntuneGraph - Contoso","tenantName":"Contoso","exportedAt":"2026-07-24T18:05:16Z","counts":{"byNodeType":{"CompliancePolicy":2,"Filter":2,"Group":8,"Script":2,"App":4,"Device":9,"ConfigPolicy":4,"Builtin":2,"User":8},"edges":34,"nodes":41}};
+
+const TYPE_COLORS = {
+  Device:'#58a6ff', User:'#c792ea', Group:'#9fef00', Filter:'#d2a8ff',
+  ConfigPolicy:'#ffb454', CompliancePolicy:'#56d4dd', App:'#ff7b72', Script:'#f778ba', Builtin:'#c9d4e3'
+};
+const TYPE_RADIUS = { Device:6, User:6, Group:10, Filter:8, ConfigPolicy:11, CompliancePolicy:11, App:11, Script:9, Builtin:12 };
+
+// ---- state ----
+const nodes = GRAPH.nodes.map(n => ({...n, x:0, y:0, vx:0, vy:0}));
+const nodeById = {}; nodes.forEach(n => nodeById[n.id] = n);
+const edges = GRAPH.edges.filter(e => nodeById[e.from] && nodeById[e.to]);
+const hidden = new Set();               // hidden node types
+let selected = null, hoverId = null;
+let scale = 1, offsetX = 0, offsetY = 0;
+
+const canvas = document.getElementById('c'), ctx = canvas.getContext('2d');
+const banner = document.getElementById('banner');
+
+// scale guard
+if (nodes.length > 1500) { hidden.add('Device'); hidden.add('User');
+  banner.classList.add('show'); banner.textContent = 'Large graph: devices & users hidden by default. Enable them in the sidebar.'; }
+
+// ---- meta + filters ----
+const counts = (META && META.counts && META.counts.byNodeType) || {};
+document.getElementById('meta').textContent =
+  `${nodes.length} nodes · ${edges.length} edges` + (META && META.exportedAt ? ` · exported ${META.exportedAt.slice(0,10)}` : '');
+
+const filtersEl = document.getElementById('filters');
+Object.keys(TYPE_COLORS).forEach(type => {
+  const c = counts[type]; if (!c) return;
+  const row = document.createElement('label'); row.className = 'filter-item';
+  row.innerHTML = `<input type="checkbox" ${hidden.has(type)?'':'checked'} data-type="${type}">
+    <span class="dot" style="background:${TYPE_COLORS[type]}"></span><span>${type}</span><span class="count">${c}</span>`;
+  row.querySelector('input').addEventListener('change', e => {
+    if (e.target.checked) hidden.delete(type); else hidden.add(type);
+    kick();
+  });
+  filtersEl.appendChild(row);
+});
+
+// ---- layout init (circle seed) ----
+const R0 = Math.min(canvas.clientWidth, canvas.clientHeight);
+nodes.forEach((n,i) => { const a = (i/nodes.length)*Math.PI*2; n.x = Math.cos(a)*R0*0.35 + (Math.random()-.5)*40; n.y = Math.sin(a)*R0*0.35 + (Math.random()-.5)*40; });
+
+// ---- force simulation ----
+let alpha = 1;
+function step() {
+  const vis = nodes.filter(n => !hidden.has(n.type));
+  const k = 0.9;
+  for (let i=0;i<vis.length;i++){
+    const a = vis[i];
+    for (let j=i+1;j<vis.length;j++){
+      const b = vis[j];
+      let dx = a.x-b.x, dy = a.y-b.y; let d2 = dx*dx+dy*dy || 0.01;
+      const rep = 2600*alpha / d2; const d = Math.sqrt(d2);
+      const fx = dx/d*rep, fy = dy/d*rep;
+      a.vx += fx; a.vy += fy; b.vx -= fx; b.vy -= fy;
+    }
+  }
+  edges.forEach(e => {
+    const a = nodeById[e.from], b = nodeById[e.to];
+    if (hidden.has(a.type)||hidden.has(b.type)) return;
+    let dx = b.x-a.x, dy = b.y-a.y; const d = Math.sqrt(dx*dx+dy*dy)||0.01;
+    const target = e.type==='memberOf'?70:120;
+    const f = (d-target)*0.02*alpha;
+    const fx = dx/d*f, fy = dy/d*f;
+    a.vx += fx; a.vy += fy; b.vx -= fx; b.vy -= fy;
+  });
+  vis.forEach(n => { n.vx*=k; n.vy*=k; if(n!==dragging){ n.x+=n.vx; n.y+=n.vy; } n.vx*=0.5; n.vy*=0.5; });
+  alpha *= 0.985; if (alpha < 0.02) alpha = 0.02;
+}
+function kick(){ alpha = 0.6; }
+
+// ---- rendering ----
+function neighborhood(id){
+  const s = new Set([id]);
+  edges.forEach(e => { if(e.from===id) s.add(e.to); if(e.to===id) s.add(e.from); });
+  return s;
+}
+function draw() {
+  const w = canvas.width = canvas.clientWidth*devicePixelRatio;
+  const h = canvas.height = canvas.clientHeight*devicePixelRatio;
+  ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+  ctx.clearRect(0,0,canvas.clientWidth,canvas.clientHeight);
+  ctx.save();
+  ctx.translate(canvas.clientWidth/2+offsetX, canvas.clientHeight/2+offsetY);
+  ctx.scale(scale,scale);
+
+  const focus = selected ? neighborhood(selected) : null;
+
+  // edges
+  edges.forEach(e => {
+    const a = nodeById[e.from], b = nodeById[e.to];
+    if (hidden.has(a.type)||hidden.has(b.type)) return;
+    const dim = focus && !(focus.has(a.id)&&focus.has(b.id));
+    ctx.globalAlpha = dim ? 0.06 : 0.5;
+    ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
+    if (e.type==='memberOf'){ ctx.strokeStyle='#2f3f61'; ctx.lineWidth=0.7; ctx.setLineDash([]); }
+    else if (e.type==='filteredBy'){ ctx.strokeStyle='#ffb454'; ctx.lineWidth=1; ctx.setLineDash([1,3]); }
+    else if (e.properties && e.properties.mode==='exclude'){ ctx.strokeStyle='#ff7b72'; ctx.lineWidth=1.4; ctx.setLineDash([5,4]); }
+    else { ctx.strokeStyle='#9fef00'; ctx.lineWidth=1.4; ctx.setLineDash([]); }
+    ctx.stroke();
+  });
+  ctx.setLineDash([]);
+
+  // nodes
+  nodes.forEach(n => {
+    if (hidden.has(n.type)) return;
+    const dim = focus && !focus.has(n.id);
+    const r = (TYPE_RADIUS[n.type]||8);
+    ctx.globalAlpha = dim ? 0.12 : 1;
+    ctx.beginPath(); ctx.arc(n.x,n.y,r,0,Math.PI*2);
+    ctx.fillStyle = TYPE_COLORS[n.type]||'#ccc'; ctx.fill();
+    if (n.id===selected){ ctx.lineWidth=2.5; ctx.strokeStyle='#fff'; ctx.stroke(); }
+    else if (n.properties && n.properties.missing){ ctx.lineWidth=2; ctx.strokeStyle='#ff7b72'; ctx.stroke(); }
+    // label
+    if (scale>0.55 && !dim && (r>=9 || n.id===hoverId || n.id===selected)){
+      ctx.globalAlpha = dim?0.2:0.9; ctx.fillStyle='#c9d4e3';
+      ctx.font = '10px -apple-system,Segoe UI,sans-serif';
+      ctx.fillText(n.name||n.id, n.x+r+3, n.y+3);
+    }
+  });
+  ctx.restore();
+}
+function frame(){ step(); draw(); requestAnimationFrame(frame); }
+
+// ---- interaction ----
+let dragging=null, panning=false, lastX=0, lastY=0, down=false, moved=false;
+function toWorld(px,py){ return { x:(px-canvas.clientWidth/2-offsetX)/scale, y:(py-canvas.clientHeight/2-offsetY)/scale }; }
+function pick(px,py){ const p=toWorld(px,py); let best=null,bd=1e9;
+  nodes.forEach(n=>{ if(hidden.has(n.type))return; const dx=n.x-p.x,dy=n.y-p.y,d=dx*dx+dy*dy; const r=(TYPE_RADIUS[n.type]||8)+4; if(d<r*r&&d<bd){bd=d;best=n;} });
+  return best; }
+
+canvas.addEventListener('mousedown', e=>{ down=true; moved=false; lastX=e.offsetX; lastY=e.offsetY;
+  const hit=pick(e.offsetX,e.offsetY); if(hit){ dragging=hit; } else { panning=true; canvas.classList.add('grabbing'); } });
+window.addEventListener('mousemove', e=>{
+  const rect=canvas.getBoundingClientRect(); const ox=e.clientX-rect.left, oy=e.clientY-rect.top;
+  hoverId = down?hoverId:(pick(ox,oy)||{}).id;
+  if(!down) return; moved=true;
+  if(dragging){ const p=toWorld(ox,oy); dragging.x=p.x; dragging.y=p.y; dragging.vx=0; dragging.vy=0; kick(); }
+  else if(panning){ offsetX+=ox-lastX; offsetY+=oy-lastY; lastX=ox; lastY=oy; }
+});
+window.addEventListener('mouseup', e=>{
+  if(down && !moved){ const rect=canvas.getBoundingClientRect(); const hit=pick(e.clientX-rect.left,e.clientY-rect.top);
+    if(hit){ selectNode(hit.id); } else { selected=null; hideSide(); } }
+  down=false; dragging=null; panning=false; canvas.classList.remove('grabbing');
+});
+canvas.addEventListener('wheel', e=>{ e.preventDefault(); const f=e.deltaY<0?1.1:0.9;
+  const p=toWorld(e.offsetX,e.offsetY); scale*=f;
+  const p2=toWorld(e.offsetX,e.offsetY); offsetX+=(p2.x-p.x)*scale; offsetY+=(p2.y-p.y)*scale; }, {passive:false});
+
+document.getElementById('search').addEventListener('input', e=>{
+  const q=e.target.value.trim().toLowerCase(); if(!q){ selected=null; hideSide(); return; }
+  const hit=nodes.find(n=>!hidden.has(n.type) && (n.name||'').toLowerCase().includes(q));
+  if(hit){ selectNode(hit.id); centerOn(hit); }
+});
+document.getElementById('reset').addEventListener('click', ()=>{ scale=1; offsetX=0; offsetY=0; selected=null; hideSide(); kick(); });
+document.getElementById('sideClose').addEventListener('click', ()=>{ selected=null; hideSide(); });
+
+function centerOn(n){ offsetX=-n.x*scale; offsetY=-n.y*scale; }
+function selectNode(id){ selected=id; showSide(nodeById[id]); }
+function hideSide(){ document.getElementById('side').classList.remove('show'); }
+function showSide(n){
+  const el=document.getElementById('side'); el.classList.add('show');
+  document.getElementById('sideType').textContent = n.type + (n.subtype?(' · '+n.subtype):'');
+  document.getElementById('sideName').textContent = n.name || n.id;
+  const props=document.getElementById('sideProps'); props.innerHTML='';
+  const p=n.properties||{};
+  Object.keys(p).forEach(k=>{ if(p[k]===null||p[k]===''||p[k]===undefined)return;
+    const row=document.createElement('div'); row.className='kv'; row.innerHTML=`<b>${k}</b><span>${escapeHtml(String(p[k]))}</span>`; props.appendChild(row); });
+  const ed=document.getElementById('sideEdges'); ed.innerHTML='';
+  const outs=edges.filter(e=>e.from===n.id), ins=edges.filter(e=>e.to===n.id);
+  if(outs.length){ ed.innerHTML+='<div class="stype" style="margin-top:6px">Outgoing</div>';
+    outs.forEach(e=>ed.innerHTML+=`<div class="edge">${edgeLabel(e)} <b>${escapeHtml(nodeById[e.to].name||e.to)}</b></div>`); }
+  if(ins.length){ ed.innerHTML+='<div class="stype" style="margin-top:6px">Incoming</div>';
+    ins.forEach(e=>ed.innerHTML+=`<div class="edge"><b>${escapeHtml(nodeById[e.from].name||e.from)}</b> ${edgeLabel(e)}</div>`); }
+}
+function edgeLabel(e){ if(e.type==='assignedTo') return (e.properties&&e.properties.mode==='exclude')?'excludes':'assigned to'; if(e.type==='memberOf')return 'member of'; if(e.type==='filteredBy')return 'filtered by'; return e.type; }
+function escapeHtml(s){ return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+// Start: declared after all interaction state so no temporal-dead-zone access.
+// Pre-stabilize the layout and paint once so the graph is settled on first frame,
+// then run the animation loop for interactivity.
+for (let i=0;i<240;i++) step();
+draw();
+frame();
+</script>
+</body>
+</html>

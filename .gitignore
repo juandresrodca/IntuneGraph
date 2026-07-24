@@ -5,11 +5,16 @@ graphify-out/
 node_modules/
 tools/gif/graph.json
 
+# Astro site build artifacts
+site/dist/
+site/.astro/
+
 # IntuneGraph exports (never commit tenant data)
 out/
 IntuneGraph-*/
 *.html
 !src/IntuneGraph/Assets/template.html
+!site/public/**/*.html
 graph.json
 !tests/Fixtures/**/*.json
 !src/IntuneGraph/DemoData/**/*.json
