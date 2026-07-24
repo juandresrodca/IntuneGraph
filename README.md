@@ -118,13 +118,6 @@ IntuneGraph is deliberately *not* another config-backup tool — it's the relati
 
 Every test runs on fixtures — **no tenant needed to contribute**. `.\build.ps1 -Task Test`. See [docs/fixtures.md](docs/fixtures.md) for how the demo tenant is structured and how to add a scenario.
 
-## Roadmap
-
-- [ ] Fixture recorder (`Export-IntuneGraphFixture`) — capture a sanitized snapshot of a live tenant
-- [ ] Filter-rule evaluation (upgrade `AppliesPreFilter` → exact)
-- [ ] `Compare-IntuneGraph` — diff two snapshots for config-drift / change audit
-- [ ] More workloads: app protection, endpoint security, ADMX, Autopilot profiles
-- [ ] Conditional Access overlay
 
 ## License
 
