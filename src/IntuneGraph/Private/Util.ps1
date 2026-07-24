@@ -28,6 +28,23 @@ function Get-IgProp {
     return $Default
 }
 
+function Set-IgTextFile {
+    <#
+        Write text as UTF-8 WITHOUT a BOM. Windows PowerShell 5.1's
+        `Set-Content -Encoding UTF8` emits a BOM, which breaks standard JSON
+        parsers and other downstream tooling; graph.json and the HTML report
+        must be BOM-free.
+    #>
+    param(
+        [Parameter(Mandatory)][string]$Path,
+        [Parameter(Mandatory)][AllowEmptyString()][string]$Content
+    )
+    $dir = Split-Path -Parent $Path
+    if ($dir -and -not (Test-Path $dir)) { New-Item -ItemType Directory -Path $dir -Force | Out-Null }
+    $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+    [System.IO.File]::WriteAllText($Path, $Content, $utf8NoBom)
+}
+
 function ConvertTo-IgArray {
     <#
         Safely materialize any value to an array. Windows PowerShell 5.1 throws

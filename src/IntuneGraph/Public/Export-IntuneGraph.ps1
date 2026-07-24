@@ -182,14 +182,14 @@ function Export-IntuneGraph {
         }
         $outDir = Split-Path -Parent $OutputPath
         if ($outDir -and -not (Test-Path $outDir)) { New-Item -ItemType Directory -Path $outDir -Force | Out-Null }
-        ConvertTo-IgGraphJson -Graph $graph | Set-Content -LiteralPath $OutputPath -Encoding UTF8
+        Set-IgTextFile -Path $OutputPath -Content (ConvertTo-IgGraphJson -Graph $graph)
         Write-Progress -Activity 'IntuneGraph export' -Completed
 
         $script:IgSession.LastGraph = $graph
 
         if ($Html) {
             $htmlPath = [System.IO.Path]::ChangeExtension($OutputPath, '.html')
-            New-IgHtmlReport -Graph $graph -Title ("IntuneGraph - " + ($(if ($tenantName) { $tenantName } else { $source }))) | Set-Content -LiteralPath $htmlPath -Encoding UTF8
+            Set-IgTextFile -Path $htmlPath -Content (New-IgHtmlReport -Graph $graph -Title ("IntuneGraph - " + ($(if ($tenantName) { $tenantName } else { $source }))))
             Write-Host "HTML report: $htmlPath" -ForegroundColor Cyan
         }
 

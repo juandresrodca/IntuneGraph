@@ -1,0 +1,14 @@
+{
+  "name": "intunegraph-gif",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Renders the IntuneGraph demo graph to an animated GIF for the README.",
+  "scripts": {
+    "build": "node make-gif.mjs"
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "^0.1.61",
+    "gifenc": "^1.0.3"
+  }
+}

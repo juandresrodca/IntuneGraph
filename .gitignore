@@ -1,6 +1,10 @@
 # graphify knowledge-graph artifacts (generated locally for reference)
 graphify-out/
 
+# Node tooling deps + generated inputs
+node_modules/
+tools/gif/graph.json
+
 # IntuneGraph exports (never commit tenant data)
 out/
 IntuneGraph-*/

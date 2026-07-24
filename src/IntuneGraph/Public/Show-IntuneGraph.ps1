@@ -33,7 +33,7 @@ function Show-IntuneGraph {
         if ($g.Metadata -and $g.Metadata['tenantName']) { $title = "IntuneGraph - $($g.Metadata['tenantName'])" }
 
         $html = New-IgHtmlReport -Graph $g -Title $title
-        $html | Set-Content -LiteralPath $OutputPath -Encoding UTF8
+        Set-IgTextFile -Path $OutputPath -Content $html
         Write-Host "HTML report written: $OutputPath" -ForegroundColor Cyan
 
         if ($Open) {

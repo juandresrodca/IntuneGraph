@@ -21,7 +21,7 @@ Export-IntuneGraph -DemoData -PassThru | Show-IntuneGraph -Open
 
 That builds the bundled **Contoso** demo tenant and opens the interactive graph in your browser — zero Graph auth, zero setup. The whole tool works offline against demo data, which means you can evaluate it (and contribute to it) without ever touching a real tenant.
 
-> **Hero screenshot:** run the command above and screenshot the result → `docs/img/hero-screenshot.png`.
+![IntuneGraph interactive demo — the Contoso tenant as a relationship graph](docs/img/demo.gif)
 
 ---
 
