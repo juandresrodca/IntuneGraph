@@ -4,6 +4,16 @@ const demo = `${base}/demo/`;
 const gh = "https://github.com/juandresrodca/IntuneGraph";
 const features = [
   {
+    cmd: "Find-IntuneOrphan",
+    q: "What's assigned to nothing — or broken?",
+    body: "Scan the whole tenant for assignment hygiene problems: dead config, empty and deleted target groups, include/exclude collisions, and mixed device/user targeting.",
+    code: `PS> Find-IntuneOrphan
+
+BrokenGroupReference    High     Old CRM             (targets a deleted group)
+IncludeExcludeCollision High     Legacy VPN Profile  (included AND excluded)
+EmptyTarget             Warning  Kiosk Lockdown      (empty group)`,
+  },
+  {
     cmd: "Get-IntuneTarget",
     q: 'What applies to this device — and why?',
     body: "Resolve every policy, app and script that targets a device or user, with the exact group path that causes each — through nesting, filters and include/exclude.",
@@ -22,16 +32,6 @@ LOB Finance App          Applies           DEV-FIN-01 -> SG-Finance`,
 
 Adding 'KIOSK-01' to 'SG-Finance':
   Gains 3 workload(s), loses 0.`,
-  },
-  {
-    cmd: "Find-IntuneOrphan",
-    q: "What's assigned to nothing — or broken?",
-    body: "Scan the whole tenant for assignment hygiene problems: dead config, empty and deleted target groups, include/exclude collisions, and mixed device/user targeting.",
-    code: `PS> Find-IntuneOrphan
-
-BrokenGroupReference    High     Old CRM             (targets a deleted group)
-IncludeExcludeCollision High     Legacy VPN Profile  (included AND excluded)
-EmptyTarget             Warning  Kiosk Lockdown      (empty group)`,
   },
 ];
 const compare = [
