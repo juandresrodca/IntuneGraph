@@ -211,7 +211,6 @@ function draw() {
   ctx.restore();
 }
 function frame(){ step(); draw(); requestAnimationFrame(frame); }
-frame();
 
 // ---- interaction ----
 let dragging=null, panning=false, lastX=0, lastY=0, down=false, moved=false;
@@ -266,6 +265,13 @@ function showSide(n){
 }
 function edgeLabel(e){ if(e.type==='assignedTo') return (e.properties&&e.properties.mode==='exclude')?'excludes':'assigned to'; if(e.type==='memberOf')return 'member of'; if(e.type==='filteredBy')return 'filtered by'; return e.type; }
 function escapeHtml(s){ return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+// Start: declared after all interaction state so no temporal-dead-zone access.
+// Pre-stabilize the layout and paint once so the graph is settled on first frame,
+// then run the animation loop for interactivity.
+for (let i=0;i<240;i++) step();
+draw();
+frame();
 </script>
 </body>
 </html>
