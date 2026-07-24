@@ -7,7 +7,7 @@
 [![Read-only](https://img.shields.io/badge/Graph%20scopes-read--only-brightgreen)](docs/permissions.md)
 [![Tests](https://img.shields.io/badge/tests-fixture--driven-blue)](tests/)
 
-> Intune assignments *are* a graph — groups nest, filters narrow, includes and excludes fight. But every existing tool shows you flat lists. IntuneGraph makes the graph the data model, so the questions admins actually ask become simple queries.
+> Intune assignments *are* a graph , groups nest, filters narrow, includes and excludes fight. But every existing tool shows you flat lists. IntuneGraph makes the graph the data model, so the questions admins actually ask become simple queries.
 
 ---
 
@@ -41,7 +41,7 @@ Win Compliance          CompliancePolicy AppliesPreFilter           DEV-FIN-01 -
 Win11 Security Baseline ConfigPolicy     Applies                    DEV-FIN-01 -> SG-Finance -> SG-AllStaff
 ```
 
-The **`Via`** column — the exact group path that causes each assignment, through nesting — is what flat-list tools don't give you. Add `-IncludeExcluded` to see what's blocked by an exclusion and why.
+The **`Via`** column. The exact group path that causes each assignment, through nesting — is what flat-list tools don't give you. Add `-IncludeExcluded` to see what's blocked by an exclusion and why.
 
 ### 2. "What breaks if I touch this group?"  →  `Get-IntuneBlastRadius`
 
