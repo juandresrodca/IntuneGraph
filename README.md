@@ -111,7 +111,7 @@ IntuneGraph is deliberately *not* another config-backup tool — it's the relati
 
 ## Requirements
 
-- **PowerShell 7+** recommended; **Windows PowerShell 5.1** supported.
+- **PowerShell 7+** recommended; ** Windows PowerShell 5.1 ** supported.
 - `Microsoft.Graph.Authentication` (only for live tenant use; loaded on demand). Demo mode needs nothing.
 
 ## Contributing
