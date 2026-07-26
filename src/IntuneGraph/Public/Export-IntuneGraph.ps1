@@ -8,7 +8,7 @@ function Export-IntuneGraph {
         members and devices; normalizes them into a node/edge graph; and writes
         graph.json (optionally an interactive HTML report too).
 
-        Use -DemoData to run against the bundled Contoso dataset with zero tenant
+        Use -DemoData to run against the bundled Silver Chariot Corporate demo dataset with zero tenant
         access, or -FromFixtures <path> to point at your own fixture directory.
     .EXAMPLE
         Export-IntuneGraph -DemoData -Html -PassThru | Show-IntuneGraph -Open

@@ -120,8 +120,8 @@ $compliance = @(
 $apps = @(
     [ordered]@{ id = 'b0000000-0000-0000-0000-000000000001'; '@odata.type' = '#microsoft.graph.win32LobApp'; displayName = 'Company Portal'; publisher = 'Microsoft'; assignments = @( (Asg 'a8' (T-AllDevices) 'required') ) }
     [ordered]@{ id = 'b0000000-0000-0000-0000-000000000002'; '@odata.type' = '#microsoft.graph.win32LobApp'; displayName = 'Adobe Reader'; publisher = 'Adobe'; assignments = @( (Asg 'a9' (T-Group $G.AllStaff) 'available') ) }
-    [ordered]@{ id = 'b0000000-0000-0000-0000-000000000003'; '@odata.type' = '#microsoft.graph.win32LobApp'; displayName = 'LOB Finance App'; publisher = 'Contoso'; assignments = @( (Asg 'a10' (T-Group $G.Finance) 'required'), (Asg 'a11' (T-Group $G.Contractors -Exclude) 'required') ) }
-    [ordered]@{ id = 'b0000000-0000-0000-0000-000000000004'; '@odata.type' = '#microsoft.graph.win32LobApp'; displayName = 'Old CRM'; publisher = 'Contoso'; assignments = @( (Asg 'a12' (T-Group $G.Legacy) 'required') ) }
+    [ordered]@{ id = 'b0000000-0000-0000-0000-000000000003'; '@odata.type' = '#microsoft.graph.win32LobApp'; displayName = 'LOB Finance App'; publisher = 'Silver Chariot Corporate'; assignments = @( (Asg 'a10' (T-Group $G.Finance) 'required'), (Asg 'a11' (T-Group $G.Contractors -Exclude) 'required') ) }
+    [ordered]@{ id = 'b0000000-0000-0000-0000-000000000004'; '@odata.type' = '#microsoft.graph.win32LobApp'; displayName = 'Old CRM'; publisher = 'Silver Chariot Corporate'; assignments = @( (Asg 'a12' (T-Group $G.Legacy) 'required') ) }
 )
 $platformScripts = @(
     [ordered]@{ id = 'e0000000-0000-0000-0000-000000000001'; displayName = 'Rename Script'; assignments = @( (Asg 'a13' (T-Group $G.IT)) ) }
@@ -138,7 +138,7 @@ foreach ($name in $devSpec) {
     $managedDevices += [ordered]@{ id = $dev[$name].mdm; deviceName = $name; azureADDeviceId = $dev[$name].aad; operatingSystem = 'Windows'; userPrincipalName = ''; complianceState = 'compliant'; lastSyncDateTime = '2026-07-20T08:00:00Z' }
 }
 
-$manifest = [ordered]@{ tenantId = 'c3f1e2d4-0000-0000-0000-000000000001'; tenantName = 'Contoso'; description = 'IntuneGraph demo/test tenant. Every hygiene check fires exactly once.' }
+$manifest = [ordered]@{ tenantId = 'c3f1e2d4-0000-0000-0000-000000000001'; tenantName = 'Silver Chariot Corporate'; description = 'IntuneGraph demo/test tenant. Every hygiene check fires exactly once.' }
 
 # --- Writer ----------------------------------------------------------------
 function Write-Fixture {

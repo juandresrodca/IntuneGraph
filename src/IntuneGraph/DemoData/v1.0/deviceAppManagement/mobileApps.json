@@ -39,7 +39,7 @@
         "id":  "b0000000-0000-0000-0000-000000000003",
         "@odata.type":  "#microsoft.graph.win32LobApp",
         "displayName":  "LOB Finance App",
-        "publisher":  "Contoso",
+        "publisher":  "Silver Chariot Corporate",
         "assignments":  [
                             {
                                 "id":  "a10",
@@ -67,7 +67,7 @@
         "id":  "b0000000-0000-0000-0000-000000000004",
         "@odata.type":  "#microsoft.graph.win32LobApp",
         "displayName":  "Old CRM",
-        "publisher":  "Contoso",
+        "publisher":  "Silver Chariot Corporate",
         "assignments":  [
                             {
                                 "id":  "a12",

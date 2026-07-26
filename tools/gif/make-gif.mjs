@@ -93,7 +93,7 @@ function drawFrame(highlightId) {
   ctx.fillStyle = '#9fef00'; ctx.font = 'bold 18px sans-serif';
   ctx.fillText('IntuneGraph', 24, 34);
   ctx.fillStyle = '#7c8aa0'; ctx.font = '13px sans-serif';
-  ctx.fillText(`Contoso demo tenant  ·  ${nodes.length} nodes · ${edges.length} edges`, 138, 34);
+  ctx.fillText(`Silver Chariot Corporate  ·  ${nodes.length} nodes · ${edges.length} edges`, 138, 34);
 
   ctx.save();
   ctx.translate(W / 2, H / 2 + 28);
