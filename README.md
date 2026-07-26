@@ -27,7 +27,7 @@ That builds the bundled **Contoso** demo tenant and opens the interactive graph 
 
 ## The three questions it answers
 
-### 1. "What applies to this device, and *why*?"  →  `Get-IntuneTarget`
+### 1. "What applies to this device, and *why*?"  →  ` Get-IntuneTarget `
 
 ```
 PS> Get-IntuneTarget -Identity DEV-FIN-01
