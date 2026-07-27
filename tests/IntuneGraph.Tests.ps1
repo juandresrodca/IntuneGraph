@@ -41,7 +41,7 @@ Describe 'Export / build' {
         $reimported = Import-IntuneGraph $script:GraphPath
         $reimported.Nodes.Count | Should -Be $script:G.Nodes.Count
     }
-    It 'synthesizes a ghost node for a deleted group reference' {
+    It 'synthesizes a ghost node for a deleted group reference' {  # initial ghost node set
         $ghost = $script:G.Nodes.Values | Where-Object { $_.type -eq 'Group' -and $_.properties.missing }
         @($ghost).Count | Should -Be 1
     }
