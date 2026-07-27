@@ -10,8 +10,12 @@
 > Intune assignments *are* a graph , groups nest, filters narrow, includes and excludes fight. But every existing tool shows you flat lists. IntuneGraph makes the graph the data model, so the questions admins actually ask become simple queries.
 
 ---
+Demo:
+https://juandresrodca.github.io/IntuneGraph/demo/
+---
 
 ## Try it in 30 seconds — no tenant needed
+
 
 ```powershell
 Install-Module IntuneGraph -Scope CurrentUser      # (coming to PSGallery)
