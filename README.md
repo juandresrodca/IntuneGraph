@@ -7,7 +7,7 @@
 [![Read-only](https://img.shields.io/badge/Graph%20scopes-read--only-brightgreen)](docs/permissions.md)
 [![Tests](https://img.shields.io/badge/tests-fixture--driven-blue)](tests/)
 
-> Intune assignments *are* a graph , groups nest, filters narrow, includes and excludes fight. But every existing tool shows you flat lists. IntuneGraph makes the graph the data model, so the questions admins actually ask become simple queries.
+> Intune assignments *are* a graph , groups nest, filters narrow,   includes and excludes fight. But every existing tool shows you flat lists. IntuneGraph makes the graph the data model, so the questions admins actually ask become simple queries.
 
 ---
 Demo:
@@ -23,7 +23,7 @@ Import-Module IntuneGraph
 Export-IntuneGraph -DemoData -PassThru | Show-IntuneGraph -Open
 ```
 
-That builds the bundled **Contoso** demo tenant and opens the interactive graph in your browser — zero Graph auth, zero setup. The whole tool works offline against demo data, which means you can evaluate it (and contribute to it) without ever touching a real tenant.
+That builds the bundled **Contoso** demo tenant and opens   the interactive graph in your browser — zero Graph auth, zero setup. The whole tool works offline against demo data, which means you can evaluate it (and contribute to it) without ever touching a real tenant.
 
 ![IntuneGraph interactive demo — the Contoso tenant as a relationship graph](docs/img/demo.gif)
 
@@ -37,7 +37,7 @@ That builds the bundled **Contoso** demo tenant and opens the interactive graph 
 PS> Get-IntuneTarget -Identity DEV-FIN-01
 
 Workload                Type             Status           Intent    Via
---------                ----             ------           ------    ---
+--------                ----             ---------        - -  ------    ---
 Adobe Reader            App              Applies          available DEV-FIN-01 -> SG-Finance -> SG-AllStaff
 Company Portal          App              Applies          required  DEV-FIN-01 -> All Devices
 LOB Finance App         App              Applies          required  DEV-FIN-01 -> SG-Finance
