@@ -7,7 +7,7 @@
     Copyright         = '(c) 2026 Juan Andres Rodriguez. MIT License.'
     Description       = 'Turn your Microsoft Intune tenant into an interactive, queryable relationship graph. Target resolution, blast-radius impact preview, and assignment hygiene checks. Read-only, offline-capable, zero write scopes.'
 
-    # 5.1 floor broadens adoption (many Intune admins are still on Windows PowerShell).
+    # 5.1 floor broadens adoption (many Intune admins are  still on Windows  PowerShell).
     # PowerShell 7+ is recommended but not required.
     PowerShellVersion = '5.1'
 
