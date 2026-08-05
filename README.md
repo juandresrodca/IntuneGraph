@@ -1,6 +1,6 @@
 # IntuneGraph
 
-**Turn your Microsoft Intune tenant into an interactive relationship graph.** See what actually applies to a device and *why*, preview the blast radius before you touch a group, and find the orphaned junk — all from a local, read-only snapshot.
+**Turn your Microsoft Intune tenant into an interactive relationship graph.** See what actually applies to a device and *why*, preview the blast radius before you touch a group, and find the orphaned junk, all from a local, read-only snapshot.
 
 [![PowerShell](https://img.shields.io/badge/PowerShell-5.1%20%7C%207%2B-5391FE)](#requirements)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
@@ -14,7 +14,7 @@ Demo:
 https://juandresrodca.github.io/IntuneGraph/demo/
 ---
 
-## Try it in 30 seconds — no tenant needed
+## Try it in 30 seconds, no tenant needed
 
 
 ```powershell
