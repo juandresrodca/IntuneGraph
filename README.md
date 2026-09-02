@@ -102,7 +102,7 @@ No telemetry. The HTML report makes **zero network calls** (the renderer is vend
 
 ## How it stacks up
 
-IntuneGraph is deliberately *not* another config-backup tool — it's the relationship-and-impact layer. The excellent tools below solve adjacent problems; use them together.
+IntuneGraph is  deliberately *not*  another  config-backup tool — it's the relationship-and-impact layer. The excellent tools below solve adjacent problems; use them together.
 
 | | IntuneGraph | [IntuneAssignmentChecker](https://github.com/ugurkocde/IntuneAssignmentChecker) | [IntuneCD](https://github.com/almenscorner/IntuneCD) | Intune portal |
 |---|:--:|:--:|:--:|:--:|
