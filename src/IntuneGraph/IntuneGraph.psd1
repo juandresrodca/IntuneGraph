@@ -16,7 +16,7 @@
     # NOT a hard RequiredModules entry.
     RequiredModules   = @()
 
-    FunctionsToExport = @(
+    FunctionsToExport = @(     # export function.
         'Connect-IntuneGraph',
         'Disconnect-IntuneGraph',
         'Export-IntuneGraph',
