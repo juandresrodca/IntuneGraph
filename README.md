@@ -7,14 +7,14 @@
 [![Read-only](https://img.shields.io/badge/Graph%20scopes-read--only-brightgreen)](docs/permissions.md)
 [![Tests](https://img.shields.io/badge/tests-fixture--driven-blue)](tests/)
 
-> Intune assignments *are* a graph , groups nest, filters narrow,   includes and excludes fight. But every existing tool shows you flat lists. IntuneGraph makes the graph the data model, so the questions admins actually ask become simple queries.
+>  Intune assignments *are* a graph , groups nest, filters narrow,   includes and excludes fight. But every existing tool shows you flat lists. IntuneGraph makes the graph the data model, so the questions admins actually ask become simple queries.
 
 ---
 Demo:
 https://juandresrodca.github.io/IntuneGraph/demo/
 ---
 
-## Try it in 30 seconds, no tenant needed
+## Try it in 30  seconds, no tenant needed
 
 
 ```powershell
