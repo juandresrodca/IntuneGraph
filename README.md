@@ -5,6 +5,7 @@
 [![PowerShell](https://img.shields.io/badge/PowerShell-5.1%20%7C%207%2B-5391FE)](#requirements)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Read-only](https://img.shields.io/badge/Graph%20scopes-read--only-brightgreen)](docs/permissions.md)
+[![MCP](https://img.shields.io/badge/MCP-server%20included-8A2BE2)](docs/mcp.md)
 [![Tests](https://img.shields.io/badge/tests-fixture--driven-blue)](tests/)
 
 >  Intune assignments *are* a graph , groups nest, filters narrow,   includes and excludes fight. But every existing tool shows you flat lists. IntuneGraph makes the graph the data model, so the questions admins actually ask become simple queries.
@@ -26,6 +27,44 @@ Export-IntuneGraph -DemoData -PassThru | Show-IntuneGraph -Open
 That builds the bundled **Contoso** demo tenant and opens   the interactive graph in your browser — zero Graph auth, zero setup. The whole tool works offline against demo data, which means you can evaluate it (and contribute to it) without ever touching a real tenant.
 
 ![IntuneGraph interactive demo — the Contoso tenant as a relationship graph](docs/img/demo.gif)
+
+---
+
+## New: ask your AI *why* a policy applies — and get the group path, not a guess
+
+IntuneGraph ships an **MCP server**, so Claude Code or GitHub Copilot can query the
+graph directly:
+
+```bash
+claude mcp add intunegraph -- pwsh -NoLogo -NoProfile -NonInteractive \
+  -File ./tools/mcp/mcp-server.ps1 -Path ./graph.json
+```
+
+```
+> why does Win11 Security Baseline apply to DEV-FIN-01?
+
+  [intune_target]
+  Win11 Security Baseline  ConfigPolicy  Applies
+  via  DEV-FIN-01 -> SG-Finance -> SG-AllStaff
+
+> what happens if I add KIOSK-01 to SG-Finance?
+
+  [intune_blast_radius]
+  Gains 3 workload(s), loses 0.
+   + LOB Finance App (required)
+   + Win11 Security Baseline
+   + Adobe Reader (available)
+```
+
+Other Intune MCP servers wrap Graph endpoints — they can *list* policies. None can
+answer **why** one applies, because none of them model group nesting, filters and
+include/exclude collisions. This one does, because that's the whole data model.
+
+**And it never touches your tenant.** The server reads a local `graph.json` snapshot,
+so the assistant gets the answers without ever getting your credentials. You decide
+when to refresh it. Six read-only tools: `intune_target`, `intune_blast_radius`,
+`intune_orphans`, `intune_path`, `intune_node`, `intune_summary` — see
+[docs/mcp.md](docs/mcp.md).
 
 ---
 
@@ -111,6 +150,7 @@ IntuneGraph is  deliberately *not*  another  config-backup tool — it's the rel
 | **Blast-radius / change impact** | ✅ | – | – | – |
 | **Assignment hygiene checks** | ✅ | partial | – | – |
 | **Interactive graph visualization** | ✅ | – | – | – |
+| **MCP server (ask an AI, offline)** | ✅ | – | – | – |
 | Config backup / config-as-code | – | – | ✅ | – |
 
 ## Requirements

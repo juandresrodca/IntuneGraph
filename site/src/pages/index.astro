@@ -43,8 +43,24 @@ const compare = [
   ["Blast-radius / change impact", 1, 0, 0],
   ["Assignment hygiene checks", 1, 0.5, 0],
   ["Interactive graph", 1, 0, 0],
+  ["MCP server (ask an AI, offline)", 1, 0, 0],
   ["Config backup / as-code", 0, 0, 1],
 ];
+const mcpAdd = `claude mcp add intunegraph -- pwsh -NoLogo -NoProfile -NonInteractive \\
+  -File ./tools/mcp/mcp-server.ps1 -Path ./graph.json`;
+const mcpChat = `> why does Win11 Security Baseline apply to DEV-FIN-01?
+
+  [intune_target]
+  Win11 Security Baseline  ConfigPolicy  Applies
+  via  DEV-FIN-01 -> SG-Finance -> SG-AllStaff
+
+> what happens if I add KIOSK-01 to SG-Finance?
+
+  [intune_blast_radius]
+  Gains 3 workload(s), loses 0.
+   + LOB Finance App (required)
+   + Win11 Security Baseline
+   + Adobe Reader (available)`;
 ---
 
 <!doctype html>
@@ -68,6 +84,7 @@ const compare = [
       <a class="brand" href={base + "/"}><span class="dia">◆</span> IntuneGraph</a>
       <div class="nav-links">
         <a href="#features">Features</a>
+        <a href="#mcp">MCP</a>
         <a href="#demo">Live demo</a>
         <a href="#install">Install</a>
         <a class="gh" href={gh} target="_blank" rel="noopener">GitHub ↗</a>
@@ -79,6 +96,7 @@ const compare = [
         <span class="pill lv">◆ Intune · PowerShell</span>
         <span class="pill">Read-only · zero write scopes</span>
         <span class="pill lv">Offline demo</span>
+        <span class="pill">MCP server included</span>
         <span class="pill">MIT</span>
       </div>
       <h1>Intune tenant as an<br /><span>interactive relationship graph</span></h1>
@@ -114,6 +132,33 @@ const compare = [
           </article>
         ))}
       </div>
+    </section>
+
+    <section id="mcp" class="section">
+      <h2 class="sec-h"><span class="d"></span>Ask your AI <em>why</em> — and get the group path</h2>
+      <p class="sec-lede">
+        IntuneGraph ships an <b>MCP server</b>, so Claude Code or GitHub Copilot can query the graph
+        directly. Other Intune MCP servers wrap Graph endpoints — they can <em>list</em> policies.
+        None can answer <b>why</b> one applies, because none of them model group nesting, filters and
+        include/exclude collisions. This one does, because that's the whole data model.
+      </p>
+      <div class="install-grid">
+        <div>
+          <div class="step">1 · Point your client at a snapshot</div>
+          <pre class="run">{mcpAdd}</pre>
+        </div>
+        <div>
+          <div class="step">2 · Ask in plain language</div>
+          <pre class="run">{mcpChat}</pre>
+        </div>
+      </div>
+      <p class="note">
+        <b>It never touches your tenant.</b> The server reads a local <code>graph.json</code> snapshot,
+        so the assistant gets the answers without ever getting your credentials — and you decide when
+        to refresh it. Six read-only tools: intune_target, intune_blast_radius, intune_orphans,
+        intune_path, intune_node, intune_summary.
+        <a href={gh + "/blob/main/docs/mcp.md"} target="_blank" rel="noopener">Setup guide ↗</a>
+      </p>
     </section>
 
     <section id="demo" class="section">

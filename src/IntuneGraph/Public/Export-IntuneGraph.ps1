@@ -167,7 +167,7 @@ function Export-IntuneGraph {
             tenantId    = $tenantId
             tenantName  = $tenantName
             exportedAt  = (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ')
-            toolVersion = '0.1.0'
+            toolVersion = '0.2.0'
             source      = $source
             deviceCount = $deviceCount
             userCount   = $userCount
