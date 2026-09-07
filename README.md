@@ -139,6 +139,8 @@ IntuneGraph requests **four read-only scopes and zero write scopes**, and the co
 
 No telemetry. The HTML report makes **zero network calls** (the renderer is vendored inline). Your data never leaves the `graph.json` you exported. See [docs/permissions.md](docs/permissions.md).
 
+Found a security problem? Please report it privately — the process, the supported versions and the guarantees this project treats as invariants are in [SECURITY.md](SECURITY.md).
+
 ## How it stacks up
 
 IntuneGraph is  deliberately *not*  another  config-backup tool — it's the relationship-and-impact layer. The excellent tools below solve adjacent problems; use them together.
