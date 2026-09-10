@@ -162,7 +162,7 @@ IntuneGraph is  deliberately *not*  another  config-backup tool — it's the rel
 
 ## Contributing
 
-Every test runs on fixtures — **no tenant needed to contribute**. `.\build.ps1 -Task Test`. See [docs/fixtures.md](docs/fixtures.md) for how the demo tenant is structured and how to add a scenario.
+Every test runs on fixtures — **no tenant needed to contribute**. `.\build.ps1 -Task Test`. [CONTRIBUTING.md](CONTRIBUTING.md) covers the layout, the build tasks, the PSScriptAnalyzer settings and the guarantees a change must not break; see [docs/fixtures.md](docs/fixtures.md) for how the demo tenant is structured and how to add a scenario.
 
 Decisions that are easy to undo by accident are written down rather than remembered — [docs/permissions.md](docs/permissions.md) for the read-only scope guarantees, [docs/discoverability.md](docs/discoverability.md) for what the repository's topics and description are meant to do.
 
