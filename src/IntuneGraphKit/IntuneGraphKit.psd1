@@ -6,7 +6,7 @@
     CompanyName       = 'IntuneGraph'
     Copyright         = '(c) 2026 Juan Andres Rodriguez. MIT License.'
     # Same text as the GitHub repository description - change both together.
-    Description       = 'Turn your Microsoft Intune tenant into an interactive relationship graph. See what applies to a device or user and why, preview the blast radius before you touch a group, and find orphaned or broken assignments. Read-only Graph, offline-capable demo, self-contained HTML viewer. Zero write scopes.'
+    Description       = 'Turn your Microsoft Intune tenant into an interactive relationship graph, and ask your AI why a policy applies through the bundled MCP server. See what applies to a device or user and why, preview a group''s blast radius, find broken assignments. Read-only Graph, offline demo, self-contained HTML viewer. Zero write scopes.'
 
     # 5.1 floor broadens adoption (many Intune admins are  still on Windows  PowerShell).
     # PowerShell 7+ is recommended but not required.
