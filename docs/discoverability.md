@@ -18,7 +18,9 @@ maintenance task — should change this file in the same commit, with the reason
 
 The README's first screen is the fourth surface, and the only one that converts a
 visitor into a user. It leads with the demo command that needs no tenant, because the
-cost of trying this tool is the thing most likely to stop someone.
+cost of trying this tool is the thing most likely to stop someone. The MCP server comes
+straight after it, ahead of the demo GIF, so the capability the `mcp` topics are there
+for is visible without scrolling rather than a screen further down.
 
 ---
 
@@ -129,13 +131,15 @@ not an addition to what is there.
 
 ## Description
 
-> Turn your Microsoft Intune tenant into an interactive relationship graph. See what
-> applies to a device or user and why, preview the blast radius before you touch a
-> group, and find orphaned or broken assignments. Read-only Graph, offline-capable
-> demo, self-contained HTML viewer. Zero write scopes.
+> Turn your Microsoft Intune tenant into an interactive relationship graph, and ask
+> your AI why a policy applies through the bundled MCP server. See what applies to a
+> device or user and why, preview a group's blast radius, find broken assignments.
+> Read-only Graph, offline demo, self-contained HTML viewer. Zero write scopes.
 
 Search results and the topic pages truncate long descriptions, so the first sentence
-has to carry the whole pitch on its own — and it does. What follows it is there for the
+has to carry the whole pitch on its own. That is why the MCP server is in the first
+sentence rather than the tail: it is what separates this from flat-list assignment
+tools, and a truncated description should still say so. What follows it is there for the
 visitor who has already clicked: the three questions the tool answers, then the two
 objections an admin raises before installing anything that touches their tenant
 (*does it write?* and *do I need a tenant to try it?*), answered before they are asked.

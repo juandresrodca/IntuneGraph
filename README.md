@@ -1,6 +1,6 @@
 # IntuneGraph
 
-**Turn your Microsoft Intune tenant into an interactive relationship graph.** See what actually applies to a device and *why*, preview the blast radius before you touch a group, and find the orphaned junk, all from a local, read-only snapshot.
+**Turn your Microsoft Intune tenant into an interactive relationship graph.** See what actually applies to a device and *why*, preview the blast radius before you touch a group, and find the orphaned junk, all from a local, read-only snapshot — from PowerShell, in a self-contained HTML viewer that makes zero network calls, or by asking your AI assistant through the bundled MCP server.
 
 [![PowerShell Gallery](https://img.shields.io/powershellgallery/v/IntuneGraphKit?label=PSGallery)](https://www.powershellgallery.com/packages/IntuneGraphKit)
 [![PowerShell](https://img.shields.io/badge/PowerShell-5.1%20%7C%207%2B-5391FE)](#requirements)
@@ -33,11 +33,9 @@ Export-IntuneGraph -DemoData -PassThru | Show-IntuneGraph -Open
 
 That builds the bundled **Contoso** demo tenant and opens   the interactive graph in your browser — zero Graph auth, zero setup. The whole tool works offline against demo data, which means you can evaluate it (and contribute to it) without ever touching a real tenant.
 
-![IntuneGraph interactive demo — the Contoso tenant as a relationship graph](docs/img/demo.gif)
-
 ---
 
-## New:  ask your AI *why* a policy applies — and get the group path, not a guess
+## Ask your AI *why* a policy applies — and get the group path, not a guess
 
 IntuneGraph ships an **MCP server**, so Claude Code or GitHub Copilot can query the
 graph directly:
@@ -72,6 +70,23 @@ so the assistant gets the answers without ever getting your credentials. You dec
 when to refresh it. Six read-only tools: `intune_target`, `intune_blast_radius`,
 `intune_orphans`, `intune_path`, `intune_node`, `intune_summary` — see
 [docs/mcp.md](docs/mcp.md).
+
+Packaging the same six tools as a Claude Code plugin with a bundled skill — one install
+for the server and the method for using it — is specified in
+[docs/skill.md](docs/skill.md). It is a specification, not yet something you can install.
+
+---
+
+## One HTML file, zero network calls
+
+![IntuneGraph interactive demo — the Contoso tenant as a relationship graph](docs/img/demo.gif)
+
+`Show-IntuneGraph` writes the graph to a single self-contained HTML file. The renderer,
+the styles and the data are all inlined, so the page makes **zero network calls**: no
+CDN, no web fonts, no telemetry. It opens from disk, offline, with nothing to install,
+and a Pester test fails the build if the generated report links to anything external.
+Because the data travels inside the file, treat a report from a real tenant the way you
+would treat the `graph.json` it came from.
 
 ---
 
