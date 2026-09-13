@@ -5,36 +5,43 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  # The release workflow calls this, so a tag is only ever published off a green run.
+  workflow_call:
 
 jobs:
   test:
     strategy:
       fail-fast: false
       matrix:
-        os: [ windows-latest, ubuntu-latest ]
+        include:
+          - { os: windows-latest, shell: pwsh }        # PowerShell 7
+          - { os: windows-latest, shell: powershell }  # Windows PowerShell 5.1 - the manifest's floor
+          - { os: ubuntu-latest,  shell: pwsh }
     runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: ${{ matrix.shell }}
     steps:
       - uses: actions/checkout@v4
 
+      # -SkipPublisherCheck: Windows ships Pester 3.4 signed with a different
+      # certificate, and without it the 5.x install refuses to replace it.
       - name: Install PowerShell modules
-        shell: pwsh
         run: |
           Set-PSRepository PSGallery -InstallationPolicy Trusted
-          Install-Module Pester -MinimumVersion 5.0.0 -Force -Scope CurrentUser
+          Install-Module Pester -MinimumVersion 5.0.0 -Force -Scope CurrentUser -SkipPublisherCheck
           Install-Module PSScriptAnalyzer -Force -Scope CurrentUser
 
       - name: PSScriptAnalyzer
-        shell: pwsh
         run: ./build.ps1 -Task Analyze
 
       - name: Pester (fixtures only - no tenant needed)
-        shell: pwsh
         run: ./build.ps1 -Task Test
 
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-results-${{ matrix.os }}
+          name: test-results-${{ matrix.os }}-${{ matrix.shell }}
           path: testResults.xml
           if-no-files-found: ignore

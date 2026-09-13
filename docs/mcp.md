@@ -100,15 +100,16 @@ claude mcp add intunegraph -- powershell.exe -NoLogo -NoProfile -NonInteractive 
 }
 ```
 
-### If the module is installed from PSGallery
+### If the module is installed from the PowerShell Gallery
 
-You can skip the launcher script and start the server from the installed module:
+You can skip the launcher script and start the server from the installed module
+(the Gallery package is `IntuneGraphKit`):
 
 ```json
 {
   "command": "pwsh",
   "args": ["-NoLogo", "-NoProfile", "-NonInteractive", "-InputFormat", "Text",
-           "-Command", "Import-Module IntuneGraph; Start-IntuneGraphMcp -Path 'D:/snapshots/contoso/graph.json'"]
+           "-Command", "Import-Module IntuneGraphKit; Start-IntuneGraphMcp -Path 'D:/snapshots/contoso/graph.json'"]
 }
 ```
 

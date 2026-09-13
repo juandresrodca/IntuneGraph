@@ -11,7 +11,7 @@
 param(
     [string[]]$TargetRoot = @(
         (Join-Path $PSScriptRoot 'Fixtures\contoso'),
-        (Join-Path $PSScriptRoot '..\src\IntuneGraph\DemoData')
+        (Join-Path $PSScriptRoot '..\src\IntuneGraphKit\DemoData')
     )
 )
 

@@ -9,5 +9,5 @@ param(
     [switch]$LogRequests
 )
 $ErrorActionPreference = 'Stop'
-Import-Module (Join-Path $PSScriptRoot '..\..\src\IntuneGraph\IntuneGraph.psd1') -Force
+Import-Module (Join-Path $PSScriptRoot '..\..\src\IntuneGraphKit\IntuneGraphKit.psd1') -Force
 Start-IntuneGraphMcp -Path $Path -LogRequests:$LogRequests
