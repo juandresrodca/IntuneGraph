@@ -23,7 +23,7 @@ live tenant. Nothing in the test suite loads it.
 ## Repository layout
 
 ```
-src/IntuneGraph/
+src/IntuneGraphKit/
 ├── Public/          one file per exported cmdlet — this is the supported surface
 ├── Private/         internals: Fetch, Normalize, GraphModel, Query, Emit, Mcp, Util
 ├── DemoData/        the Contoso tenant shipped to users via -DemoData
@@ -50,15 +50,17 @@ them aware of where the data came from, it belongs somewhere else.
 .\build.ps1 -Task Test     # Pester only
 .\build.ps1 -Task Analyze  # PSScriptAnalyzer only
 .\build.ps1 -Task Fixtures # regenerate the Contoso dataset
+.\build.ps1 -Task Publish  # release workflow only — see Releasing
 ```
 
-CI runs `Analyze` then `Test` on `windows-latest` and `ubuntu-latest` for every
-push and pull request, so run both locally before you open one.
+CI runs `Analyze` then `Test` for every push and pull request on Windows
+PowerShell 5.1 and PowerShell 7 on `windows-latest`, and PowerShell 7 on
+`ubuntu-latest`, so run both locally before you open one.
 
 ### PSScriptAnalyzer
 
 Settings live in [`PSScriptAnalyzerSettings.psd1`](PSScriptAnalyzerSettings.psd1)
-and apply to `src/IntuneGraph` recursively. Severity is `Error` and `Warning`;
+and apply to `src/IntuneGraphKit` recursively. Severity is `Error` and `Warning`;
 **errors fail the build, warnings do not.** Three rules are excluded, each with
 its reason written next to it — `PSAvoidUsingWriteHost` because the report
 cmdlets write formatted output to the host on purpose,
@@ -78,7 +80,7 @@ demo data cannot drift apart. To add a scenario:
 1. Edit the identity tables and workload definitions at the top of
    [`tests/New-ContosoFixtures.ps1`](tests/New-ContosoFixtures.ps1).
 2. Run `.\build.ps1 -Task Fixtures`. It rewrites both `tests/Fixtures/contoso`
-   and `src/IntuneGraph/DemoData`.
+   and `src/IntuneGraphKit/DemoData`.
 3. Update the expected counts in `tests/IntuneGraph.Tests.ps1` — they are
    asserted, and a scenario nobody counted is a scenario nobody tested.
 4. Commit the regenerated JSON along with your change.
@@ -124,6 +126,27 @@ A pull request wants:
   the format is [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and
   versions follow [SemVer](https://semver.org/),
 - documentation updated in the same pull request when behaviour changes.
+
+## Releasing
+
+Releases go out from CI, never from a workstation. The module is published to the
+PowerShell Gallery as **IntuneGraphKit** — `IntuneGraph` on the Gallery is an
+unrelated module by another author, which is why the two names differ (see
+[docs/discoverability.md](docs/discoverability.md#the-gallery-name-intunegraphkit)).
+
+1. Move the *Unreleased* entries in `CHANGELOG.md` under the new version and date.
+2. Set `ModuleVersion` in `src/IntuneGraphKit/IntuneGraphKit.psd1` to that version.
+3. Merge to `main`, then tag the merge commit and push the tag —
+   `git tag v0.3.0`, then `git push origin v0.3.0`.
+
+The Release workflow re-runs the whole CI matrix on the tagged commit, checks that the
+tag matches `ModuleVersion`, and only then publishes. A Gallery version can be unlisted
+but its number can never be reused, so that check is the last point at which a mistake
+costs nothing.
+
+The API key exists only as the `PSGALLERY_API_KEY` repository secret.
+`build.ps1 -Task Publish` reads it from the environment and refuses to run without
+it; there is deliberately no parameter for it.
 
 ## Where to start
 

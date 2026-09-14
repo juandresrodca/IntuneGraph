@@ -2,6 +2,7 @@
 
 **Turn your Microsoft Intune tenant into an interactive relationship graph.** See what actually applies to a device and *why*, preview the blast radius before you touch a group, and find the orphaned junk, all from a local, read-only snapshot.
 
+[![PowerShell Gallery](https://img.shields.io/powershellgallery/v/IntuneGraphKit?label=PSGallery)](https://www.powershellgallery.com/packages/IntuneGraphKit)
 [![PowerShell](https://img.shields.io/badge/PowerShell-5.1%20%7C%207%2B-5391FE)](#requirements)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Read-only](https://img.shields.io/badge/Graph%20scopes-read--only-brightgreen)](docs/permissions.md)
@@ -19,10 +20,12 @@ https://juandresrodca.github.io/IntuneGraph/demo/
 
 
 ```powershell
-Install-Module IntuneGraph -Scope CurrentUser      # (coming to PSGallery)
-Import-Module IntuneGraph
+Install-Module IntuneGraphKit -Scope CurrentUser
+Import-Module IntuneGraphKit
 Export-IntuneGraph -DemoData -PassThru | Show-IntuneGraph -Open
 ```
+
+> The Gallery package is **IntuneGraphKit**. The `IntuneGraph` package on the Gallery is an unrelated module by another author, and unlike this one it writes to Intune — check the name before you install.
 
 That builds the bundled **Contoso** demo tenant and opens   the interactive graph in your browser — zero Graph auth, zero setup. The whole tool works offline against demo data, which means you can evaluate it (and contribute to it) without ever touching a real tenant.
 

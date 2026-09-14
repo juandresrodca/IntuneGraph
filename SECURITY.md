@@ -14,7 +14,7 @@ If private reporting is unavailable to you, email **juandresrodca@gmail.com** wi
 
 Please include:
 
-- the module version (`(Get-Module IntuneGraph).Version`) and PowerShell version
+- the module version (`(Get-Module IntuneGraphKit).Version`) and PowerShell version
   (`$PSVersionTable.PSVersion`),
 - what you did, what happened, and what you expected,
 - a minimal reproduction — **against `-DemoData` wherever possible**, never against a
@@ -93,7 +93,7 @@ export the way you would treat any tenant extract:
 To reproduce almost anything, `-DemoData` is enough:
 
 ```powershell
-Import-Module IntuneGraph
+Import-Module IntuneGraphKit
 Export-IntuneGraph -DemoData -PassThru | Show-IntuneGraph
 ```
 

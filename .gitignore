@@ -13,11 +13,11 @@ site/.astro/
 out/
 IntuneGraph-*/
 *.html
-!src/IntuneGraph/Assets/template.html
+!src/IntuneGraphKit/Assets/template.html
 !site/public/**/*.html
 graph.json
 !tests/Fixtures/**/*.json
-!src/IntuneGraph/DemoData/**/*.json
+!src/IntuneGraphKit/DemoData/**/*.json
 
 # Test output
 TestResults/

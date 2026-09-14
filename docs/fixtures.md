@@ -31,7 +31,7 @@ A missing fixture is a hard error (silent empties would hide bugs).
 
 ## The Contoso dataset
 
-`tests/Fixtures/contoso` (mirrored to `src/IntuneGraph/DemoData`) is designed so
+`tests/Fixtures/contoso` (mirrored to `src/IntuneGraphKit/DemoData`) is designed so
 **each hygiene check fires exactly once** and every query scenario is covered:
 
 - **Nesting:** `SG-AllStaff` ⊃ `SG-Finance`, `SG-IT` → tests the `Via` path.

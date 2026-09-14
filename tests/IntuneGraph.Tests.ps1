@@ -3,7 +3,7 @@
 #requires -Modules @{ ModuleName = 'Pester'; ModuleVersion = '5.0.0' }
 
 BeforeAll {
-    $script:ModulePath = Join-Path $PSScriptRoot '..\src\IntuneGraph\IntuneGraph.psd1'
+    $script:ModulePath = Join-Path $PSScriptRoot '..\src\IntuneGraphKit\IntuneGraphKit.psd1'
     Import-Module $script:ModulePath -Force
     $script:FixtureRoot = Join-Path $PSScriptRoot 'Fixtures\contoso'
     $script:GraphPath = Join-Path $TestDrive 'graph.json'
@@ -16,7 +16,7 @@ BeforeAll {
     $script:McpSend = {
         param($Graph, [string[]]$Lines)
         $payload = ($Lines -join "`n")
-        $raw = & (Get-Module IntuneGraph) {
+        $raw = & (Get-Module IntuneGraphKit) {
             param($g, $text)
             $sw = New-Object System.IO.StringWriter
             Invoke-IgMcpLoop -Reader (New-Object System.IO.StringReader($text)) -Writer $sw -State (New-IgMcpState -Graph $g -Path $null)
@@ -44,8 +44,20 @@ Describe 'Module' {
         $expected = 'Connect-IntuneGraph', 'Disconnect-IntuneGraph', 'Export-IntuneGraph', 'Import-IntuneGraph',
         'Get-IntuneGraphNode', 'Get-IntuneTarget', 'Get-IntuneBlastRadius', 'Find-IntuneOrphan', 'Show-IntuneGraph',
         'Start-IntuneGraphMcp'
-        $actual = (Get-Command -Module IntuneGraph -CommandType Function).Name
+        $actual = (Get-Command -Module IntuneGraphKit -CommandType Function).Name
         ($expected | Sort-Object) | Should -Be ($actual | Sort-Object)
+    }
+    It 'carries the metadata the Gallery listing needs' {
+        # A published version's listing can never be corrected in place; only a new
+        # version fixes it. Catch a missing field here instead.
+        $m = Import-PowerShellDataFile $script:ModulePath
+        $m.CompatiblePSEditions    | Should -Contain 'Desktop'
+        $m.CompatiblePSEditions    | Should -Contain 'Core'
+        $m.PrivateData.PSData.Tags | Should -Contain 'PSEdition_Desktop'
+        $m.PrivateData.PSData.Tags | Should -Contain 'PSEdition_Core'
+        foreach ($uri in 'ProjectUri', 'LicenseUri', 'IconUri', 'ReleaseNotes') {
+            $m.PrivateData.PSData[$uri] | Should -Match '^https://' -Because "$uri is shown on the listing"
+        }
     }
 }
 
@@ -304,7 +316,7 @@ Describe 'MCP transport (feature 4)' {
         $out.Raw | Should -Match '\\n'                    # the rendered table's newlines, escaped
     }
     It 'serves every tool with the session disconnected, so no live tenant call is reachable' {
-        (InModuleScope IntuneGraph { $script:IgSession.Mode }) | Should -Be 'None'
+        (InModuleScope IntuneGraphKit { $script:IgSession.Mode }) | Should -Be 'None'
         foreach ($tool in 'intune_summary', 'intune_orphans', 'intune_node') {
             $out = & $script:McpSend $script:G @(& $script:McpToolRequest $tool @{})
             $out.Responses[0].result.isError | Should -BeFalse

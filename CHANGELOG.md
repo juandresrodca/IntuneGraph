@@ -4,6 +4,27 @@ All notable changes to IntuneGraph are documented here. Format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); versions follow
 [SemVer](https://semver.org/).
 
+## [Unreleased]
+
+### Changed
+- **The module is now `IntuneGraphKit`**: `Install-Module IntuneGraphKit`,
+  `Import-Module IntuneGraphKit`. The name `IntuneGraph` on the PowerShell Gallery
+  belongs to an unrelated module by another author, and a Gallery package name has to
+  match the module name. Cmdlet names, the `graph.json` format, the MCP server name and
+  the project name are unchanged. If you import from a clone, the path is now
+  `src/IntuneGraphKit/IntuneGraphKit.psd1`.
+- The README no longer tells visitors to run `Install-Module IntuneGraph`, which
+  installed that unrelated module instead of this one.
+- The manifest `Description` is now the same text as the repository description, and
+  the module has a freshly generated `GUID` ahead of its first Gallery publish.
+
+### Added
+- Release pipeline: pushing a `v*` tag re-runs the full CI matrix and, when it is green
+  and the tag matches `ModuleVersion`, publishes to the PowerShell Gallery
+  (`.github/workflows/release.yml`, `build.ps1 -Task Publish`).
+- Gallery listing metadata: `CompatiblePSEditions` plus the `PSEdition_Desktop` and
+  `PSEdition_Core` tags, so the module appears under both edition filters, and an icon.
+
 ## [0.2.0] - 2026-09-06
 
 ### Added

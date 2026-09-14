@@ -14,11 +14,29 @@ maintenance task — should change this file in the same commit, with the reason
 |---|---|---|
 | **GitHub search and topic pages** | Someone types `intune assignments` into GitHub, or lands on `github.com/topics/intune`. The topics decide whether this repo is in that result set at all. | Repository settings → Topics |
 | **The live demo** | `https://juandresrodca.github.io/IntuneGraph/demo/`, published by `.github/workflows/pages.yml`. Set as the repository homepage so it appears as a link in search results and in the sidebar. | Repository settings → Website |
-| **PowerShell Gallery** | The intended install route, `Install-Module IntuneGraph`. Gallery search reads the `Tags` in `src/IntuneGraph/IntuneGraph.psd1`, which are a separate list from GitHub topics and should stay in step with them. | `IntuneGraph.psd1` |
+| **PowerShell Gallery** | The install route, `Install-Module IntuneGraphKit` — see [*The Gallery name*](#the-gallery-name-intunegraphkit) for why it is not `IntuneGraph`. Gallery search reads the `Tags` in `src/IntuneGraphKit/IntuneGraphKit.psd1`, which are a separate list from GitHub topics and should stay in step with them. | `IntuneGraphKit.psd1` |
 
 The README's first screen is the fourth surface, and the only one that converts a
 visitor into a user. It leads with the demo command that needs no tenant, because the
 cost of trying this tool is the thing most likely to stop someone.
+
+---
+
+## The Gallery name: IntuneGraphKit
+
+The project is IntuneGraph; the module on the Gallery is **IntuneGraphKit**. That was
+not a choice between two names. `IntuneGraph` on the PowerShell Gallery was already
+taken — by an unrelated module from another author that uploads, assigns and removes
+Intune apps — and a Gallery package name has to equal the module name.
+
+The difference matters in one direction. Anyone who types the project name into
+`Install-Module` gets the other module: one with write cmdlets, installed on the
+strength of a README whose whole pitch is *read-only*. So the README's install block
+carries a one-line note naming the other package, and that note stays for as long as
+the other package exists.
+
+Everything a user does not install kept the project name: the repository, the site,
+the cmdlet names, the MCP server name (`intunegraph`) and the report title.
 
 ---
 
@@ -121,6 +139,10 @@ has to carry the whole pitch on its own — and it does. What follows it is ther
 visitor who has already clicked: the three questions the tool answers, then the two
 objections an admin raises before installing anything that touches their tenant
 (*does it write?* and *do I need a tenant to try it?*), answered before they are asked.
+
+The manifest `Description` in `src/IntuneGraphKit/IntuneGraphKit.psd1` carries the same
+text, so the Gallery listing and the repository make the same pitch. Change both in the
+same commit.
 
 ---
 
