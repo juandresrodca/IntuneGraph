@@ -19,11 +19,15 @@ https://juandresrodca.github.io/IntuneGraph/demo/
 ## Try it in 30  seconds, no tenant needed
 
 
+
+
 ```powershell
 Install-Module IntuneGraphKit -Scope CurrentUser
 Import-Module IntuneGraphKit
 Export-IntuneGraph -DemoData -PassThru | Show-IntuneGraph -Open
 ```
+
+
 
 > The Gallery package is **IntuneGraphKit**. The `IntuneGraph` package on the Gallery is an unrelated module by another author, and unlike this one it writes to Intune — check the name before you install.
 
@@ -33,7 +37,7 @@ That builds the bundled **Contoso** demo tenant and opens   the interactive grap
 
 ---
 
-## New: ask your AI *why* a policy applies — and get the group path, not a guess
+## New:  ask your AI *why* a policy applies — and get the group path, not a guess
 
 IntuneGraph ships an **MCP server**, so Claude Code or GitHub Copilot can query the
 graph directly:
