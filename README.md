@@ -9,7 +9,7 @@
 [![MCP](https://img.shields.io/badge/MCP-server%20included-8A2BE2)](docs/mcp.md)
 [![Tests](https://img.shields.io/badge/tests-fixture--driven-blue)](tests/)
 
->  Intune assignments *are* a graph , groups nest, filters narrow,   includes and excludes fight. But every existing tool shows you flat lists. IntuneGraph makes the graph the data model, so the questions admins actually ask become simple queries.
+>  Intune  assignments *are* a graph , groups nest, filters narrow,   includes and excludes fight. But every existing tool shows you flat lists. IntuneGraph makes the graph the data model, so the questions admins actually ask become simple queries.
 
 ---
 Demo:
