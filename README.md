@@ -162,6 +162,8 @@ IntuneGraph is  deliberately *not*  another  config-backup tool — it's the rel
 | **MCP server (ask an AI, offline)** | ✅ | – | – | – |
 | Config backup / config-as-code | – | – | ✅ | – |
 
+Wondering when to reach for **Graph Explorer** or the **Intune admin centre** instead? [docs/comparison.md](docs/comparison.md) has the decision table, four worked workflows, and an explicit list of what IntuneGraph will *not* tell you.
+
 ## Requirements
 
 - **PowerShell 7+** recommended; ** Windows PowerShell 5.1 ** supported.
