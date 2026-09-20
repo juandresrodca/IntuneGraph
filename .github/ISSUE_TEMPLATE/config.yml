@@ -1,0 +1,17 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability (do not open an issue)
+    url: https://github.com/juandresrodca/IntuneGraph/security/advisories/new
+    about: >
+      IntuneGraph reads production tenants. Report privately through GitHub Security
+      Advisories; SECURITY.md sets out what to include and how to redact evidence.
+  - name: Usage question — try the interactive demo first
+    url: https://juandresrodca.github.io/IntuneGraph/demo/
+    about: >
+      Export-IntuneGraph -DemoData reproduces most questions offline in under a minute,
+      and docs/comparison.md says when to reach for Graph Explorer instead.
+  - name: Contributing — layout, build tasks and what will not be accepted
+    url: https://github.com/juandresrodca/IntuneGraph/blob/main/CONTRIBUTING.md
+    about: >
+      No tenant is needed to contribute. CONTRIBUTING.md covers build.ps1, the
+      PSScriptAnalyzer settings and the guarantees a change must not break.

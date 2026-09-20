@@ -1,0 +1,69 @@
+name: Feature request
+description: A question about a tenant that IntuneGraph should be able to answer, but cannot.
+title: "feat: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        IntuneGraph exists to answer the questions an Intune admin actually asks —
+        *what applies here and why*, *what breaks if I touch this*, *what is assigned to
+        nothing*. The most useful feature requests start from the question, not the
+        cmdlet.
+
+  - type: textarea
+    id: scenario
+    attributes:
+      label: The Intune scenario
+      description: >
+        What were you trying to find out, and why? Describe the admin task, not the API
+        call — the shape of the answer usually follows from it.
+      placeholder: |
+        Before a filter change I want to know which configuration policies would start or
+        stop applying to a given device, so I can tell the service desk what to expect.
+    validations:
+      required: true
+
+  - type: textarea
+    id: today
+    attributes:
+      label: How you answer that question today
+      description: >
+        Portal clicks, a script, Graph Explorer, a spreadsheet — whatever it currently
+        costs you. This is what the feature has to beat.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What IntuneGraph should do
+      description: >
+        A cmdlet, a parameter, a hygiene check, a graph view. Sketch the invocation and
+        the output shape if you have one in mind.
+      render: powershell
+
+  - type: dropdown
+    id: data-source
+    attributes:
+      label: Can this be answered from the read-only snapshot?
+      description: >
+        Every Graph call in this project is a `GET` against the four read-only scopes in
+        [docs/permissions.md](https://github.com/juandresrodca/IntuneGraph/blob/main/docs/permissions.md), and that is not
+        negotiable. A feature needing a write or a new scope needs a discussion first.
+      options:
+        - "Yes — the data is already in the graph"
+        - "It needs another read-only Graph endpoint"
+        - "It would need a write or a new scope"
+        - "Not sure"
+    validations:
+      required: true
+
+  - type: textarea
+    id: fixture
+    attributes:
+      label: What the Contoso fixtures would need
+      description: >
+        Optional, but it is the fastest route to a merge. Tests run on generated
+        fixtures — see [docs/fixtures.md](https://github.com/juandresrodca/IntuneGraph/blob/main/docs/fixtures.md). Which
+        scenario would the demo tenant need so this can be tested offline?

@@ -1,0 +1,106 @@
+name: Bug report
+description: Something IntuneGraph reported is wrong, or it failed outright.
+title: "fix: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Never paste real tenant data.** Group names, UPNs, device names, tenant and
+        object IDs are all identifying. Reproduce against `-DemoData` wherever you can,
+        and redact the rest — see [SECURITY.md](https://github.com/juandresrodca/IntuneGraph/blob/main/SECURITY.md#sharing-evidence-safely).
+
+        Found a security problem instead? Do not open an issue —
+        [report it privately](https://github.com/juandresrodca/IntuneGraph/security/advisories/new).
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you ran, what it returned, and what you expected instead.
+      placeholder: |
+        Get-IntuneTarget -DeviceName <redacted> returned three compliance policies.
+        The Intune portal shows four; the missing one is assigned via a nested group.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: reproduces-on-demo
+    attributes:
+      label: Does it reproduce on demo data?
+      description: >
+        `Export-IntuneGraph -DemoData` builds the Contoso tenant offline. A bug that
+        reproduces there can be fixed and regression-tested without anyone touching a
+        real tenant, so it gets looked at first.
+      options:
+        - "Yes — it reproduces with -DemoData"
+        - "No — only against a live tenant"
+        - "I have not tried yet"
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: >
+        The exact commands, in order. If it reproduces on demo data, start from
+        `Export-IntuneGraph -DemoData` so anyone can follow it.
+      render: powershell
+      placeholder: |
+        Import-Module IntuneGraphKit
+        $g = Export-IntuneGraph -DemoData -PassThru
+        Get-IntuneTarget -Graph $g -DeviceName 'CONTOSO-LT-004'
+    validations:
+      required: true
+
+  - type: input
+    id: module-version
+    attributes:
+      label: Module version
+      description: "`(Get-Module IntuneGraphKit -ListAvailable).Version`"
+      placeholder: "0.2.0"
+    validations:
+      required: true
+
+  - type: input
+    id: powershell-version
+    attributes:
+      label: PowerShell version and OS
+      description: "`$PSVersionTable.PSVersion` and the platform you ran it on."
+      placeholder: "7.4.6 on Windows 11 / 5.1.22621 on Windows Server 2022"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: tenant-size
+    attributes:
+      label: Approximate tenant size
+      description: >
+        Traversal and paging behaviour changes with scale, so this narrows the search
+        considerably. A rough band is enough — leave it blank for demo-data bugs.
+      options:
+        - "Demo data (no tenant)"
+        - "Under 500 devices"
+        - "500 - 5,000 devices"
+        - "5,000 - 50,000 devices"
+        - "Over 50,000 devices"
+
+  - type: textarea
+    id: output
+    attributes:
+      label: Error or output, redacted
+      description: >
+        The terminal output, with names and IDs replaced. Add `-Verbose` if the failure
+        is in a fetch or a traversal.
+      render: text
+
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Before you submit
+      options:
+        - label: I have removed every real group name, UPN, device name and tenant or object ID.
+          required: true
+        - label: I have checked the open issues for the same report.
+          required: true
