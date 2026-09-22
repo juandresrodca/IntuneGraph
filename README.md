@@ -1,6 +1,6 @@
 # IntuneGraph
 
-**Turn your Microsoft Intune tenant into an interactive relationship graph.** See what actually applies to a device and *why*, preview the blast radius before you touch a group, and find the orphaned junk, all from a local, read-only snapshot — from PowerShell, in a self-contained HTML viewer that makes zero network calls, or by asking your AI assistant through the bundled MCP server.
+**Turn your Microsoft Intune tenant into an interactive relationship graph, and ask your AI why a policy applies through the bundled MCP server.** See what applies to a device or user and why, preview a group's blast radius, find broken assignments. Read-only Graph, offline demo, self-contained HTML viewer. Zero write scopes.
 
 [![PowerShell Gallery](https://img.shields.io/powershellgallery/v/IntuneGraphKit?label=PSGallery)](https://www.powershellgallery.com/packages/IntuneGraphKit)
 [![PowerShell](https://img.shields.io/badge/PowerShell-5.1%20%7C%207%2B-5391FE)](#requirements)
