@@ -206,7 +206,7 @@ While submitting, EntraHuntKit's `ioc/malicious-oauth-app-ids.md` was found to b
 hand-maintaining a table of Microsoft first-party app IDs, and two of its six rows had
 drifted from [merill/microsoft-info](https://github.com/merill/microsoft-info), the
 maintained daily-regenerated source for exactly that data. It now cites the feed rather
-than restating it ([EntraHuntKit#5](https://github.com/juandresrodca/EntraHuntKit/pull/5)).
+than restating it ([EntraHuntKit#6](https://github.com/juandresrodca/EntraHuntKit/pull/6)).
 
 Worth generalising: an index maintainer notices when a submission duplicates something
 they already maintain. Citing it is both more accurate and a better first impression than
