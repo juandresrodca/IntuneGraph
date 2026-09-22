@@ -162,6 +162,68 @@ together rather than listing every repository flat.
 
 ---
 
+## Index submissions
+
+Reach is not the metric; overlap is. A list read by the people who administer the thing
+this tool models is worth more than a general-purpose one with a hundred times the stars.
+The entry that matters is the one on the list the audience already reads.
+
+This table is the record. **Check it before submitting anywhere**, so that a rejected
+entry is not cheerfully resubmitted six months later by someone who has forgotten.
+
+| Date | Index | Repo | Section | PR | State |
+|---|---|---|---|---|---|
+| 2026-09-22 | [merill/awesome-entra](https://github.com/merill/awesome-entra) | IntuneGraph | Tools -> CLI | [#27](https://github.com/merill/awesome-entra/pull/27) | Open |
+| 2026-09-22 | [merill/awesome-entra](https://github.com/merill/awesome-entra) | [EntraHuntKit](https://github.com/juandresrodca/EntraHuntKit) | Tools -> Log Analytics, KQL, Logic Apps | [#28](https://github.com/merill/awesome-entra/pull/28) | Open |
+
+### The rules that list enforces
+
+Its `contributing.md` is short and it is checked. One link per pull request, which is why
+these are two PRs and not one. Alphabetical ordering where the section already has it: the
+CLI list does, so IntuneGraph sits between GraphRunner and JWTDetails; the KQL list does
+not, so EntraHuntKit went beside the other `Entra*` entries. A stars badge, a description
+ending in a full stop, no trailing whitespace, and a PR title of the form
+`Add user/repo - Short repo description`.
+
+Two things it does not spell out, but that a maintainer looks for anyway: whether the
+project credits its alternatives rather than talking past them, which is what
+[`comparison.md`](comparison.md) is for, and whether a contributor arriving from the list
+has somewhere to land, which is what the issue forms and pull request template under
+`.github/` are for. Neither existed a fortnight ago, and submitting before they did would
+have been submitting a worse repository.
+
+### One description, not four
+
+A listing is another place the project describes itself, and the quickest way to look
+careless is to describe it differently in each one. So the entry text is the **repository
+description, verbatim** - the same text recorded under [*Description*](#description)
+above. Four surfaces now carry it: the repository description, the README's opening
+paragraph, the manifest `Description` in `IntuneGraphKit.psd1`, and the awesome-entra
+entry. One sentence, four places.
+
+The README lead was reworded in this commit to close a gap that had already opened
+against the description, and both now lead with the MCP server - which is the point of
+that wording. A truncated search result, a Gallery listing and a one-line index entry all
+get cut at roughly the same place, so the thing that separates this from flat-list
+assignment tools has to survive the cut.
+
+That makes the rule stated for the Gallery manifest wider than it was: changing the pitch
+means changing all four in the same commit, and the fourth now lives in somebody else's
+repository. If the description changes while an entry is listed, the PR that changes it
+here is the one that opens the PR there.
+
+### Deferring to upstream
+
+While submitting, EntraHuntKit's `ioc/malicious-oauth-app-ids.md` was found to be
+hand-maintaining a table of Microsoft first-party app IDs, and two of its six rows had
+drifted from [merill/microsoft-info](https://github.com/merill/microsoft-info), the
+maintained daily-regenerated source for exactly that data. It now cites the feed rather
+than restating it ([EntraHuntKit#6](https://github.com/juandresrodca/EntraHuntKit/pull/6)).
+
+Worth generalising: an index maintainer notices when a submission duplicates something
+they already maintain. Citing it is both more accurate and a better first impression than
+a copy that quietly rots.
+
 ## Reviewing this
 
 Worth a look whenever the project gains a capability that someone would search for by
