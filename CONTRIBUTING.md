@@ -38,6 +38,11 @@ tools/gif/           the README demo recorder
 site/                the Astro page behind the GitHub Pages demo
 ```
 
+Screenshots and the README animation live in `docs/img/`, and
+[`docs/img/README.md`](docs/img/README.md) says how each one is produced — `demo.gif` is
+rendered headlessly by `tools/gif/`, not screen-captured, so regenerating it needs a
+fresh `Export-IntuneGraph -DemoData` rather than a recording session.
+
 The rule that keeps the codebase honest: **`Invoke-IgRequest` is the only seam
 that knows whether data is live or mocked.** Fetchers, normalisers, the graph
 builder, queries and the emitters are all mode-blind. If a change makes any of
