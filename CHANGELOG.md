@@ -19,6 +19,12 @@ All notable changes to IntuneGraph are documented here. Format follows
   the module has a freshly generated `GUID` ahead of its first Gallery publish.
 
 ### Added
+- [docs/FAQ.md](docs/FAQ.md): thirteen questions that keep arriving — which Gallery
+  package to install and why the name matters, delegated versus app-only auth, why an
+  exclusion beats an include through a nested group, what `AppliesPreFilter` does and
+  does not claim, why `Get-IntuneTarget` can return nothing, what an export costs on a
+  large tenant, whether `graph.json` is safe to share, and 5.1 versus 7. Linked from
+  the README.
 - Release pipeline: pushing a `v*` tag re-runs the full CI matrix and, when it is green
   and the tag matches `ModuleVersion`, publishes to the PowerShell Gallery
   (`.github/workflows/release.yml`, `build.ps1 -Task Publish`).

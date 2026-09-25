@@ -179,6 +179,8 @@ IntuneGraph is  deliberately *not*  another  config-backup tool — it's the rel
 
 Wondering when to reach for **Graph Explorer** or the **Intune admin centre** instead? [docs/comparison.md](docs/comparison.md) has the decision table, four worked workflows, and an explicit list of what IntuneGraph will *not* tell you.
 
+Shorter questions — which package to install, why an exclusion wins, what `AppliesPreFilter` means, whether `graph.json` is safe to share — are answered in [docs/FAQ.md](docs/FAQ.md).
+
 ## Requirements
 
 - **PowerShell 7+** recommended; ** Windows PowerShell 5.1 ** supported.
