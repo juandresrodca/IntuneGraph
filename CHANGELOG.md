@@ -4,15 +4,29 @@ All notable changes to IntuneGraph are documented here. Format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/); versions follow
 [SemVer](https://semver.org/).
 
+`0.1.0` and `0.2.0` predate the release pipeline: both are described below, but neither
+carries a git tag or a GitHub release, so `-RequiredVersion 0.1.0` cannot be installed
+and no `v0.1.0...v0.2.0` comparison exists. Tagging starts at `0.3.0`; the per-version
+comparison links at the foot of this file start there with it.
+
 ## [Unreleased]
 
+Everything below is written and on `main`; it ships as **0.3.0**. A minor bump rather
+than a patch because the module name changed, and pre-1.0 SemVer puts a breaking change
+there. Cutting it needs the two steps only a human should take — set `ModuleVersion` to
+`0.3.0` in the manifest, then push `v0.3.0` — because that tag publishes to the
+PowerShell Gallery and a Gallery version number can never be reused. The sequence is in
+[CONTRIBUTING.md](CONTRIBUTING.md#releasing).
+
 ### Changed
-- **The module is now `IntuneGraphKit`**: `Install-Module IntuneGraphKit`,
+- **BREAKING — the module is now `IntuneGraphKit`**: `Install-Module IntuneGraphKit`,
   `Import-Module IntuneGraphKit`. The name `IntuneGraph` on the PowerShell Gallery
   belongs to an unrelated module by another author, and a Gallery package name has to
   match the module name. Cmdlet names, the `graph.json` format, the MCP server name and
   the project name are unchanged. If you import from a clone, the path is now
-  `src/IntuneGraphKit/IntuneGraphKit.psd1`.
+  `src/IntuneGraphKit/IntuneGraphKit.psd1`. Existing scripts need their
+  `Import-Module IntuneGraph` line changed to `Import-Module IntuneGraphKit`; nothing
+  else in a caller changes, because no cmdlet was renamed.
 - The README no longer tells visitors to run `Install-Module IntuneGraph`, which
   installed that unrelated module instead of this one.
 - The manifest `Description` is now the same text as the repository description, and
@@ -68,3 +82,7 @@ Initial release.
 - `Connect-IntuneGraph` / `Disconnect-IntuneGraph` — least-privilege, read-only.
 - `Import-IntuneGraph` / `Get-IntuneGraphNode`.
 - Bundled Contoso demo tenant (`-DemoData`) and fixture-driven Pester suite.
+
+<!-- Comparison links. There are no tags before v0.3.0, so Unreleased points at the
+     commit log; add a compare link per version as each tag is pushed. -->
+[Unreleased]: https://github.com/juandresrodca/IntuneGraph/commits/main
