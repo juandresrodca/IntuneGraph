@@ -252,6 +252,32 @@ portal owns state.
 
 ---
 
+## Community tools that overlap
+
+IntuneGraph is not the only project working on Intune assignments, and for several
+questions it is not the best answer. The tools below overlap with part of its scope.
+Each row says what the project does and when to reach for it instead — the honest
+answer is often "that one".
+
+| Project | What it does | Reach for it when |
+|---|---|---|
+| [IntuneAssignmentChecker](https://github.com/ugurkocde/IntuneAssignmentChecker) | PowerShell 7 module, on the PowerShell Gallery, that audits assignments for a user, group or device from a menu-driven interface; flags unassigned policies and empty assignment groups, and writes an HTML report | you want an assignment audit straight against the live tenant with no export step, or a report to hand to someone |
+| [IntuneAssignmentChecker-MCP](https://github.com/ugurkocde/IntuneAssignmentChecker-MCP) | read-only MCP server over Graph `/beta`, running locally over stdio with delegated browser sign-in and an OS-protected token cache | you want an assistant to answer assignment questions about the tenant *as it is right now*. This is the closest twin to IntuneGraph's own MCP server, which reads an offline `graph.json` snapshot instead — live state against reproducible structure is the real trade-off between them |
+| [IntuneManagement](https://github.com/Micke-K/IntuneManagement) | WPF PowerShell application for export, import, copy, compare and documentation of Intune and Azure objects, including cross-tenant migration with a generated group migration table and dependency-aware import ordering | you need to back up, clone or migrate configuration between tenants. IntuneGraph has no write path at all |
+| [Get-IntuneAppAssignmentsAndRelationsReport](https://github.com/petripaavola/Get-IntuneAppAssignmentsAndRelationsReport) | HTML reports for app assignments with impact counts, plus a second report for app supersedence and dependency relationships, including detection-rule checks on superseded apps | the question is about applications specifically. Supersedence and dependency chains are relationships IntuneGraph does not model, and this is the tool that does |
+| [GroupCentricDocumentation](https://github.com/MHimken/GroupCentricDocumentation) | visualises what is assigned to a given group and emits JSON, with a Mermaid mind-map format in development | you want the group's-eye view documented for later comparison. It asks the same question as `Get-IntuneBlastRadius`, from the group side rather than the change side |
+| [GetIntuneAssignments](https://github.com/sibranda/GetIntuneAssignments) | C#/.NET desktop application for looking up which assignments target a given Entra group, device or user, with CSV export | you want a point-and-click lookup rather than a shell. The `Via` path is not its job — it tells you *what* targets the object, not the chain |
+| [intune-dashboard](https://github.com/haavarstein/intune-dashboard) | client-side browser dashboard over live Graph and local diagnostic exports, covering operational tabs such as app install failures, hardware, Autopilot, BitLocker key escrow and compliance posture | you need operational state — did it install, is the key escrowed, is the device healthy. That is precisely the class of question IntuneGraph refuses to answer |
+
+Two things worth saying plainly about this list. The first is that live-tenant tools and
+snapshot tools are not competitors: an audit of what is true now and a reproducible
+model you can diff, query offline and attach to a change request are different jobs, and
+most administrators want both. The second is that if you maintain one of these projects
+and the row above describes it wrongly or unfairly, please open an issue — a correction
+from the person who wrote the tool is worth more than anything inferred from its README.
+
+---
+
 ## Related reading
 
 - [permissions.md](permissions.md) — the four read-only scopes, app-only auth, national clouds
