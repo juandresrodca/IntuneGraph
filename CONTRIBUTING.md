@@ -32,7 +32,7 @@ tests/
 ├── IntuneGraph.Tests.ps1     the Pester 5 suite
 ├── New-ContosoFixtures.ps1   the generator that writes both fixture trees
 └── Fixtures/contoso/         what the tests read
-docs/                fixtures, permissions, MCP wiring, discoverability
+docs/                fixtures, permissions, MCP wiring, discoverability, publishing
 tools/mcp/           the MCP stdio launcher
 tools/gif/           the README demo recorder
 site/                the Astro page behind the GitHub Pages demo
@@ -140,7 +140,10 @@ unrelated module by another author, which is why the two names differ (see
 [docs/discoverability.md](docs/discoverability.md#the-gallery-name-intunegraphkit)).
 
 1. Move the *Unreleased* entries in `CHANGELOG.md` under the new version and date.
-2. Set `ModuleVersion` in `src/IntuneGraphKit/IntuneGraphKit.psd1` to that version.
+2. Set `ModuleVersion` in `src/IntuneGraphKit/IntuneGraphKit.psd1` to that version, and
+   bump the other places the version is written down — the table in
+   [docs/publishing.md](docs/publishing.md#where-the-version-lives) lists all six,
+   and only one of them is checked by CI.
 3. Merge to `main`, then tag the merge commit and push the tag —
    `git tag v0.3.0`, then `git push origin v0.3.0`.
 
@@ -152,6 +155,10 @@ costs nothing.
 The API key exists only as the `PSGALLERY_API_KEY` repository secret.
 `build.ps1 -Task Publish` reads it from the environment and refuses to run without
 it; there is deliberately no parameter for it.
+
+Those three steps are the outline. [docs/publishing.md](docs/publishing.md) is the whole
+checklist: the manifest fields to verify, what the gates cover, how to create the key,
+the GitHub release that the workflow does not create, and what to do when a run fails.
 
 ## Where to start
 
