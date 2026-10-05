@@ -4,6 +4,11 @@ Short answers to the questions that come up most. Where a question has a long
 answer, it lives in [comparison.md](comparison.md) or [permissions.md](permissions.md)
 and this page links to it rather than repeating it.
 
+When something is actually broken rather than merely surprising — consent refused
+partway through an export, a blank HTML report, an MCP server the client will not start —
+[troubleshooting.md](troubleshooting.md) works through the failure modes symptom by
+symptom.
+
 ---
 
 ### Do I need an Intune tenant to try this?
@@ -118,6 +123,10 @@ In rough order of likelihood:
    (MAM), Autopilot profiles and enrolment restrictions are not read, so they never
    appear in a `Via` path even when they are the real reason the device behaves as it
    does.
+
+If the export itself came back empty, the cause is upstream of the query —
+[troubleshooting.md](troubleshooting.md#the-export-finishes-with-nodes-0---edges-0) has
+the four candidates and how to tell them apart.
 
 ---
 

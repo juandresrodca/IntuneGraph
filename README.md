@@ -183,6 +183,8 @@ The same guide credits the wider set of community projects that overlap with thi
 
 Shorter questions — which package to install, why an exclusion wins, what `AppliesPreFilter` means, whether `graph.json` is safe to share — are answered in [docs/FAQ.md](docs/FAQ.md).
 
+When something is broken rather than surprising, [docs/troubleshooting.md](docs/troubleshooting.md) goes failure mode by failure mode — consent refused partway through an export, a throttled tenant that looks like a hang, an empty graph, a blank report, 5.1-versus-7 differences, an MCP server the client will not start — each written as symptom, cause and fix.
+
 ## Requirements
 
 - **PowerShell 7+** recommended; ** Windows PowerShell 5.1 ** supported.
