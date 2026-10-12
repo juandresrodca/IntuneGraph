@@ -1,6 +1,11 @@
 # Normalize line endings. PowerShell + web assets use LF in the repo.
 * text=auto eol=lf
 
+# Binaries, declared explicitly so no image depends on git's content sniffing.
+# *.mp4 is here before any MP4 is: docs/img/README.md gives it as the fallback
+# format for the viewer capture, and that file must not arrive undeclared.
 *.png binary
 *.jpg binary
 *.ico binary
+*.gif binary
+*.mp4 binary

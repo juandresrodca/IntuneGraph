@@ -105,5 +105,10 @@ network calls** — it illustrates that section honestly.
 - Put it here, in `docs/img/`. Reference it with a repository-relative path so it works
   on GitHub, on the Gallery listing and in a local Markdown preview alike.
 - Alt text describes what the image shows, not that it is an image.
+- Declare the extension `binary` in [`.gitattributes`](../../.gitattributes) before the
+  first file of that type is committed. `*.png`, `*.jpg`, `*.gif` and `*.mp4` are already
+  there. Without an entry the repository-wide `* text=auto eol=lf` is free to treat the
+  file as text and strip its CR bytes on commit, and no image or video format checksums
+  its own payload — the result is a silently corrupt frame, not an error.
 - Nothing captured from a real tenant, ever — not a device name, not a UPN, not a group
   name. `-DemoData` produces a graph rich enough for any screenshot this project needs.
