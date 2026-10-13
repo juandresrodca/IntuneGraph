@@ -27,14 +27,74 @@ npm run build                                             # -> ../../docs/img/de
 recorder is the only thing that reads it. Regenerate it whenever the demo dataset
 changes, or the GIF will keep showing the graph the dataset used to be.
 
-The animation is three phases, and the order matters:
+The animation is four phases over a **6,520 ms** loop, and the order matters:
 
-1. **Settle** — 34 frames at 70 ms while the layout relaxes, camera easing to fit.
-2. **Hold** — 6 frames on the settled graph.
-3. **Explain** — 12 frames each on `SG-Finance` and `LOB Finance App`, dimming
-   everything outside the node's neighbourhood. This is the only part that shows the
-   product's actual claim: a solid green edge for the include, a red dashed one for the
-   exclude, and the group path between them.
+| Phase | Frames | Starts at | Lasts |
+|---|---|---|---|
+| 1 — Settle | 34 × 70 ms | 0 ms | 2,380 ms |
+| 2 — Hold | 6 × 90 ms | 2,380 ms | 540 ms |
+| 3 — Explain `SG-Finance` | 2 × 60 + 10 × 120 ms | 2,920 ms | 1,320 ms |
+| 3 — Explain `LOB Finance App` | 2 × 60 + 10 × 120 ms | 4,240 ms | 1,320 ms |
+| 4 — Return to full view | 8 × 120 ms | 5,560 ms | 960 ms |
+| | **72 frames** | | **6,520 ms** |
+
+1. **Settle** — the layout relaxes while the camera eases to fit.
+2. **Hold** — six frames on the settled graph, so it reads as a shape before anything
+   moves again.
+3. **Explain** — one beat each on `SG-Finance` and `LOB Finance App`, dimming everything
+   outside the node's neighbourhood. This is the only part that shows the product's
+   actual claim: a solid green edge for the include, a red dashed one for the exclude,
+   and the group path between them.
+4. **Return to full view** — back to the undimmed graph, and the **loop point**: the last
+   frame here cuts straight to the first frame of the settle. A replacement capture has
+   to end somewhere it can cut back to its own opening, which is what makes this beat
+   worth listing rather than trimming.
+
+The offsets above come from the four runs of `push()` in `make-gif.mjs`. Do not take them
+from the source alone — the committed blob is what the README serves, and #12 is an open
+case of the two having drifted apart. Read the delays back out of the file itself:
+
+```bash
+python3 - <<'EOF'
+d = open('docs/img/demo.gif', 'rb').read()
+i, delays, flags = 13, [], d[10]
+if flags & 0x80: i = 13 + 3 * 2 ** ((flags & 7) + 1)
+while i < len(d):
+    if d[i] == 0x21 and d[i+1] == 0xF9:          # Graphic Control Extension
+        delays.append(d[i+4] | d[i+5] << 8); i += 8
+    elif d[i] == 0x21:                            # other extension
+        i += 2
+        while d[i]: i += d[i] + 1
+        i += 1
+    elif d[i] == 0x2C:                            # image descriptor
+        lf = d[i+9]; i += 10
+        if lf & 0x80: i += 3 * 2 ** ((lf & 7) + 1)
+        i += 1
+        while d[i]: i += d[i] + 1
+        i += 1
+    elif d[i] == 0x3B: break
+    else: i += 1
+cs = [x * 10 for x in delays]
+runs = []
+for v in cs:
+    if runs and runs[-1][1] == v: runs[-1][0] += 1
+    else: runs.append([1, v])
+print('frames', len(cs), '| loop', sum(cs), 'ms |', [tuple(r) for r in runs])
+EOF
+```
+
+which prints, for the file committed today:
+
+```text
+frames 72 | loop 6520 ms | [(34, 70), (6, 90), (2, 60), (10, 120), (2, 60), (18, 120)]
+```
+
+Six runs for five beats, because the two `120 ms` stretches merge: the ten tail frames of
+the second explain beat and the eight return frames share a delay. Everything else matches
+the table exactly. Run this rather than editing the numbers by hand whenever the recorder
+changes — it reads the artefact, so it catches a recorder and a committed file that no
+longer agree, which is #12's failure mode in the timing dimension instead of the branding
+one.
 
 ### Known defect: the committed GIF and the recorder disagree
 
@@ -47,10 +107,26 @@ an unrelated change — settle the name first.
 
 ## The recording that is still missing
 
-Phase 3 is the valuable second of the whole loop, and it arrives 4.5 seconds in. A
-visitor who looks at the README for eight seconds sees a graph jiggling. The fix is not
-a better render; it is a short screen capture of the real viewer being *used*, placed in
-the first screenful, with the rendered GIF kept lower down where it already sits.
+The explain beat is the valuable part of the loop, and it arrives **2.92 s** in — so a
+visitor giving the README eight seconds sees it twice over, and waiting for it is not the
+complaint. What that visitor also sees is the settle: **2,380 ms, 36% of a 6,520 ms
+loop**, spent on the one beat this page itself says says nothing.
+
+That is a narrower problem than a late payoff, and it has two fixes of very different
+cost. The choice is worth making on the figures rather than by default:
+
+- **Trim the settle — cheap, no recorder.** Drop the first loop in `make-gif.mjs` from 34
+  frames to around ten and the explain beat lands inside the first second. What it costs
+  is legibility: the settle is what makes the layout read *as* a layout rather than as a
+  graph that was always that shape, and ten frames at 70 ms is 700 ms to carry that. It
+  may not be enough. Try it and look before committing to it.
+- **Capture the real viewer — expensive, needs Juan.** A render cannot show the search
+  box being typed into or a side panel opening, and that is the part a visitor can imagine
+  themselves doing. This is the stronger fix and the only one that adds anything new.
+
+They are not exclusive, and neither is blocked on the other. The capture is specified
+below and is still wanted; the trim is a half-hour experiment that would improve the
+existing GIF whether or not the capture ever happens.
 
 **This needs Juan — it cannot be automated.** Spec for the capture:
 
