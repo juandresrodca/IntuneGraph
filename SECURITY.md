@@ -97,7 +97,7 @@ Import-Module IntuneGraphKit
 Export-IntuneGraph -DemoData -PassThru | Show-IntuneGraph
 ```
 
-The bundled Contoso tenant exercises nested groups, filters and include/exclude
+The bundled Silver Chariot Corporate tenant exercises nested groups, filters and include/exclude
 collisions without a single real identifier. If a report genuinely needs tenant shape,
 send counts and structure — "1 400 devices, 6-deep nesting, 3 exclusion groups" — not
 names, not GUIDs, not the file.

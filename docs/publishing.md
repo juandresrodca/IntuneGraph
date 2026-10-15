@@ -95,7 +95,7 @@ One trap: on a machine without PSScriptAnalyzer, `build.ps1` prints a warning an
 step instead of failing. A skipped gate looks like a passed one. Look for
 `PSScriptAnalyzer: clean.` in the output rather than for the absence of red.
 
-**Pester.** The whole suite runs against the Contoso fixtures: no tenant, no network. A
+**Pester.** The whole suite runs against the bundled fixtures: no tenant, no network. A
 failing test fails the CI step, because `Invoke-Pester` leaves its failure count in
 `$LASTEXITCODE` and the Actions step wrapper exits with it. `build.ps1` does not exit
 with that number itself: run from a prompt it finishes with status 0 even when tests

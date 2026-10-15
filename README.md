@@ -31,7 +31,7 @@ Export-IntuneGraph -DemoData -PassThru | Show-IntuneGraph -Open
 
 > The Gallery package is **IntuneGraphKit**. The `IntuneGraph` package on the Gallery is an unrelated module by another author, and unlike this one it writes to Intune — check the name before you install.
 
-That builds the bundled **Contoso** demo tenant and opens   the interactive graph in your browser — zero Graph auth, zero setup. The whole tool works offline against demo data, which means you can evaluate it (and contribute to it) without ever touching a real tenant.
+That builds the bundled **Silver Chariot Corporate** demo tenant and opens   the interactive graph in your browser — zero Graph auth, zero setup. The whole tool works offline against demo data, which means you can evaluate it (and contribute to it) without ever touching a real tenant.
 
 ---
 
@@ -79,7 +79,7 @@ for the server and the method for using it — is specified in
 
 ## One HTML file, zero network calls
 
-![IntuneGraph interactive demo — the Contoso tenant as a relationship graph](docs/img/demo.gif)
+![IntuneGraph interactive demo — the Silver Chariot Corporate tenant as a relationship graph](docs/img/demo.gif)
 
 `Show-IntuneGraph` writes the graph to a single self-contained HTML file. The renderer,
 the styles and the data are all inlined, so the page makes **zero network calls**: no

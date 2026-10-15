@@ -45,6 +45,22 @@ PowerShell Gallery and a Gallery version number can never be reused. The sequenc
 - Gallery listing metadata: `CompatiblePSEditions` plus the `PSEdition_Desktop` and
   `PSEdition_Core` tags, so the module appears under both edition filters, and an icon.
 
+### Fixed
+- The documentation calls the demo tenant by the name the demo data gives it.
+  `src/IntuneGraphKit/DemoData/manifest.json` sets `tenantName` to **Silver Chariot
+  Corporate**, which is what the viewer header, the hosted demo and the MCP
+  `intune_summary` tool have always reported, while the README, `CONTRIBUTING.md`,
+  `SECURITY.md`, `docs/fixtures.md`, `docs/publishing.md` and both issue forms still
+  called it Contoso from an earlier version of the data. The prose now agrees with the
+  data, so the FAQ entry and the known-issue row that existed only to explain the
+  disagreement are gone ([#12](https://github.com/juandresrodca/IntuneGraph/issues/12)).
+  Filenames and paths are deliberately untouched: `tests/New-ContosoFixtures.ps1`, the
+  `build.ps1` task that calls it and `tests/Fixtures/contoso/` are source, and renaming
+  them is a separate decision with its own regeneration step.
+- The bug-report form's reproduction placeholder queried `CONTOSO-LT-004`, a device the
+  demo tenant does not contain, so copying it returned nothing. It now uses
+  `DEV-FIN-01`, which is in the bundled data.
+
 ## [0.2.0] - 2026-09-06
 
 ### Added

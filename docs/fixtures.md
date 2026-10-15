@@ -1,4 +1,4 @@
-# Fixtures & the Contoso demo tenant
+# Fixtures & the Silver Chariot Corporate demo tenant
 
 IntuneGraph's tests and `-DemoData` mode run against **fixtures**: verbatim
 Microsoft Graph response bodies stored on disk. This means the whole tool — and
@@ -29,7 +29,7 @@ Each file holds the exact wire shape: `{ "value": [ ... ] }`. Multi-page
 responses can use `{ "pages": [ {"value":[...]}, ... ] }` to exercise paging.
 A missing fixture is a hard error (silent empties would hide bugs).
 
-## The Contoso dataset
+## The Silver Chariot Corporate dataset
 
 `tests/Fixtures/contoso` (mirrored to `src/IntuneGraphKit/DemoData`) is designed so
 **each hygiene check fires exactly once** and every query scenario is covered:

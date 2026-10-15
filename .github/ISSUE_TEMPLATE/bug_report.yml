@@ -29,7 +29,7 @@ body:
     attributes:
       label: Does it reproduce on demo data?
       description: >
-        `Export-IntuneGraph -DemoData` builds the Contoso tenant offline. A bug that
+        `Export-IntuneGraph -DemoData` builds the Silver Chariot Corporate tenant offline. A bug that
         reproduces there can be fixed and regression-tested without anyone touching a
         real tenant, so it gets looked at first.
       options:
@@ -50,7 +50,7 @@ body:
       placeholder: |
         Import-Module IntuneGraphKit
         $g = Export-IntuneGraph -DemoData -PassThru
-        Get-IntuneTarget -Graph $g -DeviceName 'CONTOSO-LT-004'
+        Get-IntuneTarget -Graph $g -DeviceName 'DEV-FIN-01'
     validations:
       required: true
 

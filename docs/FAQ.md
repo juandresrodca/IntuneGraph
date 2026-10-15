@@ -183,17 +183,6 @@ of any kind. One file, open it anywhere, including on a machine with no route ou
 
 ---
 
-### The demo tenant is called something different in the viewer than in the docs
-
-Known and tracked in
-[#12](https://github.com/juandresrodca/IntuneGraph/issues/12). The bundled demo data
-identifies the tenant as **Silver Chariot Corporate**, which is what the viewer header,
-the hosted demo and the MCP `intune_summary` tool all report; parts of the documentation
-still call it Contoso from an earlier version of the data. Same tenant, one name pending
-a cleanup.
-
----
-
 ### Does it work in GCC High, DoD or another national cloud?
 
 Yes — pass the environment to `Connect-IntuneGraph`:

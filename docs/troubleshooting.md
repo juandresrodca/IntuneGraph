@@ -205,9 +205,8 @@ filters are on `beta`, the rest on `v1.0`, and the path must match.
 **Cause.** Without `-OutputPath`, the export names its own directory from the tenant
 name with every non-word character stripped, plus a timestamp:
 `.\IntuneGraph-<TenantName>-<yyyyMMdd-HHmm>\graph.json`, relative to the current
-directory. For the bundled demo data that is `IntuneGraph-SilverChariotCorporate-…`,
-which is also why the viewer header does not say Contoso
-([#12](https://github.com/juandresrodca/IntuneGraph/issues/12)).
+directory. For the bundled demo data that is `IntuneGraph-SilverChariotCorporate-…`, after the
+tenant name `Silver Chariot Corporate` has had its spaces stripped.
 
 **Fix.** Pass `-OutputPath` when you care. `-Html` writes the report beside it with the
 same base name.
@@ -370,7 +369,6 @@ chooses the working directory.
 | | Tracking |
 |---|---|
 | `Install-Module IntuneGraphKit` does not work yet — the package is unpublished | [#5](https://github.com/juandresrodca/IntuneGraph/issues/5) |
-| The demo tenant is Contoso in parts of the docs and Silver Chariot Corporate in the data | [#12](https://github.com/juandresrodca/IntuneGraph/issues/12) |
 | The MCP server version and `graph.json` `toolVersion` are hard-coded rather than read from the manifest | [#13](https://github.com/juandresrodca/IntuneGraph/issues/13) |
 | Traversal performance on tenants with 1,000+ devices and users | [#1](https://github.com/juandresrodca/IntuneGraph/issues/1) |
 

@@ -3,7 +3,7 @@
 **You do not need an Intune tenant to contribute.** Every test, the demo mode and
 the whole query engine run against fixtures on disk — verbatim Microsoft Graph
 response bodies committed to this repository. Clone it, run `.\build.ps1`, and
-you have a working Contoso tenant with nested groups, exclusions, filters and one
+you have a working Silver Chariot Corporate tenant with nested groups, exclusions, filters and one
 of every hygiene defect, offline.
 
 That is deliberate. A reporting tool for production tenants cannot ask its
@@ -26,7 +26,7 @@ live tenant. Nothing in the test suite loads it.
 src/IntuneGraphKit/
 ├── Public/          one file per exported cmdlet — this is the supported surface
 ├── Private/         internals: Fetch, Normalize, GraphModel, Query, Emit, Mcp, Util
-├── DemoData/        the Contoso tenant shipped to users via -DemoData
+├── DemoData/        the Silver Chariot Corporate tenant, shipped via -DemoData
 └── Assets/          the self-contained HTML report template
 tests/
 ├── IntuneGraph.Tests.ps1     the Pester 5 suite
@@ -54,7 +54,7 @@ them aware of where the data came from, it belongs somewhere else.
 .\build.ps1                # Analyze, then Test — what CI runs
 .\build.ps1 -Task Test     # Pester only
 .\build.ps1 -Task Analyze  # PSScriptAnalyzer only
-.\build.ps1 -Task Fixtures # regenerate the Contoso dataset
+.\build.ps1 -Task Fixtures # regenerate the demo dataset
 .\build.ps1 -Task Publish  # release workflow only — see Releasing
 ```
 
@@ -96,7 +96,7 @@ Multi-page responses use `{ "pages": [ ... ] }` so paging stays exercised. A
 missing fixture is a hard error by design: a silent empty result would hide a
 bug rather than surface one.
 
-The Contoso dataset is built so **each hygiene check fires exactly once**. If you
+The dataset is built so **each hygiene check fires exactly once**. If you
 add a defect to the fixtures, add the assertion that catches it in the same pull
 request, and keep it to one instance — the one-of-each property is what makes
 `Find-IntuneOrphan` regressions obvious.

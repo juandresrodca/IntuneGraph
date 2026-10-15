@@ -62,7 +62,7 @@ body:
   - type: textarea
     id: fixture
     attributes:
-      label: What the Contoso fixtures would need
+      label: What the demo fixtures would need
       description: >
         Optional, but it is the fastest route to a merge. Tests run on generated
         fixtures — see [docs/fixtures.md](https://github.com/juandresrodca/IntuneGraph/blob/main/docs/fixtures.md). Which
