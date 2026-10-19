@@ -47,7 +47,9 @@ it lands, bump both by hand and treat the grep in *Before you tag* as part of th
 
 Two places that look like version locations are not. `ReleaseNotes` in the manifest points
 at `CHANGELOG.md` on `main`, so it never needs editing per release. The README's Gallery
-badge reads the version from the Gallery.
+badge read the version from the Gallery — it is **not in the README today**, because
+until the first publish it rendered as *not found*; restoring it is step 6 of
+*Prepare the release* below.
 
 ---
 
@@ -126,6 +128,23 @@ Releases are cut from `main`, so the preparation is an ordinary pull request:
 4. Update the *Supported versions* table in `SECURITY.md`, following the pattern already
    there: the new minor is current, and the previous one drops to security fixes only.
 5. Check the manifest fields above, especially `Description` if the pitch has moved.
+6. **Only for the first release, `0.3.0`:** put the README back the way it will be true.
+   The quick start currently leads with the clone-and-import route and carries
+   `Install-Module` underneath, marked as the route once published, because that command
+   fails today ([#5](https://github.com/juandresrodca/IntuneGraph/issues/5)). Swap the two
+   so `Install-Module IntuneGraphKit -Scope CurrentUser` leads again, drop the *not yet
+   published* note, and restore the Gallery badge as the first entry in the badge row:
+
+   ```markdown
+   [![PowerShell Gallery](https://img.shields.io/powershellgallery/v/IntuneGraphKit?label=PSGallery)](https://www.powershellgallery.com/packages/IntuneGraphKit)
+   ```
+
+   Merge this with the rest of the preparation, but do not push the tag until step 5
+   below has confirmed the Gallery actually has the version — a README promising an
+   install that does not resolve is the defect this removed in the first place. The same
+   applies to the *Installing and importing* entry in
+   [troubleshooting.md](troubleshooting.md), which explains the failure and will no
+   longer be true.
 
 ### 2. Before you tag
 

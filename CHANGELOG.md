@@ -19,6 +19,15 @@ PowerShell Gallery and a Gallery version number can never be reused. The sequenc
 [CONTRIBUTING.md](CONTRIBUTING.md#releasing).
 
 ### Changed
+- The README's quick start leads with the route that works today. `Install-Module
+  IntuneGraphKit` was the first command a visitor ran and it fails, because the module
+  is not on the PowerShell Gallery yet ([#5](https://github.com/juandresrodca/IntuneGraph/issues/5));
+  the clone-and-import sequence from
+  [docs/troubleshooting.md](docs/troubleshooting.md) now leads instead, with
+  `Install-Module` kept underneath and marked as the route once published. The Gallery
+  version badge is out of the badge row until that publish — it rendered as *not found*,
+  which reads as a broken project rather than an unreleased one. Restoring both is step 6
+  of *Prepare the release* in [docs/publishing.md](docs/publishing.md).
 - **BREAKING — the module is now `IntuneGraphKit`**: `Install-Module IntuneGraphKit`,
   `Import-Module IntuneGraphKit`. The name `IntuneGraph` on the PowerShell Gallery
   belongs to an unrelated module by another author, and a Gallery package name has to

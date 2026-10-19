@@ -2,7 +2,6 @@
 
 **Turn your Microsoft Intune tenant into an interactive relationship graph, and ask your AI why a policy applies through the bundled MCP server.** See what applies to a device or user and why, preview a group's blast radius, find broken assignments. Read-only Graph, offline demo, self-contained HTML viewer. Zero write scopes.
 
-[![PowerShell Gallery](https://img.shields.io/powershellgallery/v/IntuneGraphKit?label=PSGallery)](https://www.powershellgallery.com/packages/IntuneGraphKit)
 [![PowerShell](https://img.shields.io/badge/PowerShell-5.1%20%7C%207%2B-5391FE)](#requirements)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Read-only](https://img.shields.io/badge/Graph%20scopes-read--only-brightgreen)](docs/permissions.md)
@@ -22,14 +21,19 @@ https://juandresrodca.github.io/IntuneGraph/demo/
 
 
 ```powershell
-Install-Module IntuneGraphKit -Scope CurrentUser
-Import-Module IntuneGraphKit
+git clone https://github.com/juandresrodca/IntuneGraph.git
+Import-Module .\IntuneGraph\src\IntuneGraphKit\IntuneGraphKit.psd1 -Force
 Export-IntuneGraph -DemoData -PassThru | Show-IntuneGraph -Open
 ```
 
+**Once it is on the PowerShell Gallery**, the first two lines collapse into one. They do not work yet — the module has not been published, which is [#5](https://github.com/juandresrodca/IntuneGraph/issues/5):
 
+```powershell
+Install-Module IntuneGraphKit -Scope CurrentUser
+Import-Module IntuneGraphKit
+```
 
-> The Gallery package is **IntuneGraphKit**. The `IntuneGraph` package on the Gallery is an unrelated module by another author, and unlike this one it writes to Intune — check the name before you install.
+> The Gallery package will be **IntuneGraphKit**. The `IntuneGraph` package already on the Gallery is an unrelated module by another author, and unlike this one it writes to Intune — check the name before you install.
 
 That builds the bundled **Silver Chariot Corporate** demo tenant and opens   the interactive graph in your browser — zero Graph auth, zero setup. The whole tool works offline against demo data, which means you can evaluate it (and contribute to it) without ever touching a real tenant.
 
