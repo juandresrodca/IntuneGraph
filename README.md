@@ -202,6 +202,8 @@ Decisions that are easy to undo by accident are written down rather than remembe
 
 What changed between versions, and what is queued for the next one, is in [CHANGELOG.md](CHANGELOG.md); how a version gets cut and published is [CONTRIBUTING.md](CONTRIBUTING.md#releasing).
 
+Participation is governed by the [Code of Conduct](CODE_OF_CONDUCT.md); security problems go through [SECURITY.md](SECURITY.md)'s private route rather than the issue tracker.
+
 
 ## License
 

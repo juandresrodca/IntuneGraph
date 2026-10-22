@@ -179,6 +179,14 @@ Do not open a public issue for a security problem. The private reporting route,
 the supported versions and the invariants this project treats as non-negotiable
 are in [SECURITY.md](SECURITY.md).
 
+## Code of conduct
+
+By taking part you agree to the [Code of Conduct](CODE_OF_CONDUCT.md). It carries
+one note specific to this project: disagreeing about what a graph shows, or about
+the read-only scope set, is a correctness question and belongs in an issue — but
+the comparison table names other people's projects, and criticism there stays on
+the software.
+
 ## Licence
 
 By contributing, you agree that your contributions are licensed under the
