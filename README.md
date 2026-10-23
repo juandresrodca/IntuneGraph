@@ -20,7 +20,7 @@ https://juandresrodca.github.io/IntuneGraph/demo/
 
 
 
-```powershell
+```powershell.  
 git clone https://github.com/juandresrodca/IntuneGraph.git
 Import-Module .\IntuneGraph\src\IntuneGraphKit\IntuneGraphKit.psd1 -Force
 Export-IntuneGraph -DemoData -PassThru | Show-IntuneGraph -Open
@@ -28,7 +28,7 @@ Export-IntuneGraph -DemoData -PassThru | Show-IntuneGraph -Open
 
 **Once it is on the PowerShell Gallery**, the first two lines collapse into one. They do not work yet — the module has not been published, which is [#5](https://github.com/juandresrodca/IntuneGraph/issues/5):
 
-```powershell
+```powershell.  
 Install-Module IntuneGraphKit -Scope CurrentUser
 Import-Module IntuneGraphKit
 ```
