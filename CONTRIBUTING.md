@@ -77,6 +77,22 @@ Suppress a rule inline only with a comment saying why. If you find yourself
 adding a fourth global exclusion, raise an issue first — the exclusion list is
 meant to stay short enough to read.
 
+### Whitespace
+
+PSScriptAnalyzer says nothing about encoding, line endings or indentation, so
+`-Task Analyze` stays green while an editor with other defaults reindents a
+module and buries a one-line fix in a whole-file diff.
+[`.editorconfig`](.editorconfig) is what covers that: UTF-8, LF, four spaces for
+PowerShell, two for YAML, JSON and Markdown, a final newline, no trailing
+whitespace. Most editors read it with no plugin; VS Code, Visual Studio and the
+JetBrains IDEs all do.
+
+The generated fixtures are carved out of it on purpose. `New-ContosoFixtures.ps1`
+writes them through `Set-Content -Encoding UTF8`, so they carry a byte-order mark
+and four-space `ConvertTo-Json` formatting, and the file preserves both — an
+editor that normalised them would produce 34 files of diff that the next
+`-Task Fixtures` run would simply undo.
+
 ## Adding a scenario or a fixture
 
 Fixtures are generated, not hand-edited, so that the test tree and the shipped

@@ -1,0 +1,66 @@
+# EditorConfig — https://editorconfig.org
+#
+# PSScriptAnalyzer checks rules, not whitespace. PSScriptAnalyzerSettings.psd1
+# runs at Error and Warning severity over src/IntuneGraphKit and has nothing to
+# say about encoding, line endings or indentation, so `build.ps1 -Task Analyze`
+# stays green while an editor with other defaults reindents a module. This file
+# closes that gap: a one-line fix should arrive as a one-line diff.
+
+root = true
+
+# Four spaces, because that is what all 26 .ps1, .psm1 and .psd1 files in src/,
+# tests/ and tools/ already use, with no tab character in any of them.
+# LF matches `* text=auto eol=lf` in .gitattributes.
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# PowerShell, stated rather than inherited: this is the repository's language.
+[*.{ps1,psm1,psd1}]
+indent_size = 4
+
+# Workflows, issue forms, and the Astro site and gif tooling, all as written.
+[*.{yml,yaml,mjs,js,astro,css,html}]
+indent_size = 2
+
+# Hand-written and npm-managed JSON: docs/graph.schema.json, site/package.json,
+# tools/gif/package.json and both lockfiles.
+[*.json]
+indent_size = 2
+
+# Markdown nests lists at two, and its two-space hard line break is
+# load-bearing, so trailing whitespace is left alone here.
+[*.md]
+indent_size = 2
+trim_trailing_whitespace = false
+
+# Generated fixtures. CONTRIBUTING.md is explicit that these are generated and
+# never hand-edited: tests/New-ContosoFixtures.ps1 writes them with
+# `ConvertTo-Json -Depth 12 | Set-Content -Encoding UTF8`, which on Windows
+# PowerShell 5.1 means a UTF-8 BOM, four-space indentation and two spaces after
+# each colon. An editor that strips the BOM or reindents them produces a diff
+# that the next `build.ps1 -Task Fixtures` immediately undoes, across 34 files.
+[src/IntuneGraphKit/DemoData/**.json]
+charset = utf-8-bom
+indent_size = 4
+trim_trailing_whitespace = false
+
+[tests/Fixtures/**.json]
+charset = utf-8-bom
+indent_size = 4
+trim_trailing_whitespace = false
+
+# Rendered output, not source: Assets/template.html is the vendored HTML report
+# shell with __IG_*__ placeholders, and site/public/demo/index.html is a built
+# artifact. Neither is hand-formatted.
+[src/IntuneGraphKit/Assets/template.html]
+indent_style = unset
+indent_size = unset
+
+[site/public/demo/index.html]
+indent_style = unset
+indent_size = unset
