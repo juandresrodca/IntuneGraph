@@ -83,7 +83,7 @@ for the server and the method for using it — is specified in
 
 ## One HTML file, zero network calls
 
-![IntuneGraph interactive demo — the Silver Chariot Corporate tenant as a relationship graph](docs/img/demo.gif)
+![IntuneGraph interactive demo — groups, apps, policies and filters laid out as a relationship graph, with one app's include edge and exclude edge picked out from the rest](docs/img/demo.gif)
 
 `Show-IntuneGraph` writes the graph to a single self-contained HTML file. The renderer,
 the styles and the data are all inlined, so the page makes **zero network calls**: no

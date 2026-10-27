@@ -51,8 +51,9 @@ The animation is four phases over a **6,520 ms** loop, and the order matters:
    worth listing rather than trimming.
 
 The offsets above come from the four runs of `push()` in `make-gif.mjs`. Do not take them
-from the source alone — the committed blob is what the README serves, and #12 is an open
-case of the two having drifted apart. Read the delays back out of the file itself:
+from the source alone — the committed blob is what the README serves, and
+[#12](https://github.com/juandresrodca/IntuneGraph/issues/12) was a case of the two having
+drifted apart. Read the delays back out of the file itself:
 
 ```bash
 python3 - <<'EOF'
@@ -93,17 +94,36 @@ Six runs for five beats, because the two `120 ms` stretches merge: the ten tail 
 the second explain beat and the eight return frames share a delay. Everything else matches
 the table exactly. Run this rather than editing the numbers by hand whenever the recorder
 changes — it reads the artefact, so it catches a recorder and a committed file that no
-longer agree, which is #12's failure mode in the timing dimension instead of the branding
-one.
+longer agree. That is the timing-dimension version of the branding drift #12 recorded, and
+the section below is the branding one, still open on the artefact.
 
-### Known defect: the committed GIF and the recorder disagree
+### The committed GIF predates the settled tenant name
 
-The GIF in the repository today reads **"Contoso demo tenant · 41 nodes · 34 edges"** in
-its header. `make-gif.mjs` writes **"Silver Chariot Corporate"**, which is the
-`tenantName` in `src/IntuneGraphKit/DemoData/manifest.json`. The committed file
-therefore predates the rename, and re-running the recorder today changes the branding in
-the README without anyone intending it. Do not regenerate `demo.gif` as a side effect of
-an unrelated change — settle the name first.
+The name is settled. [#12](https://github.com/juandresrodca/IntuneGraph/issues/12) closed on
+15 October 2026 on **Silver Chariot Corporate**, which is the `tenantName` in
+[`manifest.json`](../../src/IntuneGraphKit/DemoData/manifest.json), and 0.2.1 brought the prose
+across the repository into line with the data.
+
+`demo.gif` was not brought with it. The committed blob still draws **"Contoso demo tenant · 41
+nodes · 34 edges"** in its header — read off frame 0 of the file on 27 October 2026, not inferred
+from its age — and it has not been rewritten since `b5d32c6` on 24 July 2026, three months before
+the decision. `make-gif.mjs:96` writes the manifest name, so the recorder and the artefact
+disagree, and it is the artefact that is wrong.
+
+That reverses the instruction this section used to carry. While the name was undecided,
+regenerating the GIF would have changed the README's branding as a side effect of whatever
+commit happened to run the recorder, so the advice was to leave it alone. The decision has been
+taken, so **regenerating `demo.gif` is now the fix rather than the risk** — the branding it
+changes is the branding every other file already uses. The warning that survives is narrower:
+run the four commands at the top of this file **in a commit of its own**, so a 1.6 MB binary
+arrives on a diff where it can be looked at, rather than riding along with a docs change.
+
+Until that happens, nothing in the repository should claim the GIF shows the settled name. That
+is why the alt text in [`README.md`](../../README.md), under **One HTML file, zero network
+calls**, describes the shape of the graph and names no tenant at all. Alt text is what a
+screen-reader user and anyone on a throttled connection get *instead of* the animation, so it is
+the one description nobody can check against the picture — which is exactly why it should not be
+the one carrying a claim the picture contradicts.
 
 ## The recording that is still missing
 
