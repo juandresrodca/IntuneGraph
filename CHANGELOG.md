@@ -51,6 +51,13 @@ PowerShell Gallery and a Gallery version number can never be reused. The sequenc
 - Release pipeline: pushing a `v*` tag re-runs the full CI matrix and, when it is green
   and the tag matches `ModuleVersion`, publishes to the PowerShell Gallery
   (`.github/workflows/release.yml`, `build.ps1 -Task Publish`).
+- Dependabot covers the two npm trees and the workflow actions: `site` (the Astro
+  page `pages.yml` publishes) and `tools/gif` (the demo recorder) weekly with minor
+  and patch grouped per tree, and `github-actions` monthly. The actions entry is the
+  one that matters most — `release.yml` publishes to the PowerShell Gallery, so an
+  abandoned or compromised action there has the widest reach of anything in the
+  repository. `*.psd1` module dependencies are not a dependabot ecosystem and remain
+  unwatched.
 - Gallery listing metadata: `CompatiblePSEditions` plus the `PSEdition_Desktop` and
   `PSEdition_Core` tags, so the module appears under both edition filters, and an icon.
 
