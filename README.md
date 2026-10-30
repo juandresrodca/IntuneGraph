@@ -8,19 +8,16 @@
 [![MCP](https://img.shields.io/badge/MCP-server%20included-8A2BE2)](docs/mcp.md)
 [![Tests](https://img.shields.io/badge/tests-fixture--driven-blue)](tests/)
 
->  Intune  assignments *are* a graph , groups nest, filters narrow,   includes and excludes fight. But every existing tool shows you flat lists. IntuneGraph makes the graph the data model, so the questions admins actually ask become simple queries.
+> Intune assignments *are* a graph, groups nest, filters narrow, includes and excludes fight. But every existing tool shows you flat lists. IntuneGraph makes the graph the data model, so the questions admins actually ask become simple queries.
 
 ---
 Demo:
 https://juandresrodca.github.io/IntuneGraph/demo/
 ---
 
-## Try it in 30  seconds, no tenant needed
+## Try it in 30 seconds, no tenant needed
 
-
-
-
-```powershell.  
+```powershell
 git clone https://github.com/juandresrodca/IntuneGraph.git
 Import-Module .\IntuneGraph\src\IntuneGraphKit\IntuneGraphKit.psd1 -Force
 Export-IntuneGraph -DemoData -PassThru | Show-IntuneGraph -Open
@@ -28,14 +25,14 @@ Export-IntuneGraph -DemoData -PassThru | Show-IntuneGraph -Open
 
 **Once it is on the PowerShell Gallery**, the first two lines collapse into one. They do not work yet — the module has not been published, which is [#5](https://github.com/juandresrodca/IntuneGraph/issues/5):
 
-```powershell.  
+```powershell
 Install-Module IntuneGraphKit -Scope CurrentUser
 Import-Module IntuneGraphKit
 ```
 
 > The Gallery package will be **IntuneGraphKit**. The `IntuneGraph` package already on the Gallery is an unrelated module by another author, and unlike this one it writes to Intune — check the name before you install.
 
-That builds the bundled **Silver Chariot Corporate** demo tenant and opens   the interactive graph in your browser — zero Graph auth, zero setup. The whole tool works offline against demo data, which means you can evaluate it (and contribute to it) without ever touching a real tenant.
+That builds the bundled **Silver Chariot Corporate** demo tenant and opens the interactive graph in your browser — zero Graph auth, zero setup. The whole tool works offline against demo data, which means you can evaluate it (and contribute to it) without ever touching a real tenant.
 
 ---
 
@@ -96,7 +93,7 @@ would treat the `graph.json` it came from.
 
 ## The three questions it answers
 
-### 1. "What applies to this device, and *why*?"  →  ` Get-IntuneTarget `
+### 1. "What applies to this device, and *why*?"  →  `Get-IntuneTarget`
 
 ```
 PS> Get-IntuneTarget -Identity DEV-FIN-01
@@ -169,7 +166,7 @@ Found a security problem? Please report it privately — the process, the suppor
 
 ## How it stacks up
 
-IntuneGraph is  deliberately *not*  another  config-backup tool — it's the relationship-and-impact layer. The excellent tools below solve adjacent problems; use them together.
+IntuneGraph is deliberately *not* another config-backup tool — it's the relationship-and-impact layer. The excellent tools below solve adjacent problems; use them together.
 
 | | IntuneGraph | [IntuneAssignmentChecker](https://github.com/ugurkocde/IntuneAssignmentChecker) | [IntuneCD](https://github.com/almenscorner/IntuneCD) | Intune portal |
 |---|:--:|:--:|:--:|:--:|
