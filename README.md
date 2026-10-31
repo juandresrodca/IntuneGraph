@@ -62,9 +62,11 @@ claude mcp add intunegraph -- pwsh -NoLogo -NoProfile -NonInteractive \
    + Adobe Reader (available)
 ```
 
-Other Intune MCP servers wrap Graph endpoints — they can *list* policies. None can
-answer **why** one applies, because none of them model group nesting, filters and
-include/exclude collisions. This one does, because that's the whole data model.
+Answering *why* a policy applies means resolving group nesting, assignment filters and
+include/exclude collisions, which is what this graph is made of, so the server returns a
+resolved path rather than a list. Tools that read the live tenant answer the other half of
+the question, and [docs/comparison.md](docs/comparison.md#community-tools-that-overlap)
+sets out the overlap and the closest twin to this server.
 
 **And it never touches your tenant.** The server reads a local `graph.json` snapshot,
 so the assistant gets the answers without ever getting your credentials. You decide
