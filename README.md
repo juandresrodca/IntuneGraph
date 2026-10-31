@@ -23,20 +23,20 @@ Import-Module .\IntuneGraph\src\IntuneGraphKit\IntuneGraphKit.psd1 -Force
 Export-IntuneGraph -DemoData -PassThru | Show-IntuneGraph -Open
 ```
 
-**Once it is on the PowerShell Gallery**, the first two lines collapse into one. They do not work yet — the module has not been published, which is [#5](https://github.com/juandresrodca/IntuneGraph/issues/5):
+**Once it is on the PowerShell Gallery**, the first two lines collapse into one. They do not work yet, since the module has not been published, which is [#5](https://github.com/juandresrodca/IntuneGraph/issues/5):
 
 ```powershell
 Install-Module IntuneGraphKit -Scope CurrentUser
 Import-Module IntuneGraphKit
 ```
 
-> The Gallery package will be **IntuneGraphKit**. The `IntuneGraph` package already on the Gallery is an unrelated module by another author, and unlike this one it writes to Intune — check the name before you install.
+> The Gallery package will be **IntuneGraphKit**. The `IntuneGraph` package already on the Gallery is an unrelated module by another author, and unlike this one it writes to Intune. Check the name before you install.
 
-That builds the bundled **Silver Chariot Corporate** demo tenant and opens the interactive graph in your browser — zero Graph auth, zero setup. The whole tool works offline against demo data, which means you can evaluate it (and contribute to it) without ever touching a real tenant.
+That builds the bundled **Silver Chariot Corporate** demo tenant and opens the interactive graph in your browser: zero Graph auth, zero setup. The whole tool works offline against demo data, which means you can evaluate it (and contribute to it) without ever touching a real tenant.
 
 ---
 
-## Ask your AI *why* a policy applies — and get the group path, not a guess
+## Ask your AI *why* a policy applies, and get the group path, not a guess
 
 IntuneGraph ships an **MCP server**, so Claude Code or GitHub Copilot can query the
 graph directly:
@@ -71,18 +71,18 @@ sets out the overlap and the closest twin to this server.
 **And it never touches your tenant.** The server reads a local `graph.json` snapshot,
 so the assistant gets the answers without ever getting your credentials. You decide
 when to refresh it. Six read-only tools: `intune_target`, `intune_blast_radius`,
-`intune_orphans`, `intune_path`, `intune_node`, `intune_summary` — see
+`intune_orphans`, `intune_path`, `intune_node`, `intune_summary`. See
 [docs/mcp.md](docs/mcp.md).
 
-Packaging the same six tools as a Claude Code plugin with a bundled skill — one install
-for the server and the method for using it — is specified in
+Packaging the same six tools as a Claude Code plugin with a bundled skill (one install
+for the server and the method for using it) is specified in
 [docs/skill.md](docs/skill.md). It is a specification, not yet something you can install.
 
 ---
 
 ## One HTML file, zero network calls
 
-![IntuneGraph interactive demo — groups, apps, policies and filters laid out as a relationship graph, with one app's include edge and exclude edge picked out from the rest](docs/img/demo.gif)
+![IntuneGraph interactive demo: groups, apps, policies and filters laid out as a relationship graph, with one app's include edge and exclude edge picked out from the rest](docs/img/demo.gif)
 
 `Show-IntuneGraph` writes the graph to a single self-contained HTML file. The renderer,
 the styles and the data are all inlined, so the page makes **zero network calls**: no
@@ -109,7 +109,7 @@ Win Compliance          CompliancePolicy AppliesPreFilter           DEV-FIN-01 -
 Win11 Security Baseline ConfigPolicy     Applies                    DEV-FIN-01 -> SG-Finance -> SG-AllStaff
 ```
 
-The **`Via`** column. The exact group path that causes each assignment, through nesting — is what flat-list tools don't give you. Add `-IncludeExcluded` to see what's blocked by an exclusion and why.
+The **`Via`** column is the exact group path that causes each assignment, through nesting, and it is what flat-list tools do not give you. Add `-IncludeExcluded` to see what's blocked by an exclusion and why.
 
 ### 2. "What breaks if I touch this group?"  →  `Get-IntuneBlastRadius`
 
@@ -149,11 +149,11 @@ Get-IntuneBlastRadius -Group <groupName>
 Find-IntuneOrphan
 ```
 
-`Export-IntuneGraph` is the only command that talks to Graph. It writes a `graph.json` snapshot; every query runs against that snapshot — fast, offline, and reproducible.
+`Export-IntuneGraph` is the only command that talks to Graph. It writes a `graph.json` snapshot; every query runs against that snapshot: fast, offline, and reproducible.
 
 ## Permissions & security
 
-IntuneGraph requests **four read-only scopes and zero write scopes**, and the code contains **no `POST`/`PATCH`/`DELETE` paths** — the single function that calls Graph hardcodes `GET`.
+IntuneGraph requests **four read-only scopes and zero write scopes**, and the code contains **no `POST`/`PATCH`/`DELETE` paths**: the single function that calls Graph hardcodes `GET`.
 
 | Scope | Why |
 |---|---|
@@ -164,11 +164,11 @@ IntuneGraph requests **four read-only scopes and zero write scopes**, and the co
 
 No telemetry. The HTML report makes **zero network calls** (the renderer is vendored inline). Your data never leaves the `graph.json` you exported. See [docs/permissions.md](docs/permissions.md).
 
-Found a security problem? Please report it privately — the process, the supported versions and the guarantees this project treats as invariants are in [SECURITY.md](SECURITY.md).
+Found a security problem? Please report it privately. The process, the supported versions and the guarantees this project treats as invariants are in [SECURITY.md](SECURITY.md).
 
 ## How it stacks up
 
-IntuneGraph is deliberately *not* another config-backup tool — it's the relationship-and-impact layer. The excellent tools below solve adjacent problems; use them together.
+IntuneGraph is the relationship-and-impact layer rather than another config-backup tool. The excellent tools below solve adjacent problems; use them together.
 
 | | IntuneGraph | [IntuneAssignmentChecker](https://github.com/ugurkocde/IntuneAssignmentChecker) | [IntuneCD](https://github.com/almenscorner/IntuneCD) | Intune portal |
 |---|:--:|:--:|:--:|:--:|
@@ -182,11 +182,11 @@ IntuneGraph is deliberately *not* another config-backup tool — it's the relati
 
 Wondering when to reach for **Graph Explorer** or the **Intune admin centre** instead? [docs/comparison.md](docs/comparison.md) has the decision table, four worked workflows, and an explicit list of what IntuneGraph will *not* tell you.
 
-The same guide credits the wider set of community projects that overlap with this one — live-tenant assignment auditors, cross-tenant migration tooling, app-supersedence reporting and operational dashboards — with a line each on when to reach for them instead: [community tools that overlap](docs/comparison.md#community-tools-that-overlap).
+The same guide credits the wider set of community projects that overlap with this one (live-tenant assignment auditors, cross-tenant migration tooling, app-supersedence reporting and operational dashboards), with a line each on when to reach for them instead: [community tools that overlap](docs/comparison.md#community-tools-that-overlap).
 
-Shorter questions — which package to install, why an exclusion wins, what `AppliesPreFilter` means, whether `graph.json` is safe to share — are answered in [docs/FAQ.md](docs/FAQ.md).
+Shorter questions (which package to install, why an exclusion wins, what `AppliesPreFilter` means, whether `graph.json` is safe to share) are answered in [docs/FAQ.md](docs/FAQ.md).
 
-When something is broken rather than surprising, [docs/troubleshooting.md](docs/troubleshooting.md) goes failure mode by failure mode — consent refused partway through an export, a throttled tenant that looks like a hang, an empty graph, a blank report, 5.1-versus-7 differences, an MCP server the client will not start — each written as symptom, cause and fix.
+When something is broken rather than surprising, [docs/troubleshooting.md](docs/troubleshooting.md) goes failure mode by failure mode (consent refused partway through an export, a throttled tenant that looks like a hang, an empty graph, a blank report, 5.1-versus-7 differences, an MCP server the client will not start), each written as symptom, cause and fix.
 
 ## Requirements
 
@@ -195,9 +195,9 @@ When something is broken rather than surprising, [docs/troubleshooting.md](docs/
 
 ## Contributing
 
-Every test runs on fixtures — **no tenant needed to contribute**. `.\build.ps1 -Task Test`. [CONTRIBUTING.md](CONTRIBUTING.md) covers the layout, the build tasks, the PSScriptAnalyzer settings and the guarantees a change must not break; see [docs/fixtures.md](docs/fixtures.md) for how the demo tenant is structured and how to add a scenario.
+Every test runs on fixtures: **no tenant needed to contribute**. `.\build.ps1 -Task Test`. [CONTRIBUTING.md](CONTRIBUTING.md) covers the layout, the build tasks, the PSScriptAnalyzer settings and the guarantees a change must not break; see [docs/fixtures.md](docs/fixtures.md) for how the demo tenant is structured and how to add a scenario.
 
-Decisions that are easy to undo by accident are written down rather than remembered — [docs/permissions.md](docs/permissions.md) for the read-only scope guarantees, [docs/discoverability.md](docs/discoverability.md) for what the repository's topics and description are meant to do.
+Decisions that are easy to undo by accident are written down rather than remembered: [docs/permissions.md](docs/permissions.md) for the read-only scope guarantees, [docs/discoverability.md](docs/discoverability.md) for what the repository's topics and description are meant to do.
 
 What changed between versions, and what is queued for the next one, is in [CHANGELOG.md](CHANGELOG.md); how a version gets cut and published is [CONTRIBUTING.md](CONTRIBUTING.md#releasing).
 
@@ -206,4 +206,4 @@ Participation is governed by the [Code of Conduct](CODE_OF_CONDUCT.md); security
 
 ## License
 
-MIT. Not affiliated with Microsoft. IntuneGraph is a read-only reporting tool — always verify changes in the Intune portal.
+MIT. Not affiliated with Microsoft. IntuneGraph is a read-only reporting tool, so always verify changes in the Intune portal.
