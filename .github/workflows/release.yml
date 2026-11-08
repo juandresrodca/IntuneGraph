@@ -24,7 +24,7 @@ jobs:
     needs: ci
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # The tag reaches the script through env, never interpolated into it.
       - name: Check the tag matches ModuleVersion
