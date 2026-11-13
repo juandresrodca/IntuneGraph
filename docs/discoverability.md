@@ -89,21 +89,23 @@ the fifteen above.
 
 ---
 
-## Status: proposed, not yet applied
+## Status: applied
 
-The list above is the target. The topics currently set on the repository are the
-earlier ten; the five capability and module terms — `entra-id`, `mcp`,
-`model-context-protocol`, `microsoft-intune`, `powershell-module` — still need
-applying.
+All fifteen topics have been live on the repository since 2026-11-13. The earlier ten
+were set by hand; the five capability and module terms (`entra-id`, `mcp`,
+`model-context-protocol`, `microsoft-intune`, `powershell-module`) were added that day
+with `gh repo edit --add-topic`, and the live list was checked against the one above.
+The manifest `Tags` gained `EntraID` in the same change; it already carried `MCP` and
+`ModelContextProtocol`, and Gallery tags take effect on the next release.
 
-They cannot be applied by the maintenance tooling. Setting topics is
+Changing the list later still cannot be done by the maintenance tooling. Setting topics is
 `PUT /repos/{owner}/{repo}/topics`, which a fine-grained token can only call with
 **Administration: write**, and the token used for routine maintenance deliberately does
 not carry that permission — its whole blast radius is contents and issues. Repository
 settings are a human decision, which is the correct trade.
 
-So this is a manual step. Either paste the list into
-**Settings → General → Topics**, or run it once with a token that has the scope:
+So any change is a manual step. Either edit **Settings → General → Topics**, or run
+this with a token that has the scope:
 
 ```bash
 gh api -X PUT repos/juandresrodca/IntuneGraph/topics \
@@ -173,8 +175,14 @@ entry is not cheerfully resubmitted six months later by someone who has forgotte
 
 | Date | Index | Repo | Section | PR | State |
 |---|---|---|---|---|---|
-| 2026-09-22 | [merill/awesome-entra](https://github.com/merill/awesome-entra) | IntuneGraph | Tools -> CLI | [#27](https://github.com/merill/awesome-entra/pull/27) | Open |
-| 2026-09-22 | [merill/awesome-entra](https://github.com/merill/awesome-entra) | [EntraHuntKit](https://github.com/juandresrodca/EntraHuntKit) | Tools -> Log Analytics, KQL, Logic Apps | [#28](https://github.com/merill/awesome-entra/pull/28) | Open |
+| 2026-09-22 | [merill/awesome-entra](https://github.com/merill/awesome-entra) | IntuneGraph | Tools -> CLI | [#27](https://github.com/merill/awesome-entra/pull/27) | Open, list dormant |
+| 2026-09-22 | [merill/awesome-entra](https://github.com/merill/awesome-entra) | [EntraHuntKit](https://github.com/juandresrodca/EntraHuntKit) | Tools -> Log Analytics, KQL, Logic Apps | [#28](https://github.com/merill/awesome-entra/pull/28) | Open, list dormant |
+
+Checked on 2026-11-13: awesome-entra had merged nothing since 2026-06-02, and six
+other submissions were waiting alongside these two. Both stay open, since closing them
+gains nothing, but they send no traffic. Do not nudge the maintainer until the list
+merges something again; `gh api repos/merill/awesome-entra/commits?per_page=1` shows
+the last change.
 
 ### The rules that list enforces
 
