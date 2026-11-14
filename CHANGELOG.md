@@ -115,14 +115,12 @@ Initial release.
 - `Import-IntuneGraph` / `Get-IntuneGraphNode`.
 - Bundled Contoso demo tenant (`-DemoData`) and fixture-driven Pester suite.
 
-<!-- Comparison links. No tag exists before v0.3.0, so each range is bounded by the
-     commit the version shipped at rather than by a tag: 0.1.0 points at the log up to
-     its last commit, 0.2.0 compares that commit with its own, and Unreleased compares
-     0.2.0's commit with HEAD. 0.2.0 is a single commit, c79a3c1, which added the MCP
-     server and wrote its own section here; e2c3fb8 is the commit before it and the last
-     of the 0.1.0 era. juandresrodca/EntraHuntKit#9 carries the reasoning for choosing a
-     boundary commit this way. Replace each range with a tag comparison as the tags are
-     pushed, starting with v0.3.0. -->
+<!-- Comparison links. No tag exists yet, so each range is bounded by the commit the
+     version shipped at, under rules 1 to 3 of
+     https://github.com/juandresrodca/EntraHuntKit/blob/main/docs/changelog-anchors.md#the-anchor-rule
+     which is where the convention and the reasoning for it now live. The boundaries are
+     local to this repository: 0.2.0 is the single commit c79a3c1, and e2c3fb8 is the
+     commit before it, the last of the 0.1.0 era. -->
 [Unreleased]: https://github.com/juandresrodca/IntuneGraph/compare/c79a3c1...HEAD
 [0.2.0]: https://github.com/juandresrodca/IntuneGraph/compare/e2c3fb8...c79a3c1
 [0.1.0]: https://github.com/juandresrodca/IntuneGraph/commits/e2c3fb8
