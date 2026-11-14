@@ -38,7 +38,7 @@
 
     PrivateData = @{
         PSData = @{
-            Tags         = @('Intune', 'MicrosoftGraph', 'MEM', 'Endpoint', 'MDM', 'Graph', 'Visualization',
+            Tags         = @('Intune', 'EntraID', 'MicrosoftGraph', 'MEM', 'Endpoint', 'MDM', 'Graph', 'Visualization',
                 'MCP', 'ModelContextProtocol', 'AI', 'Copilot', 'Windows', 'macOS', 'Linux',
                 'PSEdition_Desktop', 'PSEdition_Core')
             LicenseUri   = 'https://github.com/juandresrodca/IntuneGraph/blob/main/LICENSE'
