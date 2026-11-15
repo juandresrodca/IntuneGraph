@@ -1,6 +1,6 @@
 @{
     RootModule        = 'IntuneGraphKit.psm1'
-    ModuleVersion     = '0.2.0'
+    ModuleVersion     = '0.3.0'
     GUID              = '2fd9d683-0ede-4a50-a4b5-60a39b1a93be'
     Author            = 'Juan Andres Rodriguez'
     CompanyName       = 'IntuneGraph'

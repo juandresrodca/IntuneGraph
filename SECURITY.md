@@ -37,8 +37,8 @@ bug bounty; there is a genuine commitment to answering you and to crediting you.
 
 | Version | Supported |
 |---|---|
-| 0.2.x | ✅ current |
-| 0.1.x | ⚠️ security fixes only |
+| 0.3.x | ✅ current |
+| 0.2.x | ⚠️ security fixes only |
 | `main` | ✅ fixes land here first |
 
 Until 1.0, the supported version is the latest tagged release plus `main`.

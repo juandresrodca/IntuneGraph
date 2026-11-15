@@ -139,12 +139,12 @@ Releases are cut from `main`, so the preparation is an ordinary pull request:
    [![PowerShell Gallery](https://img.shields.io/powershellgallery/v/IntuneGraphKit?label=PSGallery)](https://www.powershellgallery.com/packages/IntuneGraphKit)
    ```
 
-   Merge this with the rest of the preparation, but do not push the tag until step 5
-   below has confirmed the Gallery actually has the version — a README promising an
-   install that does not resolve is the defect this removed in the first place. The same
-   applies to the *Installing and importing* entry in
-   [troubleshooting.md](troubleshooting.md), which explains the failure and will no
-   longer be true.
+   This one is **not** part of the preparation pull request. It goes in a pull request of
+   its own, opened only after step 5 of *Releasing* has confirmed with `Find-Module` that
+   the Gallery lists the version: a README promising an install that does not resolve is
+   the defect this removed in the first place. The same pull request updates the
+   *Installing and importing* entry in [troubleshooting.md](troubleshooting.md), which
+   explains the failure and will no longer be true.
 
 ### 2. Before you tag
 
@@ -275,18 +275,21 @@ Gallery lists the version, the tag stays where it is.
 
 ## The first release
 
-Status as of 4 October 2026: **nothing has been published**, and the first tag is also the
-first time the `publish` job runs.
+Status as of 15 November 2026: **nothing has been published**, and the first tag is also
+the first time the `publish` job runs.
 
-- `ModuleVersion` is still `0.2.0`, there are no git tags, and there are no GitHub
-  releases. `0.1.0` and `0.2.0` predate the pipeline, which is why
-  [CHANGELOG.md](../CHANGELOG.md) says they cannot be installed with
-  `-RequiredVersion`.
-- The repository has no Actions secrets, so `PSGALLERY_API_KEY` does not exist yet.
-- The changelog for `0.3.0` is written and sits under *Unreleased*.
+- The release is prepared: `ModuleVersion` is `0.3.0`, both hardcoded version strings
+  match it, `SECURITY.md` lists `0.3.x` as current, and the changelog section is dated.
+  There are still no git tags and no GitHub releases. `0.1.0` and `0.2.0` predate the
+  pipeline, which is why [CHANGELOG.md](../CHANGELOG.md) says they cannot be installed
+  with `-RequiredVersion`.
+- The repository has no Actions secrets, so `PSGALLERY_API_KEY` does not exist yet. A
+  tag pushed now would pass CI and the tag check, then stop at *PSGALLERY_API_KEY is not
+  set*.
 
-What is left is the human part: create the key, set the secret, open the release pull
-request described under *Releasing*, and push `v0.3.0`.
+What is left is the human part: create the key, set the secret, and push `v0.3.0` from
+the merge commit. If that happens on a later day than the changelog heading says, correct
+the date first.
 
 Read *When it goes wrong* before the tag goes up, not after. The `publish` job has not
 been exercised end to end: that `Publish-PSResource` is available to the PowerShell on the
