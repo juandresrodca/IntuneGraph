@@ -6,17 +6,15 @@ All notable changes to IntuneGraph are documented here. Format follows
 
 `0.1.0` and `0.2.0` predate the release pipeline: both are described below, but neither
 carries a git tag or a GitHub release, so `-RequiredVersion 0.1.0` cannot be installed
-and no `v0.1.0...v0.2.0` comparison exists. Tagging starts at `0.3.0`; until a tag exists, the
-comparison links at the foot of this file are commit ranges rather than tag ranges.
+and no `v0.1.0...v0.2.0` comparison exists. Tagging starts at `0.3.0`: from there the comparison links at the foot
+of this file are tag ranges, and the two versions before it keep their commit ranges.
 
 ## [Unreleased]
 
-Everything below is written and on `main`; it ships as **0.3.0**. A minor bump rather
-than a patch because the module name changed, and pre-1.0 SemVer puts a breaking change
-there. Cutting it needs the two steps only a human should take — set `ModuleVersion` to
-`0.3.0` in the manifest, then push `v0.3.0` — because that tag publishes to the
-PowerShell Gallery and a Gallery version number can never be reused. The sequence is in
-[CONTRIBUTING.md](CONTRIBUTING.md#releasing).
+## [0.3.0] - 2026-11-15
+
+The first version published to the PowerShell Gallery. A minor bump rather than a patch
+because the module name changed, and pre-1.0 SemVer puts a breaking change there.
 
 ### Changed
 - The README's quick start leads with the route that works today. `Install-Module
@@ -115,14 +113,14 @@ Initial release.
 - `Import-IntuneGraph` / `Get-IntuneGraphNode`.
 - Bundled Contoso demo tenant (`-DemoData`) and fixture-driven Pester suite.
 
-<!-- Comparison links. No tag exists before v0.3.0, so each range is bounded by the
-     commit the version shipped at rather than by a tag: 0.1.0 points at the log up to
-     its last commit, 0.2.0 compares that commit with its own, and Unreleased compares
-     0.2.0's commit with HEAD. 0.2.0 is a single commit, c79a3c1, which added the MCP
-     server and wrote its own section here; e2c3fb8 is the commit before it and the last
-     of the 0.1.0 era. juandresrodca/EntraHuntKit#9 carries the reasoning for choosing a
-     boundary commit this way. Replace each range with a tag comparison as the tags are
-     pushed, starting with v0.3.0. -->
-[Unreleased]: https://github.com/juandresrodca/IntuneGraph/compare/c79a3c1...HEAD
+<!-- Comparison links. 0.3.0 is the first tag, so it and Unreleased are tag links under
+     rule 5 of the anchor rule. 0.1.0 and 0.2.0 were never tagged and keep the commit
+     bounds they shipped at, under rules 1 to 3 of
+     https://github.com/juandresrodca/EntraHuntKit/blob/main/docs/changelog-anchors.md#the-anchor-rule
+     which is where the convention and the reasoning for it now live. The boundaries are
+     local to this repository: 0.2.0 is the single commit c79a3c1, and e2c3fb8 is the
+     commit before it, the last of the 0.1.0 era. -->
+[Unreleased]: https://github.com/juandresrodca/IntuneGraph/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/juandresrodca/IntuneGraph/releases/tag/v0.3.0
 [0.2.0]: https://github.com/juandresrodca/IntuneGraph/compare/e2c3fb8...c79a3c1
 [0.1.0]: https://github.com/juandresrodca/IntuneGraph/commits/e2c3fb8

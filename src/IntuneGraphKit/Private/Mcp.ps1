@@ -15,7 +15,7 @@
 # stderr via Write-IgMcpLog.
 
 $script:IgMcpServerName    = 'intunegraph'
-$script:IgMcpServerVersion = '0.2.0'
+$script:IgMcpServerVersion = '0.3.0'
 
 # Legacy era: the 'initialize' handshake. This is what every shipping client speaks
 # or falls back to. Modern era (per-request _meta) is additive; see Invoke-IgMcpRequest.
